@@ -1,0 +1,579 @@
+[2025-08-03 23:56:18] About sections fetched: 6 sections
+[2025-08-03 23:56:18] Section: ID=1, Title=हम कौन हैं, Sort=1
+[2025-08-03 23:56:18] Section: ID=2, Title=हमारी दृष्टि, Sort=2
+[2025-08-03 23:56:18] Section: ID=3, Title=हमारा मिशन, Sort=3
+[2025-08-03 23:56:18] Section: ID=4, Title=हमें क्यों चुनें, Sort=4
+[2025-08-03 23:56:18] Section: ID=5, Title=हमारा दृष्टिकोण, Sort=5
+[2025-08-03 23:56:18] Section: ID=6, Title=हमारा प्रभाव, Sort=6
+[2025-08-03 23:56:26] About sections fetched: 6 sections
+[2025-08-03 23:56:26] Section: ID=1, Title=हम कौन हैं, Sort=1
+[2025-08-03 23:56:26] Section: ID=2, Title=हमारी दृष्टि, Sort=2
+[2025-08-03 23:56:26] Section: ID=3, Title=हमारा मिशन, Sort=3
+[2025-08-03 23:56:26] Section: ID=4, Title=हमें क्यों चुनें, Sort=4
+[2025-08-03 23:56:26] Section: ID=5, Title=हमारा दृष्टिकोण, Sort=5
+[2025-08-03 23:56:26] Section: ID=6, Title=हमारा प्रभाव, Sort=6
+[2025-08-03 23:57:21] About sections fetched: 6 sections
+[2025-08-03 23:57:21] Section: ID=1, Title=हम कौन हैं, Sort=1
+[2025-08-03 23:57:21] Section: ID=2, Title=हमारी दृष्टि, Sort=2
+[2025-08-03 23:57:21] Section: ID=3, Title=हमारा मिशन, Sort=3
+[2025-08-03 23:57:21] Section: ID=4, Title=हमें क्यों चुनें, Sort=4
+[2025-08-03 23:57:21] Section: ID=5, Title=हमारा दृष्टिकोण, Sort=5
+[2025-08-03 23:57:21] Section: ID=6, Title=हमारा प्रभाव, Sort=6
+[2025-08-03 23:57:51] Image deleted on content deletion: 688fa1f380d0a.jpg
+[2025-08-03 23:59:48] About sections fetched: 5 sections
+[2025-08-03 23:59:48] Section: ID=1, Title=हम कौन हैं, Sort=1
+[2025-08-03 23:59:48] Section: ID=2, Title=हमारी दृष्टि, Sort=2
+[2025-08-03 23:59:48] Section: ID=3, Title=हमारा मिशन, Sort=3
+[2025-08-03 23:59:48] Section: ID=4, Title=हमें क्यों चुनें, Sort=4
+[2025-08-03 23:59:48] Section: ID=5, Title=हमारा दृष्टिकोण, Sort=5
+[2025-08-04 00:08:20] File uploaded successfully: 688fac9ceb6f0.jpg to img/about
+[2025-08-04 00:50:21] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.123456789!2d80.9671234567!3d26.8734567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDUyJzI0LjQiTiA4MMKwNTgnMDEuNiJF!5e0!3m2!1sen!2sin!4v1627654321987!5m2!1sen!2sin
+[2025-08-04 00:50:21] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.123456789!2d80.9671234567!3d26.8734567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDUyJzI0LjQiTiA4MMKwNTgnMDEuNiJF!5e0!3m2!1sen!2sin!4v1627654321987!5m2!1sen!2sin
+[2025-08-04 14:05:02] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.123456789!2d80.9671234567!3d26.8734567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDUyJzI0LjQiTiA4MMKwNTgnMDEuNiJF!5e0!3m2!1sen!2sin!4v1627654321987!5m2!1sen!2sin
+[2025-08-04 14:05:02] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.123456789!2d80.9671234567!3d26.8734567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDUyJzI0LjQiTiA4MMKwNTgnMDEuNiJF!5e0!3m2!1sen!2sin!4v1627654321987!5m2!1sen!2sin
+[2025-08-10 14:13:34] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'u526627089_ngospecial'@'localhost' (using password: YES)
+[2025-08-10 14:13:36] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'u526627089_ngospecial'@'localhost' (using password: YES)
+[2025-08-10 16:04:50] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'u526627089_ngospecial'@'localhost' (using password: YES)
+[2025-08-10 20:28:34] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'u526627089_ngospecial'@'localhost' (using password: YES)
+[2025-08-10 20:29:41] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'u526627089_ngospecial'@'localhost' (using password: YES)
+[2025-08-10 20:32:36] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'u526627089_ngospecial'@'localhost' (using password: YES)
+[2025-08-10 20:33:48] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'u526627089_ngospecial'@'localhost' (using password: YES)
+[2025-08-17 00:58:42] File upload failed for Aadhar_front: File size too large. Maximum 5MB allowed.
+[2025-08-25 22:36:48] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-25 22:36:48] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-25 22:36:48] Old footer logo deleted: 688fb675a9a32.jpg
+[2025-08-25 22:36:48] Old header logo deleted: 688fb675a9f57.jpg
+[2025-08-25 22:36:48] Old site icon deleted: 688fb675aa44b.jpg
+[2025-08-25 22:37:22] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-25 22:37:22] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-25 22:37:22] Old footer logo deleted: 68ac982856990.png
+[2025-08-25 22:50:50] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-25 22:50:50] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-25 22:50:50] Old header logo deleted: 68ac982858501.png
+[2025-08-25 22:52:48] File uploaded successfully: 68ac9be863774.png to img/about
+[2025-08-25 22:53:03] File uploaded successfully: 68ac9bf7cee5a.png to img/about
+[2025-08-25 22:53:11] File uploaded successfully: 68ac9bff24216.jpg to img/about
+[2025-08-25 22:53:33] File uploaded successfully: 68ac9c1510f4d.jpg to img/about
+[2025-08-25 22:53:57] File uploaded successfully: 68ac9c2d1b81d.jpg to img/about
+[2025-08-25 22:53:57] Old image deleted: 68ac9c1510f4d.jpg
+[2025-08-25 22:54:05] File uploaded successfully: 68ac9c35b3922.jpg to img/about
+[2025-08-25 22:54:14] File uploaded successfully: 68ac9c3e8ac6b.jpg to img/about
+[2025-08-25 22:54:51] File uploaded successfully: 68ac9c639544f.jpg to img/about
+[2025-08-25 22:54:51] Old image deleted: 68ac9be863774.png
+[2025-08-25 22:55:03] File uploaded successfully: 68ac9c6f99437.jpg to img/about
+[2025-08-25 22:55:03] Old image deleted: 68ac9bf7cee5a.png
+[2025-08-25 22:55:13] File uploaded successfully: 68ac9c79752a5.jpg to img/about
+[2025-08-25 22:55:13] Old image deleted: 68ac9bff24216.jpg
+[2025-08-26 03:05:15] Debug: SQL Query - , Params: []
+[2025-08-26 03:09:04] Debug: SQL Query - , Params: []
+[2025-08-26 03:09:04] Database error in user query: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'phone' in 'field list'
+[2025-08-28 12:35:44] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:35:44] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:35:44] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:36:17] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:36:17] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:36:17] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:36:17] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:36:17] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:36:17] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:36:26] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:36:26] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:36:26] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:36:26] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:36:26] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:36:26] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:36:35] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:36:35] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:36:35] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:36:35] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:36:35] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:36:35] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:36:45] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:36:45] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:36:45] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:36:45] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:36:45] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:36:45] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:36:58] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:36:58] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:36:58] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:36:58] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:36:58] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:36:58] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:40:23] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:40:23] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:40:23] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:40:38] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:40:38] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:40:38] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:40:47] Membership pricing error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.settings' doesn't exist
+[2025-08-28 12:40:47] Payment config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.razorpay_config' doesn't exist
+[2025-08-28 12:40:47] Site config error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_ngowebsite.site_config' doesn't exist
+[2025-08-28 12:44:51] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-28 12:44:51] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-28 13:15:37] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-28 13:15:37] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-28 13:16:14] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-28 13:16:14] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-28 14:22:24] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'u526627089_ngowebsite'@'localhost' (using password: YES)
+[2025-08-28 14:30:41] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-08-28 14:30:41] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3481.22123456789!2d79.5271234567!3d29.2234567890!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDEzJzI0LjQiTiA3OcKwMzEnMDEuNiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-10 22:15:26] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3579.6578!2d85.4845!3d26.5941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed3e63f46f2b9b%3A0x0!2zMjbCsDM1JzM4LjgiTiA4NcKwMjknMDQuMiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-10 22:15:26] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3579.6578!2d85.4845!3d26.5941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed3e63f46f2b9b%3A0x0!2zMjbCsDM1JzM4LjgiTiA4NcKwMjknMDQuMiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-12 16:55:57] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3706.6578!2d73.6162!3d22.7772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc6b24e6f2b9b%3A0x0!2zMjLCsDQ2JzM3LjkiTiA3M8KwMzYnNTguMiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-12 16:55:57] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3706.6578!2d73.6162!3d22.7772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc6b24e6f2b9b%3A0x0!2zMjLCsDQ2JzM3LjkiTiA3M8KwMzYnNTguMiJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-12 16:55:57] Old footer logo deleted: 68c1ab266de10.png
+[2025-09-12 16:55:57] Old header logo deleted: 68c1ab266e513.png
+[2025-09-12 16:55:57] Old site icon deleted: 68c1ab266ebbc.png
+[2025-09-14 14:08:34] Database error in certificate listing: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.date_of_birth' in 'field list'
+[2025-09-14 14:09:03] Database error in certificate listing: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'u.date_of_birth' in 'field list'
+[2025-09-14 15:46:39] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 15:46:39] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 16:11:33] File uploaded successfully: 68c69bdd765ea.jpg to img/about
+[2025-09-14 16:11:47] File uploaded successfully: 68c69beb5b843.jpg to img/about
+[2025-09-14 16:11:56] File uploaded successfully: 68c69bf4bdea4.jpg to img/about
+[2025-09-14 16:12:06] File uploaded successfully: 68c69bfe4bc8b.jpg to img/about
+[2025-09-14 16:12:16] File uploaded successfully: 68c69c081f6c0.jpg to img/about
+[2025-09-14 16:12:33] File uploaded successfully: 68c69c19a0b86.jpg to img/about
+[2025-09-14 16:46:54] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 16:46:54] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 16:53:09] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 16:53:09] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 16:53:52] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 16:53:52] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 17:08:15] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 17:08:15] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 18:00:03] डेटाबेस त्रुटि: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;updated_at&#039; in &#039;SET&#039;
+[2025-09-14 18:13:44] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 18:13:44] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 18:29:02] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 18:29:02] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 18:29:02] Old header logo deleted: 68c6960759850.png
+[2025-09-14 19:10:45] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 19:10:45] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 19:10:45] Old header logo deleted: 68c6bc16c7a34.jpeg
+[2025-09-14 19:40:30] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-14 19:40:30] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-15 00:00:22] Duplicate Aadhaar (621877557839), mobile (9530274374), or email (ypriyanka781@gmail.com)
+[2025-09-15 00:00:57] Duplicate Aadhaar (621877557839), mobile (9530274374), or email (amityadav1005@gmail.com)
+[2025-09-16 17:44:24] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 17:44:24] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 17:46:22] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 17:46:22] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 17:48:09] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 17:48:09] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 17:48:32] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 17:48:32] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 18:40:37] Invalid CSRF token in user apply form submission
+[2025-09-16 18:40:45] Invalid CSRF token in user apply form submission
+[2025-09-16 19:35:45] डेटाबेस त्रुटि: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;updated_at&#039; in &#039;SET&#039;
+[2025-09-16 19:35:55] डेटाबेस त्रुटि: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;updated_at&#039; in &#039;SET&#039;
+[2025-09-16 19:36:55] डेटाबेस त्रुटि: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;updated_at&#039; in &#039;SET&#039;
+[2025-09-16 20:01:02] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 20:01:02] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 20:12:40] डेटाबेस त्रुटि: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;updated_at&#039; in &#039;SET&#039;
+[2025-09-16 20:12:53] डेटाबेस त्रुटि: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;updated_at&#039; in &#039;SET&#039;
+[2025-09-16 20:14:44] डेटाबेस त्रुटि: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;updated_at&#039; in &#039;SET&#039;
+[2025-09-16 20:14:55] डेटाबेस त्रुटि: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;updated_at&#039; in &#039;SET&#039;
+[2025-09-16 20:16:00] डेटाबेस त्रुटि: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;updated_at&#039; in &#039;SET&#039;
+[2025-09-16 20:33:41] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 20:33:41] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 20:39:14] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 20:39:14] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 22:50:03] Raw map_embed_url input: https://www.facebook.com/
+[2025-09-16 22:50:03] Processed map_embed_url: https://www.facebook.com/
+[2025-09-16 22:50:03] Google Maps Embed URL 'https://www.google.com/maps/embed?' से शुरू होना चाहिए।
+[2025-09-16 22:51:41] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-16 22:51:41] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-17 00:43:18] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-17 00:43:18] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-17 00:43:18] Old header logo deleted: 68c99c22dec0d.png
+[2025-09-17 00:52:51] File uploaded successfully: 68c9b90bbd031.jpg to img/about
+[2025-09-17 04:46:02] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-17 04:46:02] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-17 11:14:45] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-17 11:14:45] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-17 11:33:23] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-17 11:33:23] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.5478!2d76.8545!3d27.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397299c3f46f2b9b%3A0x0!2zMjfCsDU2JzAyLjgiTiA3NsKwNTEnMTYuMyJF!5e0!3m2!1sen!2sin!4v1724567890123!5m2!1sen!2sin
+[2025-09-18 19:52:26] Email sending failed: SMTP Error: Could not authenticate.
+[2025-09-18 19:56:02] Email sending failed: SMTP Error: Could not authenticate.
+[2025-09-18 20:00:19] Email sending failed: SMTP Error: Could not authenticate.
+[2025-09-18 20:33:33] Email sending failed: SMTP Error: Could not authenticate.
+[2025-09-18 20:35:44] Email sending failed: SMTP Error: Could not authenticate.
+[2025-09-18 20:37:41] Email sending failed: SMTP Error: Could not authenticate.
+[2025-09-18 20:37:41] टेस्ट ईमेल भेजने में त्रुटि: टेस्ट ईमेल भेजने में असफल।
+[2025-09-20 16:48:24] No site configuration found in site_config table
+[2025-09-20 16:48:25] No site configuration found in site_config table
+[2025-09-20 16:48:35] No site configuration found in site_config table
+[2025-09-20 16:48:36] No site configuration found in site_config table
+[2025-09-20 16:56:55] Raw map_embed_url input: <iframe src="https://www.google.com/maps?q=Jamser%20near%20Chalarai%20Bus%20Stand%20Bikaner&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+[2025-09-20 16:56:55] Processed map_embed_url: https://www.google.com/maps?q=Jamser%20near%20Chalarai%20Bus%20Stand%20Bikaner&output=embed
+[2025-09-20 16:56:55] Google Maps Embed URL 'https://www.google.com/maps/embed?' से शुरू होना चाहिए।
+[2025-09-20 16:58:13] Raw map_embed_url input: <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44980.15680933253!2d73.31954055!3d28.021407950000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393fdd7bd90bbb89%3A0x4ce3121a7664816b!2sBikaner%2C%20Rajasthan!5e1!3m2!1sen!2sin!4v1758367684845!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+[2025-09-20 16:58:13] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44980.15680933253!2d73.31954055!3d28.021407950000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393fdd7bd90bbb89%3A0x4ce3121a7664816b!2sBikaner%2C%20Rajasthan!5e1!3m2!1sen!2sin!4v1758367684845!5m2!1sen!2sin
+[2025-09-20 20:03:28] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44980.15680933253!2d73.31954055!3d28.021407950000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393fdd7bd90bbb89%3A0x4ce3121a7664816b!2sBikaner%2C%20Rajasthan!5e1!3m2!1sen!2sin!4v1758367684845!5m2!1sen!2sin
+[2025-09-20 20:03:28] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44980.15680933253!2d73.31954055!3d28.021407950000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393fdd7bd90bbb89%3A0x4ce3121a7664816b!2sBikaner%2C%20Rajasthan!5e1!3m2!1sen!2sin!4v1758367684845!5m2!1sen!2sin
+[2025-09-20 20:47:02] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44980.15680933253!2d73.31954055!3d28.021407950000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393fdd7bd90bbb89%3A0x4ce3121a7664816b!2sBikaner%2C%20Rajasthan!5e1!3m2!1sen!2sin!4v1758367684845!5m2!1sen!2sin
+[2025-09-20 20:47:02] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44980.15680933253!2d73.31954055!3d28.021407950000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x393fdd7bd90bbb89%3A0x4ce3121a7664816b!2sBikaner%2C%20Rajasthan!5e1!3m2!1sen!2sin!4v1758367684845!5m2!1sen!2sin
+[2025-09-20 20:47:02] Old header logo deleted: 68cebb384382a.png
+[2025-09-22 07:06:21] File uploaded successfully: 68d0a81522366.jpg to img/about
+[2025-09-29 01:50:50] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-09-29 01:50:50] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-09-29 01:50:50] Old footer logo deleted: 68cebb3841b46.png
+[2025-09-29 01:50:50] Old header logo deleted: 68cec56e4b55f.png
+[2025-09-29 01:50:50] Old site icon deleted: 68cebb3844299.png
+[2025-09-29 13:54:48] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 13:58:00] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:00:05] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'uu526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:00:08] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'uu526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:00:12] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'uu526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:00:13] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'uu526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:01:51] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:01:53] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:03:59] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:04:00] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:04:00] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:04:00] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:04:00] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:04:00] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:04:00] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:04:22] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:04:31] Database connection error: SQLSTATE[HY000] [1045] Access denied for user ' u526627089_jwmngo'@'localhost' (using password: YES)
+[2025-09-29 14:23:47] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-09-29 14:23:47] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-09-29 14:50:01] File uploaded successfully: 68da4f416785e.jpg to img/about
+[2025-09-29 14:50:15] File uploaded successfully: 68da4f4f9ea73.jpg to img/about
+[2025-09-29 14:53:53] File uploaded successfully: 68da5029a85e8.jpg to img/about
+[2025-09-29 14:54:05] File uploaded successfully: 68da5035ef86a.jpg to img/about
+[2025-09-29 14:54:21] File uploaded successfully: 68da5045e547e.jpg to img/about
+[2025-09-29 14:58:50] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-09-29 14:58:50] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-09-29 14:58:50] Old header logo deleted: 68d998a20955a.png
+[2025-09-30 10:07:23] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-09-30 10:07:23] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-01 11:45:10] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-01 11:45:10] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-01 11:45:10] Old header logo deleted: 68da515271d96.png
+[2025-10-01 14:38:47] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-01 14:38:47] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d77.05844461485392!3d20.262446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd747d34c47e7e3%3A0x7f7a9e7b7e7f7e7f!2sKutasa%2C%20Maharashtra%20444107!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-02 21:35:01] File uploaded successfully: 68dea2adba889.jpg to img/shankaracharya
+[2025-10-02 21:38:05] File uploaded successfully: 68dea365299e5.jpg to img/shankaracharya
+[2025-10-17 07:31:03] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d92.73761861485392!3d24.833446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x374e4b8b7c7f7e7f%3A0x7f7a9e7b7e7f7e7f!2sMalugram%2C%20Assam%20788003!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-17 07:31:03] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d92.73761861485392!3d24.833446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x374e4b8b7c7f7e7f%3A0x7f7a9e7b7e7f7e7f!2sMalugram%2C%20Assam%20788003!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-17 07:56:36] File uploaded successfully: 68f1a95c8a806.png to img/about
+[2025-10-17 07:56:46] File uploaded successfully: 68f1a9663df31.png to img/about
+[2025-10-17 07:56:56] File uploaded successfully: 68f1a970d64a3.png to img/about
+[2025-10-17 07:57:09] File uploaded successfully: 68f1a97dce39d.png to img/about
+[2025-10-17 07:57:30] File uploaded successfully: 68f1a992ba95e.png to img/about
+[2025-10-17 07:57:47] File uploaded successfully: 68f1a9a3471b3.png to img/about
+[2025-10-17 08:02:21] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d92.73761861485392!3d24.833446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x374e4b8b7c7f7e7f%3A0x7f7a9e7b7e7f7e7f!2sMalugram%2C%20Assam%20788003!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-17 08:02:21] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d92.73761861485392!3d24.833446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x374e4b8b7c7f7e7f%3A0x7f7a9e7b7e7f7e7f!2sMalugram%2C%20Assam%20788003!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-17 08:18:02] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d92.73761861485392!3d24.833446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x374e4b8b7c7f7e7f%3A0x7f7a9e7b7e7f7e7f!2sMalugram%2C%20Assam%20788003!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-17 08:18:02] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3744.666059139617!2d92.73761861485392!3d24.833446086412893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x374e4b8b7c7f7e7f%3A0x7f7a9e7b7e7f7e7f!2sMalugram%2C%20Assam%20788003!5e0!3m2!1sen!2sin!4v1695836284845!5m2!1sen!2sin
+[2025-10-26 18:43:52] Status change email sent successfully to: onlinegrowthhub@gmail.com for registration ID: RBF0001
+[2025-10-31 12:07:58] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'janmanascharitabletrust.disclaimer_content' doesn't exist
+[2025-10-31 12:08:04] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'janmanascharitabletrust.disclaimer_content' doesn't exist
+[2025-11-01 09:39:38] No site configuration found in site_config table
+[2025-11-01 09:39:43] No site configuration found in site_config table
+[2025-11-01 09:40:27] No site configuration found in site_config table
+[2025-11-01 09:40:28] No site configuration found in site_config table
+[2025-11-01 09:41:26] No site configuration found in site_config table
+[2025-11-01 12:47:27] Error fetching terms and conditions content: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'worldcharityfoundation.terms_conditions_content' doesn't exist
+[2025-11-04 13:06:00] Registration confirmation email sent successfully to: yesuadianjohn3@gmail.com for registration ID: WCWF32624
+[2025-11-04 13:28:52] Status change email sent successfully to: yesuadianjohn3@gmail.com for registration ID: WCWF32624
+[2025-11-04 14:59:22] Registration confirmation email sent successfully to: sofirahil075@gmail.com for registration ID: WCWF75005
+[2025-11-04 14:59:38] Status change email sent successfully to: sofirahil075@gmail.com for registration ID: WCWF75005
+[2025-11-04 15:15:01] Registration confirmation email sent successfully to: joevounia@gmail.com for registration ID: WCWF01961
+[2025-11-04 15:15:18] Status change email sent successfully to: joevounia@gmail.com for registration ID: WCWF01961
+[2025-11-04 15:33:39] Registration confirmation email sent successfully to: sayaladanuel@gmail.com for registration ID: WCWF33828
+[2025-11-04 15:34:06] Status change email sent successfully to: sayaladanuel@gmail.com for registration ID: WCWF33828
+[2025-11-04 16:40:53] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_worldcharity.disclaimer_content' doesn't exist
+[2025-11-04 17:06:03] Registration confirmation email sent successfully to: fayazmalik832@gmail.com for registration ID: WCWF32732
+[2025-11-04 17:06:22] Status change email sent successfully to: fayazmalik832@gmail.com for registration ID: WCWF32732
+[2025-11-04 17:18:10] Registration confirmation email sent successfully to: vipinuka94@gmail.com for registration ID: WCWF78049
+[2025-11-04 17:18:24] Status change email sent successfully to: vipinuka94@gmail.com for registration ID: WCWF78049
+[2025-11-04 17:33:25] Registration confirmation email sent successfully to: nirdoshverma58@gmail.com for registration ID: WCWF93824
+[2025-11-04 17:33:37] Status change email sent successfully to: nirdoshverma58@gmail.com for registration ID: WCWF93824
+[2025-11-04 21:56:53] Database error in advertisement-slider.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_worldcharity.advertisements' doesn't exist
+[2025-11-04 21:56:53] Database error in sponsor-slider.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_worldcharity.sponsors' doesn't exist
+[2025-11-04 21:56:53] Database error in affiliation-slider.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_worldcharity.affiliations' doesn't exist
+[2025-11-04 21:56:53] Database error in partner-slider.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_worldcharity.partners' doesn't exist
+[2025-11-05 10:03:09] Registration confirmation email sent successfully to: samarpana2000@gmail.com for registration ID: WCWF10849
+[2025-11-05 10:03:26] Status change email sent successfully to: samarpana2000@gmail.com for registration ID: WCWF10849
+[2025-11-05 10:03:32] Status change email sent successfully to: samarpana2000@gmail.com for registration ID: WCWF10849
+[2025-11-05 15:39:47] Error: File size must not exceed 5MB.
+[2025-11-05 15:40:06] File uploaded successfully: 690b227eb0f02.jpeg to img/about
+[2025-11-05 15:41:48] File uploaded successfully: 690b22e43506c.jpeg to img/about
+[2025-11-05 15:41:48] Old image deleted: 690b227eb0f02.jpeg
+[2025-11-07 10:09:18] Registration confirmation email sent successfully to: dr.prince.kr.verma@gmail.com for registration ID: WCWF19639
+[2025-11-07 10:09:56] Status change email sent successfully to: dr.prince.kr.verma@gmail.com for registration ID: WCWF19639
+[2025-11-30 19:29:50] Error fetching disclaimer content: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.disclaimer_content' doesn't exist
+[2025-11-30 19:30:14] Error fetching privacy policy content: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.privacy_policy_content' doesn't exist
+[2025-11-30 19:30:16] Error fetching refund policy content: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.refund_policy_content' doesn't exist
+[2025-11-30 19:30:18] Error fetching shipping policy content: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.shipping_policy_content' doesn't exist
+[2025-11-30 19:30:22] Error fetching terms and conditions content: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.terms_conditions_content' doesn't exist
+[2025-12-02 21:01:29] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.disclaimer_content' doesn't exist
+[2025-12-02 21:01:32] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.privacy_policy_content' doesn't exist
+[2025-12-02 21:01:33] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.refund_policy_content' doesn't exist
+[2025-12-02 21:01:35] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.privacy_policy_content' doesn't exist
+[2025-12-02 21:01:36] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.disclaimer_content' doesn't exist
+[2025-12-02 21:01:44] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.terms_conditions_content' doesn't exist
+[2025-12-02 21:03:40] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.disclaimer_content' doesn't exist
+[2025-12-02 21:16:03] Error fetching terms and conditions content: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.terms_conditions_content' doesn't exist
+[2025-12-02 22:33:39] Award processing error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'mobile' in 'INSERT INTO'
+[2025-12-02 22:37:52] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.disclaimer_content' doesn't exist
+[2025-12-02 22:38:24] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.privacy_policy_content' doesn't exist
+[2025-12-02 22:38:25] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.refund_policy_content' doesn't exist
+[2025-12-02 22:38:26] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.shipping_policy_content' doesn't exist
+[2025-12-02 22:38:27] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.terms_conditions_content' doesn't exist
+[2025-12-02 22:38:29] Database query error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_honorarydoc.disclaimer_content' doesn't exist
+[2025-12-05 13:19:04] Error: This Award already exists.
+[2025-12-05 16:39:05] Error: This Award already exists.
+[2025-12-05 16:39:29] Error: This Award already exists.
+[2025-12-05 16:39:55] Error: This Award already exists.
+[2025-12-05 16:55:08] Error: This Award already exists.
+[2025-12-05 17:09:06] Invalid CSRF token.
+[2025-12-05 17:12:00] Error: This Award already exists.
+[2025-12-12 11:03:52] Image deleted on content deletion: 690b22e43506c.jpeg
+[2025-12-14 17:27:10] Verification Error: SQLSTATE[HY093]: Invalid parameter number
+[2025-12-18 17:05:45] File uploaded successfully: 6943e711c9fa1.jpeg to img/about
+[2025-12-19 12:05:54] Registration confirmation email sent successfully to: sharmaopsonologist@gmail.com for registration ID: GHDAF90361
+[2025-12-19 13:19:09] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d791970.1834169542!2d34.864966098177646!3d39.173284959113225!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1555966354663!5m2!1sen!2sin
+[2025-12-19 13:19:09] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d791970.1834169542!2d34.864966098177646!3d39.173284959113225!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1555966354663!5m2!1sen!2sin
+[2025-12-19 13:23:37] Raw map_embed_url input: https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d791970.1834169542!2d34.864966098177646!3d39.173284959113225!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1555966354663!5m2!1sen!2sin
+[2025-12-19 13:23:37] Processed map_embed_url: https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d791970.1834169542!2d34.864966098177646!3d39.173284959113225!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1555966354663!5m2!1sen!2sin
+[2026-01-05 13:49:47] Registration confirmation email sent successfully to: jaitrisingharoy831@gmail.com for registration ID: GHDAF13018
+[2026-02-08 18:18:57] Database connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-02-08 18:19:29] Database connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-02-08 18:19:48] Database connection error: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it
+[2026-02-09 10:50:49] Registration confirmation email sent successfully to: Jugalaachhera@gmail.com for registration ID: GHDAF42975
+[2026-02-09 11:00:53] Registration confirmation email sent successfully to: Jugalaachhera@gmail.com for registration ID: GHDAF40282
+[2026-02-09 19:37:59] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-09 21:44:26] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-10 06:49:44] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-10 19:03:49] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-10 20:25:42] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-13 23:29:12] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-15 04:42:08] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-15 17:34:11] Missing required field: State
+[2026-02-16 12:26:03] Registration confirmation email sent successfully to: mineshchoksi@gmail.com for registration ID: GHDAF82657
+[2026-02-17 11:19:42] Registration confirmation email sent successfully to: sayedaddy86@gmail.com for registration ID: PCWWF/67904
+[2026-02-17 17:49:21] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-17 20:13:40] Database connection error: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO)
+[2026-02-18 11:14:14] Registration confirmation email sent successfully to: vishnu@gmail.com for registration ID: PCWWF/19545
+[2026-02-18 11:27:49] Registration confirmation email sent successfully to: mahendrasingh@gmail.com for registration ID: PCWWF/41869
+[2026-02-18 11:37:54] Registration confirmation email sent successfully to: krishan@gmail.com for registration ID: PCWWF/22880
+[2026-02-18 11:47:32] Registration confirmation email sent successfully to: Sahilnazirkps@gmail.com for registration ID: PCWWF/56861
+[2026-02-18 12:24:51] Registration confirmation email sent successfully to: Riyazhighway07@gmail.com for registration ID: PCWWF/86571
+[2026-02-18 12:31:24] Registration confirmation email sent successfully to: nasirtagale@gmail.com for registration ID: PCWWF/26453
+[2026-02-18 12:41:35] Registration confirmation email sent successfully to: newsno1bhutniallindiadigital@gmail.com for registration ID: PCWWF/13434
+[2026-02-18 12:53:34] Registration confirmation email sent successfully to: Truthofkashmirnewsnetwork@gmail.com for registration ID: PCWWF/21965
+[2026-02-18 13:05:22] Registration confirmation email sent successfully to: rajibduttaphotography@gmail.com for registration ID: PCWWF/31773
+[2026-02-18 13:07:54] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-18 16:09:43] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-19 05:03:06] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-19 11:53:33] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-19 22:11:58] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-19 23:44:57] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-21 10:51:37] Registration confirmation email sent successfully to: rathnam2014@gmail.com for registration ID: PCWWF/48765
+[2026-02-22 17:27:54] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-22 21:35:15] Missing required field: State
+[2026-02-23 10:51:19] Registration confirmation email sent successfully to: rajjaiswal.g.life@gmail.com for registration ID: PCWWF/74438
+[2026-02-23 11:17:43] Registration confirmation email sent successfully to: rajkumar@gmail.com for registration ID: PCWWF/14651
+[2026-02-24 07:26:54] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-24 10:45:29] Registration confirmation email sent successfully to: suniti@gmail.com for registration ID: PCWWF/54532
+[2026-02-24 10:59:04] Registration confirmation email sent successfully to: anitaupatel778@gmail.com for registration ID: PCWWF/49654
+[2026-02-24 11:13:41] Registration confirmation email sent successfully to: eknath.kamble40@gmail.com for registration ID: PCWWF/46661
+[2026-02-26 11:00:39] Registration confirmation email sent successfully to: chintamanir1962@gmail.com for registration ID: PCWWF/77301
+[2026-02-26 18:12:09] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-26 22:15:11] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-27 05:31:46] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-02-28 11:40:36] Registration confirmation email sent successfully to: sushilsharma3200@gmail.com for registration ID: PCWWF/01979
+[2026-03-01 21:55:13] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-02 05:32:29] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-02 11:31:46] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-02 13:27:14] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-02 16:32:46] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-02 20:19:44] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-02 23:44:26] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-03 05:45:02] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-03 06:12:05] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-03 06:22:22] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-03 14:25:17] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-04 04:54:56] Missing required field: State
+[2026-03-05 19:18:12] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-06 12:46:57] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-07 08:24:33] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-07 19:52:41] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-08 13:03:56] Registration confirmation email sent successfully to: Katihartodaysnews@gmail.com for registration ID: PCWWF/53774
+[2026-03-10 10:28:42] Missing required field: State
+[2026-03-10 12:01:27] Registration confirmation email sent successfully to: pankaj@gmail.com for registration ID: PCWWF/98358
+[2026-03-11 15:04:51] Registration confirmation email sent successfully to: sakaldip@gmail.com for registration ID: PCWWF/21933
+[2026-03-11 18:09:17] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-12 06:12:18] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-12 12:40:46] Registration confirmation email sent successfully to: rakeshrakesh99476@gmail.com for registration ID: WPEWF88238
+[2026-03-12 16:41:40] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-12 18:32:58] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-14 15:28:03] Registration confirmation email sent successfully to: sureshsharma@gmail.com for registration ID: WPEWF25035
+[2026-03-15 06:52:36] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-16 02:59:34] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-16 03:44:44] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-16 03:44:45] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-16 06:27:32] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-16 16:20:38] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-17 00:12:11] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-17 01:29:03] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-17 07:14:09] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-17 10:36:10] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-18 09:11:22] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-18 09:16:08] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-18 09:18:22] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-18 09:28:19] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-18 17:01:51] Registration confirmation email sent successfully to: madanjeet@gmail.com for registration ID: WPEWF17822
+[2026-03-18 17:12:22] Registration confirmation email sent successfully to: Ubsfilms@gmail.com for registration ID: WPEWF26871
+[2026-03-19 11:01:54] Registration confirmation email sent successfully to: vimal@gmail.com for registration ID: WPEWF03000
+[2026-03-19 11:11:24] Registration confirmation email sent successfully to: ramesh@gmail.com for registration ID: WPEWF64534
+[2026-03-20 05:57:41] File upload failed for Aadhar_back: File too large. Maximum: 5MB
+[2026-03-20 06:04:53] Registration confirmation email sent successfully to: ravirajshinde2222@gmail.com for registration ID: PCWWF/76283
+[2026-03-20 17:36:26] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-20 20:29:02] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-20 20:29:02] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-20 20:29:02] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-20 20:29:02] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-21 03:38:02] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-21 21:05:30] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-22 05:47:39] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-22 05:47:40] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-22 20:50:20] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-22 21:59:01] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-23 21:06:14] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-24 09:23:37] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-24 09:23:37] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-24 14:01:16] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-24 14:01:16] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-24 15:45:55] Registration confirmation email sent successfully to: ansari0107@gmail.com for registration ID: WPEWF82450
+[2026-03-24 16:21:32] Registration confirmation email sent successfully to: Afiqaali@gmail.com for registration ID: WPEWF41831
+[2026-03-24 16:45:06] Registration confirmation email sent successfully to: shankar@gmail.com for registration ID: WPEWF42114
+[2026-03-24 16:51:45] Registration confirmation email sent successfully to: radhe@gmail.com for registration ID: WPEWF77581
+[2026-03-24 17:04:29] Registration confirmation email sent successfully to: ghulam@gmail.com for registration ID: WPEWF16660
+[2026-03-25 03:43:03] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-25 06:47:36] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-25 23:05:28] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-26 08:47:13] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-26 21:59:38] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-27 10:41:27] Registration confirmation email sent successfully to: singhjournalistvikram@gmail.com for registration ID: WPEWF74787
+[2026-03-27 10:51:48] Registration confirmation email sent successfully to: aslamkhan64nov@gmail.com for registration ID: WPEWF55157
+[2026-03-27 11:03:10] Registration confirmation email sent successfully to: biswajeetmohapatra510@gmail.com for registration ID: WPEWF81776
+[2026-03-27 11:14:44] Registration confirmation email sent successfully to: Kishordixit0007@gmail.com for registration ID: WPEWF15748
+[2026-03-27 11:21:21] Registration confirmation email sent successfully to: shiv620@gmail.com for registration ID: WPEWF71636
+[2026-03-29 18:59:39] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-30 10:55:50] Registration confirmation email sent successfully to: ritikkumarasdfg@gmail.com for registration ID: WPEWF88255
+[2026-03-30 11:15:21] Registration confirmation email sent successfully to: alokk8019@gmail.com for registration ID: WPEWF87928
+[2026-03-30 11:34:08] Registration confirmation email sent successfully to: rafeeq2160@gmail.com for registration ID: WPEWF83486
+[2026-03-30 11:42:59] Registration confirmation email sent successfully to: jaiswalvijayshaab1@gmail.com for registration ID: WPEWF08294
+[2026-03-30 11:54:57] Registration confirmation email sent successfully to: wackchourenilamchandra@gmail.com for registration ID: WPEWF69367
+[2026-03-30 12:00:40] Registration confirmation email sent successfully to: satendrarairai3@gmail.com for registration ID: WPEWF43575
+[2026-03-30 23:54:16] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-03-31 06:34:01] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-01 11:51:14] Registration confirmation email sent successfully to: Ashwinikulkarni303@gmail.com for registration ID: WPEWF13726
+[2026-04-01 13:25:20] Registration confirmation email sent successfully to: uttam@gmail.com for registration ID: WPEWF42346
+[2026-04-01 19:59:51] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-03 18:00:56] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-03 21:10:40] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-04 10:36:15] Registration confirmation email sent successfully to: lajpat@gmail.com for registration ID: WPEWF09833
+[2026-04-04 12:33:34] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-04 23:12:31] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-05 06:06:04] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-05 09:58:53] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-06 16:13:07] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-07 02:18:36] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-08 10:39:39] Registration confirmation email sent successfully to: maadvani@gmail.com for registration ID: WPEWF79755
+[2026-04-09 03:16:42] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-10 06:05:28] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-11 15:37:40] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-11 16:52:16] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-12 14:04:29] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u526627089_pressclubwell.notices' doesn't exist
+[2026-04-14 22:15:22] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-04-15 04:04:17] Missing required field: Aadhar_no
+[2026-04-15 07:08:23] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-04-15 08:38:50] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-04-16 23:36:51] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-04-17 07:36:47] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-04-17 07:36:48] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-04-19 10:59:46] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-04-19 11:00:36] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-04-20 11:05:41] Email sending failed: SMTP Error: Could not authenticate.
+[2026-04-20 11:05:41] Failed to send registration confirmation email to: sanoj@gmail.com for registration ID: WPEWF68776
+[2026-04-20 16:10:56] Email sending failed: SMTP Error: Could not authenticate.
+[2026-04-20 16:10:56] Failed to send registration confirmation email to: samanvayvani@gmail.com for registration ID: WPEWF50189
+[2026-04-23 15:12:21] Email sending failed: SMTP Error: Could not authenticate.
+[2026-04-23 15:12:21] Failed to send registration confirmation email to: pawan@gmail.com for registration ID: WPEWF64329
+[2026-04-28 01:11:25] Database error in notice-details.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-04-28 01:11:27] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-04-28 10:46:20] Email sending failed: SMTP Error: Could not authenticate.
+[2026-04-28 10:46:20] Failed to send registration confirmation email to: pradeep@gmail.com for registration ID: WPEWF09875
+[2026-05-02 10:56:21] Email sending failed: SMTP Error: Could not authenticate.
+[2026-05-02 10:56:21] Failed to send registration confirmation email to: tileare@gmail.com for registration ID: WPEWF84656
+[2026-05-05 17:32:57] Email sending failed: SMTP Error: Could not authenticate.
+[2026-05-05 17:32:57] Failed to send registration confirmation email to: sonmonidutta2@gmail.com for registration ID: WPEWF16643
+[2026-05-06 10:53:31] Email sending failed: SMTP Error: Could not authenticate.
+[2026-05-06 10:53:31] Failed to send registration confirmation email to: spandey230226@gmail.com for registration ID: WPEWF86565
+[2026-05-14 13:04:06] Email sending failed: SMTP Error: Could not authenticate.
+[2026-05-14 13:04:06] Failed to send registration confirmation email to: surendra@gmail.com for registration ID: WPEWF00527
+[2026-05-15 16:16:52] Email sending failed: SMTP Error: Could not authenticate.
+[2026-05-15 16:16:52] Failed to send registration confirmation email to: gowthamdhariwal@gmail.com for registration ID: WPEWF55462
+[2026-05-15 16:29:51] Email sending failed: SMTP Error: Could not authenticate.
+[2026-05-15 16:29:51] Failed to send registration confirmation email to: vikramjain537@gmail.com for registration ID: WPEWF66633
+[2026-05-18 11:21:19] Email sending failed: SMTP Error: Could not authenticate.
+[2026-05-18 11:21:19] Failed to send registration confirmation email to: rashmisurana.rs@gmail.com for registration ID: WPEWF43514
+[2026-05-18 11:45:01] Email sending failed: SMTP Error: Could not authenticate.
+[2026-05-18 11:45:01] Failed to send registration confirmation email to: anand@gmail.com for registration ID: WPEWF71495
+[2026-05-19 00:29:58] Database error in all-notices.php: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u126736286_pressclubwell.notices' doesn't exist
+[2026-05-25 10:57:48] Email sending failed: SMTP Error: Could not authenticate.
+[2026-05-25 10:57:48] Failed to send registration confirmation email to: santosh@gmail.com for registration ID: WPEWF78285
+[2026-06-05 08:14:31] Razorpay config error: No active Razorpay configuration found for environment: live
+[2026-06-05 08:14:31] Razorpay config error: No active Razorpay configuration found for environment: live
+[2026-06-05 08:14:31] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 08:14:31] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 08:14:31] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 08:14:31] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 08:14:31] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Razorpay config error: No active Razorpay configuration found for environment: live
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Razorpay config error: No active Razorpay configuration found for environment: live
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 09:49:47] Database connection error: SQLSTATE[HY000] [2002] Operation not permitted
+[2026-06-05 14:16:08] Razorpay config error: No active Razorpay configuration found for environment: live
+[2026-06-05 14:16:09] Razorpay config error: No active Razorpay configuration found for environment: live
+[2026-06-12 12:15:56] Email sending failed: SMTP Error: Could not authenticate.
+[2026-06-12 12:15:56] Failed to send registration confirmation email to: Adishjain1625@gmail.com for registration ID: WPEWF94213
+[2026-06-12 12:16:11] Email sending failed: SMTP Error: Could not authenticate.
+[2026-06-12 12:16:11] Failed to send status change email to: Adishjain1625@gmail.com for registration ID: WPEWF94213
+[2026-06-20 12:28:56] Email sending failed: SMTP Error: Could not authenticate.
+[2026-06-20 12:28:56] Failed to send registration confirmation email to: debisirscience@gmail.com for registration ID: WPEWF22958
+[2026-06-25 20:27:06] Email sending failed: SMTP Error: Could not authenticate.
+[2026-06-25 20:27:06] Failed to send registration confirmation email to: nagadauday2@gmail.com for registration ID: PCWWF/73566
+[2026-06-26 16:50:46] Email sending failed: SMTP Error: Could not authenticate.
+[2026-06-26 16:50:46] Failed to send status change email to: nagadauday2@gmail.com for registration ID: PCWWF/73566
+[2026-06-30 16:10:36] Email sending failed: SMTP Error: Could not authenticate.
+[2026-06-30 16:10:36] Failed to send registration confirmation email to: siyyadulayellarao1234@gmail.com for registration ID: WPEWF12664
+[2026-07-07 16:58:11] Error: This Category already exists.
+[2026-07-07 16:58:27] Error: This Category already exists.
+[2026-07-08 12:54:05] Error: This Award already exists.
+[2026-07-08 13:26:55] Error: This Award already exists.
+[2026-07-08 15:57:30] Email sending failed: SMTP Error: Could not authenticate.
+[2026-07-08 15:57:30] Failed to send registration confirmation email to: floramontu@gmail.com for registration ID: WPEWF07314
+[2026-07-08 16:07:39] Email sending failed: SMTP Error: Could not authenticate.
+[2026-07-08 16:07:39] Failed to send registration confirmation email to: parmarchandrakant9408568304@gmail.com for registration ID: WPEWF85569
+[2026-07-09 11:07:30] Email sending failed: SMTP Error: Could not authenticate.
+[2026-07-09 11:07:30] Failed to send registration confirmation email to: raijshanker@gmail.com for registration ID: WPEWF58870
+[2026-07-10 17:06:45] Email sending failed: SMTP Error: Could not authenticate.
+[2026-07-10 17:06:45] Failed to send registration confirmation email to: kcswain0665@gmail.com for registration ID: WPEWF33403
