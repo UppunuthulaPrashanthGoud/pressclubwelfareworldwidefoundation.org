@@ -129,6 +129,7 @@ include 'navbar.php';
     <!-- PARTNER SLIDER -->
     <?php include 'includes/partner-slider.php'; ?>
     
+    <?php include 'includes/e-certificates-section.php'; ?>
 
     
     <?php include 'includes/news-section.php'; ?>

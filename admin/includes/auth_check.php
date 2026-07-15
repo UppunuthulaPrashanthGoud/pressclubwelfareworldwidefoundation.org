@@ -143,7 +143,7 @@ if (!isLoggedIn()) {
     $login_page = SITE_URL . "/user-login.php";
     
     // Check if it's an admin-specific page
-    $admin_pages = ['settings.php', 'users-management.php', 'site_config.php'];
+    $admin_pages = ['settings.php', 'users-management.php', 'site_config.php', 'e_certificates.php'];
     $current_page = basename($_SERVER['PHP_SELF']);
     
     if (in_array($current_page, $admin_pages)) {
@@ -169,6 +169,7 @@ $page_permissions = [
     'events.php' => ['admin', 'coordinator'],
     'news.php' => ['admin', 'coordinator'],
     'gallery.php' => ['admin', 'coordinator'],
+    'e_certificates.php' => ['admin', 'coordinator'],
     
     // All authenticated users can access these
     'index.php' => ['admin', 'coordinator', 'member'],

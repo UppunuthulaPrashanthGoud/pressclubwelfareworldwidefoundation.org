@@ -59,6 +59,10 @@ require_once __DIR__ . '/auth_check.php';
                     <i class="fas fa-bullhorn"></i>
                     <span>Campaign Management</span>
                 </a>
+                <a href="<?php echo SITE_URL; ?>/admin/e_certificates.php" class="dropdown-item <?php echo basename($_SERVER['PHP_SELF']) == 'e_certificates.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-certificate"></i>
+                    <span>E-Certificates</span>
+                </a>
                 <a href="<?php echo SITE_URL; ?>/admin/ourworks.php" class="dropdown-item">
                     <i class="fas fa-briefcase"></i>
                     <span>Our Works</span>
