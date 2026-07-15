@@ -157,7 +157,7 @@ include 'navbar.php';
                                 </div>
                                 <div class="col-sm-8 text-center">
                                     <h3 class="header-main-title">OFFICIAL VERIFICATION RECORD</h3>
-                                    <p class="mb-0 subtitle-text">Gyandaan Honorary Doctorate Awards Foundation</p>
+                                    <p class="mb-0 subtitle-text">PRESS CLUB WELFARE WORLDWIDE FOUNDATION Honorary Doctorate Awards Foundation</p>
                                 </div>
                                 <div class="col-sm-2 text-center text-sm-end mt-2 mt-sm-0">
                                     <div class="verified-seal">

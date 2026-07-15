@@ -193,7 +193,7 @@ include 'navbar.php';
 
 <main class="container-fluid">
     <div class="text-center mt-4">
-        <h2>GYANDAAN HONORARY DOCTORATE AWARDS FOUNDATION</h2>
+        <h2>PRESS CLUB WELFARE WORLDWIDE FOUNDATION HONORARY DOCTORATE AWARDS FOUNDATION</h2>
         <h4 class="text-muted">Award Nomination Registration Form</h4>
     </div>
     
@@ -397,7 +397,7 @@ include 'navbar.php';
             </div>
             <div class="modal-body">
                 <h3>Nomination Submitted Successfully!</h3>
-                <p>Thank you for nominating for Gyandaan Honorary Doctorate Awards Foundation.</p>
+                <p>Thank you for nominating for PRESS CLUB WELFARE WORLDWIDE FOUNDATION Honorary Doctorate Awards Foundation.</p>
                 <div class="alert alert-primary mt-3">
                     Your Registration ID is: <br>
                     <strong id="display_reg_id" style="font-size: 24px;"></strong>
