@@ -24,22 +24,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $currentConfig = getSiteConfig(true);
         
         // Sanitize inputs WITHOUT encoding special chars (for database storage)
-        $site_title = sanitizeInput($_POST['site_title'], false);
-        $site_subtitle = sanitizeInput($_POST['site_subtitle'], false);
-        $meta_title = sanitizeInput($_POST['meta_title'], false);
-        $meta_description = sanitizeInput($_POST['meta_description'], false);
-        $meta_keywords = sanitizeInput($_POST['meta_keywords'], false);
-        $meta_author = sanitizeInput($_POST['meta_author'], false);
-        $address = sanitizeInput($_POST['address'], false);
-        $phone1 = sanitizeInput($_POST['phone1'], false);
-        $phone2 = !empty($_POST['phone2']) ? sanitizeInput($_POST['phone2'], false) : null;
-        $email = sanitizeInput($_POST['email'], false);
-        $working_hours = sanitizeInput($_POST['working_hours'], false);
-        $facebook_url = !empty($_POST['facebook_url']) ? sanitizeInput($_POST['facebook_url'], false) : '#';
-        $twitter_url = !empty($_POST['twitter_url']) ? sanitizeInput($_POST['twitter_url'], false) : '#';
-        $instagram_url = !empty($_POST['instagram_url']) ? sanitizeInput($_POST['instagram_url'], false) : '#';
-        $youtube_url = !empty($_POST['youtube_url']) ? sanitizeInput($_POST['youtube_url'], false) : '#';
-        $website_url = !empty($_POST['website_url']) ? sanitizeInput($_POST['website_url'], false) : SITE_URL;
+        $getOptionalInput = static function ($key) {
+            $value = sanitizeInput($_POST[$key] ?? '', false);
+            return $value === '' ? null : $value;
+        };
+        $getOptionalUrlInput = static function ($key) use ($getOptionalInput) {
+            $value = $getOptionalInput($key);
+            return $value === '#' ? null : $value;
+        };
+
+        // Keep an empty string for site_title because the database column is NOT NULL.
+        $site_title = sanitizeInput($_POST['site_title'] ?? '', false);
+        $site_subtitle = $getOptionalInput('site_subtitle');
+        $meta_title = $getOptionalInput('meta_title');
+        $meta_description = $getOptionalInput('meta_description');
+        $meta_keywords = $getOptionalInput('meta_keywords');
+        $meta_author = $getOptionalInput('meta_author');
+        $address = $getOptionalInput('address');
+        $phone1 = $getOptionalInput('phone1');
+        $phone2 = $getOptionalInput('phone2');
+        $email = $getOptionalInput('email');
+        $working_hours = $getOptionalInput('working_hours');
+        $facebook_url = $getOptionalUrlInput('facebook_url');
+        $twitter_url = $getOptionalUrlInput('twitter_url');
+        $instagram_url = $getOptionalUrlInput('instagram_url');
+        $youtube_url = $getOptionalUrlInput('youtube_url');
+        $website_url = $getOptionalUrlInput('website_url');
         
         // Handle map embed URL
         $map_embed_url = !empty($_POST['map_embed_url']) ? trim($_POST['map_embed_url']) : null;
@@ -61,15 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $header_logo = $currentConfig['header_logo'] ?? null;
         $site_icon = $currentConfig['site_icon'] ?? null;
 
-        // Validate required fields
-        if (empty($error)) {
-            if (empty($site_title) || empty($site_subtitle) || empty($meta_title) || 
-                empty($meta_description) || empty($meta_keywords) || empty($meta_author) || 
-                empty($address) || empty($phone1) || empty($email) || empty($working_hours)) {
-                $error = "Please fill in all required fields.";
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $error = "Invalid email address.";
-            }
+        // All fields are optional; only validate formats when values are provided.
+        if (empty($error) && !empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error = "Invalid email address.";
         }
 
         // Handle file uploads
@@ -130,16 +134,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         if (empty($error)) {
             try {
                 $stmt = $db->prepare("
-                    UPDATE site_config 
-                    SET site_title = ?, site_subtitle = ?, meta_title = ?, meta_description = ?, 
-                        meta_keywords = ?, meta_author = ?, address = ?, phone1 = ?, phone2 = ?, 
-                        email = ?, working_hours = ?, facebook_url = ?, twitter_url = ?, 
-                        instagram_url = ?, youtube_url = ?, footer_logo = ?, header_logo = ?, 
-                        site_icon = ?, website_url = ?, map_embed_url = ?, updated_at = NOW() 
-                    WHERE id = 1
+                    INSERT INTO site_config (
+                        id, site_title, site_subtitle, meta_title, meta_description,
+                        meta_keywords, meta_author, address, phone1, phone2,
+                        email, working_hours, facebook_url, twitter_url,
+                        instagram_url, youtube_url, footer_logo, header_logo,
+                        site_icon, website_url, map_embed_url, updated_at
+                    ) VALUES (
+                        1, ?, ?, ?, ?,
+                        ?, ?, ?, ?, ?,
+                        ?, ?, ?, ?,
+                        ?, ?, ?, ?,
+                        ?, ?, ?, NOW()
+                    )
+                    ON DUPLICATE KEY UPDATE
+                        site_title = ?, site_subtitle = ?, meta_title = ?, meta_description = ?,
+                        meta_keywords = ?, meta_author = ?, address = ?, phone1 = ?, phone2 = ?,
+                        email = ?, working_hours = ?, facebook_url = ?, twitter_url = ?,
+                        instagram_url = ?, youtube_url = ?, footer_logo = ?, header_logo = ?,
+                        site_icon = ?, website_url = ?, map_embed_url = ?, updated_at = NOW()
                 ");
                 
                 $result = $stmt->execute([
+                    $site_title, $site_subtitle, $meta_title, $meta_description, 
+                    $meta_keywords, $meta_author, $address, $phone1, $phone2, 
+                    $email, $working_hours, $facebook_url, $twitter_url, 
+                    $instagram_url, $youtube_url, $footer_logo, $header_logo, 
+                    $site_icon, $website_url, $map_embed_url,
                     $site_title, $site_subtitle, $meta_title, $meta_description, 
                     $meta_keywords, $meta_author, $address, $phone1, $phone2, 
                     $email, $working_hours, $facebook_url, $twitter_url, 
@@ -175,6 +196,11 @@ if (isset($_GET['success'])) {
 // Fetch current site configuration (AFTER processing form)
 try {
     $siteConfig = getSiteConfig(true); // Force refresh to get latest data
+    foreach (['facebook_url', 'twitter_url', 'instagram_url', 'youtube_url', 'website_url'] as $urlField) {
+        if (($siteConfig[$urlField] ?? null) === '#') {
+            $siteConfig[$urlField] = '';
+        }
+    }
 } catch (Exception $e) {
     $error = "Error loading site configuration: " . $e->getMessage();
     logError('Site config fetch error: ' . $e->getMessage());
@@ -231,14 +257,14 @@ include 'includes/header.php';
                     <h5 class="mb-3"><i class="fas fa-info-circle"></i> Basic Information</h5>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="site_title" class="form-label">Site Title <span class="text-danger">*</span></label>
+                            <label for="site_title" class="form-label">Site Title</label>
                             <input type="text" class="form-control" id="site_title" name="site_title" 
-                                   value="<?php echo htmlspecialchars($siteConfig['site_title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+                                   value="<?php echo htmlspecialchars($siteConfig['site_title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <div class="col-md-6">
-                            <label for="site_subtitle" class="form-label">Site Subtitle <span class="text-danger">*</span></label>
+                            <label for="site_subtitle" class="form-label">Site Subtitle</label>
                             <input type="text" class="form-control" id="site_subtitle" name="site_subtitle" 
-                                   value="<?php echo htmlspecialchars($siteConfig['site_subtitle'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+                                   value="<?php echo htmlspecialchars($siteConfig['site_subtitle'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                     </div>
                     
@@ -246,26 +272,26 @@ include 'includes/header.php';
                     <h5 class="mb-3 mt-4"><i class="fas fa-tags"></i> SEO Meta Information</h5>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="meta_title" class="form-label">Meta Title <span class="text-danger">*</span></label>
+                            <label for="meta_title" class="form-label">Meta Title</label>
                             <input type="text" class="form-control" id="meta_title" name="meta_title" 
-                                   value="<?php echo htmlspecialchars($siteConfig['meta_title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+                                   value="<?php echo htmlspecialchars($siteConfig['meta_title'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <div class="col-md-6">
-                            <label for="meta_author" class="form-label">Meta Author <span class="text-danger">*</span></label>
+                            <label for="meta_author" class="form-label">Meta Author</label>
                             <input type="text" class="form-control" id="meta_author" name="meta_author" 
-                                   value="<?php echo htmlspecialchars($siteConfig['meta_author'] ?? 'Rawbit Foundation', ENT_QUOTES, 'UTF-8'); ?>" required>
+                                   value="<?php echo htmlspecialchars($siteConfig['meta_author'] ?? 'Rawbit Foundation', ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                     </div>
                     
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="meta_description" class="form-label">Meta Description <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="meta_description" name="meta_description" rows="3" required><?php echo htmlspecialchars($siteConfig['meta_description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
+                            <label for="meta_description" class="form-label">Meta Description</label>
+                            <textarea class="form-control" id="meta_description" name="meta_description" rows="3"><?php echo htmlspecialchars($siteConfig['meta_description'] ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
                         </div>
                         <div class="col-md-6">
-                            <label for="meta_keywords" class="form-label">Meta Keywords <span class="text-danger">*</span></label>
+                            <label for="meta_keywords" class="form-label">Meta Keywords</label>
                             <textarea class="form-control" id="meta_keywords" name="meta_keywords" rows="3" 
-                                      placeholder="keyword1, keyword2, keyword3" required><?php echo htmlspecialchars($siteConfig['meta_keywords'] ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
+                                      placeholder="keyword1, keyword2, keyword3"><?php echo htmlspecialchars($siteConfig['meta_keywords'] ?? '', ENT_QUOTES, 'UTF-8'); ?></textarea>
                             <small class="text-muted">Comma-separated keywords</small>
                         </div>
                     </div>
@@ -274,22 +300,22 @@ include 'includes/header.php';
                     <h5 class="mb-3 mt-4"><i class="fas fa-address-book"></i> Contact Information</h5>
                     <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="address" class="form-label">Address <span class="text-danger">*</span></label>
+                            <label for="address" class="form-label">Address</label>
                             <input type="text" class="form-control" id="address" name="address" 
-                                   value="<?php echo htmlspecialchars($siteConfig['address'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+                                   value="<?php echo htmlspecialchars($siteConfig['address'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                     </div>
                     
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email" 
-                                   value="<?php echo htmlspecialchars($siteConfig['email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+                                   value="<?php echo htmlspecialchars($siteConfig['email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <div class="col-md-4">
-                            <label for="phone1" class="form-label">Primary Phone <span class="text-danger">*</span></label>
+                            <label for="phone1" class="form-label">Primary Phone</label>
                             <input type="text" class="form-control" id="phone1" name="phone1" 
-                                   value="<?php echo htmlspecialchars($siteConfig['phone1'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+                                   value="<?php echo htmlspecialchars($siteConfig['phone1'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <div class="col-md-4">
                             <label for="phone2" class="form-label">Secondary Phone</label>
@@ -300,14 +326,14 @@ include 'includes/header.php';
                     
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="working_hours" class="form-label">Working Hours <span class="text-danger">*</span></label>
+                            <label for="working_hours" class="form-label">Working Hours</label>
                             <input type="text" class="form-control" id="working_hours" name="working_hours" 
-                                   value="<?php echo htmlspecialchars($siteConfig['working_hours'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+                                   value="<?php echo htmlspecialchars($siteConfig['working_hours'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                         <div class="col-md-6">
-                            <label for="website_url" class="form-label">Website URL <span class="text-danger">*</span></label>
+                            <label for="website_url" class="form-label">Website URL</label>
                             <input type="url" class="form-control" id="website_url" name="website_url" 
-                                   value="<?php echo htmlspecialchars($siteConfig['website_url'] ?? SITE_URL, ENT_QUOTES, 'UTF-8'); ?>" required>
+                                   value="<?php echo htmlspecialchars($siteConfig['website_url'] ?? SITE_URL, ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
                     </div>
                     
