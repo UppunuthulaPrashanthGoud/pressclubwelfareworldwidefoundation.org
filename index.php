@@ -87,6 +87,7 @@ include 'navbar.php';
 
 <main>
     <?php include 'includes/hero-slider.php'; ?>
+    <?php include 'includes/e-certificates-section.php'; ?>
     <?php include 'includes/gallery-section.php'; ?>
     <?php include 'includes/about-section.php'; ?>
 
@@ -128,9 +129,6 @@ include 'navbar.php';
 
     <!-- PARTNER SLIDER -->
     <?php include 'includes/partner-slider.php'; ?>
-    
-    <?php include 'includes/e-certificates-section.php'; ?>
-
     
     <?php include 'includes/news-section.php'; ?>
 </main>
