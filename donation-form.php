@@ -1,5 +1,6 @@
 <?php 
 require_once 'config/config.php';
+require_once 'includes/neodove_integration.php';
 // require_once 'config/razorpay-order-api.php'; // COMMENTED: Uncomment when enabling online payments
 
 // Database connection
@@ -100,6 +101,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $amount, $photo, $order_id, $payment_id, $payment_proof, $status, $payment_method, $user_id
         ]);
         $donation_id = $db->lastInsertId();
+
+          // Send to Neodove
+          sendToNeodove($name, $mobile, $email, 'Donation', $amount);
         
         /* COMMENTED: Email sending for completed donations - Uncomment when enabling online payments
         if ($status === 'completed' && !empty($email)) {

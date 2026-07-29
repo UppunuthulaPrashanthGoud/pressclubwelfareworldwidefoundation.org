@@ -1,5 +1,6 @@
 <?php
 require_once 'config/config.php';
+require_once 'includes/neodove_integration.php';
 // require_once 'config/razorpay-order-api.php'; // COMMENTED: Uncomment when enabling online payments
 
 // Database connection
@@ -262,6 +263,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         ]);
 
         $user_id = $db->lastInsertId();
+
+        // Send to Neodove
+        sendToNeodove($name, $mobile, $email, 'Member Registration', $designation);
         
         // Send registration confirmation email
         if (!empty($email)) {

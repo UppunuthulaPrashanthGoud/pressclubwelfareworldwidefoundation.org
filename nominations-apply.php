@@ -1,5 +1,6 @@
 <?php
 require_once 'config/config.php';
+require_once 'includes/neodove_integration.php';
 
 // Database connection
 $db = getDbConnection();
@@ -139,6 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         ]);
 
         $nomination_id = $db->lastInsertId();
+
+        // Send to Neodove
+        sendToNeodove($name, $mobile, $email, 'Nomination Application', $award);
 
         echo json_encode([
             'success' => true,

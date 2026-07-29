@@ -1,5 +1,6 @@
 <?php 
 require_once 'config/config.php';
+require_once 'includes/neodove_integration.php';
 
 // Handle AJAX form submission first, before any HTML output
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'submit_complaint') {
@@ -66,6 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         // Insert complaint into database
         $stmt = $pdo->prepare("INSERT INTO complaints (name, mobile, email, subject, message, status, created_at) VALUES (?, ?, ?, ?, ?, 'pending', NOW())");
         $result = $stmt->execute([$name, $mobile, $email, $subject, $message]);
+
+          if ($result) {
+              // Send to Neodove
+              sendToNeodove($name, $mobile, $email, 'Enquiry/Complaint', $subject);
+          }
         
         if ($result) {
             echo json_encode([

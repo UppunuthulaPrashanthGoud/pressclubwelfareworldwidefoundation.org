@@ -1,5 +1,6 @@
 <?php
 require_once 'config/config.php';
+require_once 'includes/neodove_integration.php';
 
 // Database connection
 $db = getDbConnection();
@@ -49,6 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         // Insert participation data
         $stmt = $db->prepare("INSERT INTO participations (event_id, name, mobile, city, is_ngo, ngo_id, donation_detail, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
         $stmt->execute([$event_id, $name, $mobile, $city, $is_ngo, $ngo_id ?: null, $donation_detail ?: null]);
+
+        // Send to Neodove
+        sendToNeodove($name, $mobile, '', 'Event Participation', $event_id);
 
         header('Content-Type: application/json');
         echo json_encode(['success' => true, 'message' => 'Participation recorded successfully.']);
