@@ -33,7 +33,7 @@ $page_meta_image = !empty($article['image']) ? SITE_URL . '/img/' . $article['im
 $page_url = SITE_URL . '/news-details.php?id=' . $article['id'];
 
 // Fetch recent news for sidebar (limit to 5)
-$stmt = $db->prepare("SELECT id, title, image, created_at FROM news WHERE status = 'active' AND id != ? ORDER BY created_at DESC LIMIT 5");
+$stmt = $db->prepare("SELECT id, title, image, created_at FROM news WHERE status = 'active' AND id != ? ORDER BY created_at DESC");
 $stmt->execute([$id]);
 $recentNews = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($recentNews as &$news) {

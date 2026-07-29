@@ -1,6 +1,6 @@
 <?php
 // Get sponsors for homepage - limit to 4
-$stmt = $db->prepare("SELECT * FROM sponsers ORDER BY created_at DESC LIMIT 4");
+$stmt = $db->prepare("SELECT * FROM sponsers ORDER BY created_at DESC");
 $stmt->execute();
 $homepage_sponsors = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>

@@ -5,7 +5,7 @@
  */
 
 // Get works for homepage - limit to 6
-$stmt = $db->prepare("SELECT * FROM ourworks ORDER BY created_at DESC LIMIT 6");
+$stmt = $db->prepare("SELECT * FROM ourworks ORDER BY created_at DESC");
 $stmt->execute();
 $homepage_works = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>

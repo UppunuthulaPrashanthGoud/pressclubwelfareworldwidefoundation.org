@@ -22,12 +22,12 @@ $stmt->execute();
 $about_content = $stmt->fetch();
 
 // Get recent news for slider
-$stmt = $db->prepare("SELECT id, title, image, created_at FROM news WHERE status = 'active' ORDER BY created_at DESC LIMIT 10");
+$stmt = $db->prepare("SELECT id, title, image, created_at FROM news WHERE status = 'active' ORDER BY created_at DESC");
 $stmt->execute();
 $news_slider = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Get news for ticker (more recent news items)
-$stmt = $db->prepare("SELECT id, title, created_at FROM news WHERE status = 'active' ORDER BY created_at DESC LIMIT 20");
+$stmt = $db->prepare("SELECT id, title, created_at FROM news WHERE status = 'active' ORDER BY created_at DESC");
 $stmt->execute();
 $news_ticker = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -48,12 +48,12 @@ $stmt->execute();
 $aboutSections = $stmt->fetchAll();
 
 // Get youtube videos
-$stmt = $db->prepare("SELECT * FROM youtube_videos WHERE status = 'active' ORDER BY created_at DESC LIMIT 6");
+$stmt = $db->prepare("SELECT * FROM youtube_videos WHERE status = 'active' ORDER BY created_at DESC");
 $stmt->execute();
 $youtube_videos = $stmt->fetchAll();
 
 // Get gallery images
-$stmt = $db->prepare("SELECT * FROM gallery ORDER BY id DESC LIMIT 6");
+$stmt = $db->prepare("SELECT * FROM gallery ORDER BY id DESC");
 $stmt->execute();
 $gallery_images = $stmt->fetchAll();
 

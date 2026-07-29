@@ -6,7 +6,7 @@ try {
     
     // Get upcoming events (limit to 3 for homepage)
     $currentDate = date('Y-m-d');
-    $stmt = $db->prepare("SELECT * FROM events WHERE status = 'active' AND event_date >= ? ORDER BY event_date ASC, event_time ASC LIMIT 3");
+    $stmt = $db->prepare("SELECT * FROM events WHERE status = 'active' AND event_date >= ? ORDER BY event_date ASC, event_time ASC");
     $stmt->execute([$currentDate]);
     $upcomingEvents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

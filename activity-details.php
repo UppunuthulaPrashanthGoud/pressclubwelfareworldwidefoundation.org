@@ -26,7 +26,7 @@ $activity['title'] = htmlspecialchars($activity['title']);
 $activity['description'] = htmlspecialchars($activity['description'] ?? 'No description available.');
 
 // Fetch recent activities for sidebar (limit to 5, exclude current)
-$stmt = $db->prepare("SELECT id, title, image, activity_date FROM recent_activities WHERE status = 'active' AND id != ? ORDER BY activity_date DESC LIMIT 5");
+$stmt = $db->prepare("SELECT id, title, image, activity_date FROM recent_activities WHERE status = 'active' AND id != ? ORDER BY activity_date DESC");
 $stmt->execute([$id]);
 $recentActivities = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($recentActivities as &$act) {

@@ -7,7 +7,7 @@ if (!isset($db)) {
 
 try {
     // Fetch recent active honorary awards
-    $stmt = $db->prepare("SELECT award_no, recipient_name, award_name, category, photo_path FROM honorary_awards WHERE status = 'active' ORDER BY award_date DESC, created_at DESC LIMIT 6");
+    $stmt = $db->prepare("SELECT award_no, recipient_name, award_name, category, photo_path FROM honorary_awards WHERE status = 'active' ORDER BY award_date DESC, created_at DESC");
     $stmt->execute();
     $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

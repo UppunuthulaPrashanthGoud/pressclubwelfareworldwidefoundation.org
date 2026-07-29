@@ -32,7 +32,7 @@ try {
         $stats['pending_approvals'] = $stmt->fetch()['total'];
         
         // Recent activities for admin
-        $stmt = $db->prepare("SELECT * FROM recent_activities WHERE status = 'active' ORDER BY activity_date DESC LIMIT 5");
+        $stmt = $db->prepare("SELECT * FROM recent_activities WHERE status = 'active' ORDER BY activity_date DESC");
         $stmt->execute();
         $recent_activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
@@ -48,7 +48,7 @@ try {
         $stats['total_news'] = $stmt->fetch()['total'];
         
         // Recent activities for coordinator
-        $stmt = $db->prepare("SELECT * FROM recent_activities WHERE status = 'active' ORDER BY activity_date DESC LIMIT 3");
+        $stmt = $db->prepare("SELECT * FROM recent_activities WHERE status = 'active' ORDER BY activity_date DESC");
         $stmt->execute();
         $recent_activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
@@ -66,7 +66,7 @@ try {
     
     // Recent members (admin and coordinator only)
     if (isAdmin() || isCoordinator()) {
-        $stmt = $db->prepare("SELECT * FROM users WHERE status = 'approved' ORDER BY created_at DESC LIMIT 5");
+        $stmt = $db->prepare("SELECT * FROM users WHERE status = 'approved' ORDER BY created_at DESC");
         $stmt->execute();
         $recent_members = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {

@@ -11,7 +11,7 @@ $facebook_url = $site_config['facebook_url'] ?? '';
 $site_url = $site_config['website_url'] ?? SITE_URL; // Fallback to defined SITE_URL if needed
 
 // Get sliders
-$stmt = $db->prepare("SELECT * FROM sliders WHERE status = 'active' ORDER BY sort_order ASC LIMIT 10");
+$stmt = $db->prepare("SELECT * FROM sliders WHERE status = 'active' ORDER BY sort_order ASC");
 $stmt->execute();
 $sliders = $stmt->fetchAll();
 
@@ -26,22 +26,22 @@ $stmt->execute();
 $president_message = $stmt->fetch();
 
 // Get objectives
-$stmt = $db->prepare("SELECT * FROM objectives WHERE status = 'active' ORDER BY sort_order ASC LIMIT 6");
+$stmt = $db->prepare("SELECT * FROM objectives WHERE status = 'active' ORDER BY sort_order ASC");
 $stmt->execute();
 $objectives = $stmt->fetchAll();
 
 // Get youtube videos
-$stmt = $db->prepare("SELECT * FROM youtube_videos WHERE status = 'active' ORDER BY created_at DESC LIMIT 6");
+$stmt = $db->prepare("SELECT * FROM youtube_videos WHERE status = 'active' ORDER BY created_at DESC");
 $stmt->execute();
 $youtube_videos = $stmt->fetchAll();
 
 // Get gallery images
-$stmt = $db->prepare("SELECT * FROM gallery WHERE status = 'active' ORDER BY created_at DESC LIMIT 6");
+$stmt = $db->prepare("SELECT * FROM gallery WHERE status = 'active' ORDER BY created_at DESC");
 $stmt->execute();
 $gallery_images = $stmt->fetchAll();
 
 // Get testimonials
-$stmt = $db->prepare("SELECT * FROM testimonials WHERE status = 'active' ORDER BY created_at DESC LIMIT 6");
+$stmt = $db->prepare("SELECT * FROM testimonials WHERE status = 'active' ORDER BY created_at DESC");
 $stmt->execute();
 $testimonials = $stmt->fetchAll();
 
@@ -54,30 +54,29 @@ $stmt = $db->prepare("
         AND u.designation = md.designation 
     WHERE u.status = 'approved' 
         AND (md.status = 'active' OR md.status IS NULL)
-    ORDER BY u.created_at DESC 
-    LIMIT 5
+    ORDER BY u.created_at DESC
 ");
 $stmt->execute();
 $recent_users = $stmt->fetchAll();
 
 // Get management team
-$stmt = $db->prepare("SELECT * FROM team_members WHERE member_type = 'management' AND status = 'active' ORDER BY sort_order ASC, created_at DESC LIMIT 5");
+$stmt = $db->prepare("SELECT * FROM team_members WHERE member_type = 'management' AND status = 'active' ORDER BY sort_order ASC, created_at DESC");
 $stmt->execute();
 $management_team = $stmt->fetchAll();
 
 // Get recent activities
-$stmt = $db->prepare("SELECT * FROM recent_activities WHERE status = 'active' ORDER BY created_at DESC LIMIT 5");
+$stmt = $db->prepare("SELECT * FROM recent_activities WHERE status = 'active' ORDER BY created_at DESC");
 $stmt->execute();
 $recent_activities = $stmt->fetchAll();
 
 // Get recent news
-$stmt = $db->prepare("SELECT * FROM news WHERE status = 'active' ORDER BY created_at DESC LIMIT 6");
+$stmt = $db->prepare("SELECT * FROM news WHERE status = 'active' ORDER BY created_at DESC");
 $stmt->execute();
 $news = $stmt->fetchAll();
 
 // Get upcoming events
 $currentDate = date('Y-m-d');
-$stmt = $db->prepare("SELECT * FROM events WHERE status = ? AND event_date >= ? ORDER BY event_date ASC, event_time ASC LIMIT 5");
+$stmt = $db->prepare("SELECT * FROM events WHERE status = ? AND event_date >= ? ORDER BY event_date ASC, event_time ASC");
 $stmt->execute(['active', $currentDate]);
 $upcoming_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

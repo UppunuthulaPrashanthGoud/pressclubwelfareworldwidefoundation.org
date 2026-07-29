@@ -5,7 +5,6 @@ $stmt = $db->prepare("
     FROM news
     WHERE status = 'active'
     ORDER BY created_at DESC, id DESC
-    LIMIT 6
 ");
 $stmt->execute();
 $recentNewsArticles = $stmt->fetchAll(PDO::FETCH_ASSOC);

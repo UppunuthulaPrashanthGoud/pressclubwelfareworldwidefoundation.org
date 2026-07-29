@@ -31,7 +31,7 @@ $page_meta_image = !empty($work['image']) ? SITE_URL . '/img/ourworks/' . $work[
 $page_url = SITE_URL . '/ourworks-details.php?id=' . $work['id'];
 
 // Fetch other works for sidebar (limit to 5)
-$stmt = $db->prepare("SELECT id, name, image, created_at FROM ourworks WHERE id != ? ORDER BY created_at DESC LIMIT 5");
+$stmt = $db->prepare("SELECT id, name, image, created_at FROM ourworks WHERE id != ? ORDER BY created_at DESC");
 $stmt->execute([$id]);
 $otherWorks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($otherWorks as &$item) {

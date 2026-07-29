@@ -24,7 +24,7 @@ try {
     }
     
     // Fetch related notices (same category or recent)
-    $stmt = $db->prepare("SELECT * FROM notices WHERE id != :id AND status = 'active' ORDER BY date DESC LIMIT 5");
+    $stmt = $db->prepare("SELECT * FROM notices WHERE id != :id AND status = 'active' ORDER BY date DESC");
     $stmt->bindParam(':id', $notice_id);
     $stmt->execute();
     $related_notices = $stmt->fetchAll(PDO::FETCH_ASSOC);
