@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'config/config.php';
+require_once 'includes/neodove_integration.php';
 
 // Database connection
 $db = getDbConnection();
@@ -35,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     try {
         $stmt = $db->prepare("INSERT INTO contact_messages (name, mobile, email, topic, description, created_at, status) VALUES (?, ?, ?, ?, ?, NOW(), 'pending')");
         $stmt->execute([$name, $mobile, $email, $topic, $description]);
+
+          // Send to Neodove
+          sendToNeodove($name, $mobile, $email, 'Contact Us', $topic);
         echo json_encode(['success' => true]);
         exit;
     } catch (PDOException $e) {
