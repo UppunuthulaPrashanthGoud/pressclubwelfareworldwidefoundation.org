@@ -122,8 +122,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             address, state, district, pincode, 
             is_online, is_offline, is_ecert,
             profile_image, document_one, document_two, document_three, document_four,
-            user_type, status, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            status, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $db->prepare($sql);
         $stmt->execute([
@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $uploaded_files['profile_pic'], $uploaded_files['document_one'], 
             $uploaded_files['document_two'], $uploaded_files['document_three'], 
             $uploaded_files['document_four'],
-            $user_type, $status, $created_at
+            $status, $created_at
         ]);
 
         $nomination_id = $db->lastInsertId();
