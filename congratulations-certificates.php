@@ -33,12 +33,8 @@ include 'navbar.php';
             <div class="row g-4">
                 <?php foreach ($congratulationsCertificates as $index => $certificate): ?>
                     <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="<?php echo $index * 80; ?>">
-                        <a
-                            href="<?php echo SITE_URL; ?>/congratulations-certificate-view.php?id=<?php echo (int) $certificate['id']; ?>"
-                            class="text-decoration-none"
-                            target="_blank"
-                            rel="noopener"
-                        >
+                        <a href="<?php echo SITE_URL; ?>/congratulations-certificate-view.php?id=<?php echo (int) $certificate['id']; ?>"
+                            class="text-decoration-none" target="_blank" rel="noopener">
                             <div class="card-custom congratulations-certificate-list-card h-100">
                                 <div class="congratulations-certificate-list-preview">
                                     <?php if (congratulationsCertificateIsPdf($certificate)): ?>
@@ -47,22 +43,22 @@ include 'navbar.php';
                                             <span>PDF Download</span>
                                         </div>
                                     <?php else: ?>
-                                        <img
-                                            src="<?php echo htmlspecialchars(congratulationsCertificateGetUrl($certificate), ENT_QUOTES, 'UTF-8'); ?>"
+                                        <img src="<?php echo htmlspecialchars(congratulationsCertificateGetUrl($certificate), ENT_QUOTES, 'UTF-8'); ?>"
                                             alt="<?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?>"
-                                            class="congratulations-certificate-list-image"
-                                            loading="lazy"
-                                        >
+                                            class="congratulations-certificate-list-image" loading="lazy">
                                     <?php endif; ?>
                                 </div>
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="badge <?php echo congratulationsCertificateIsPdf($certificate) ? 'bg-danger' : 'bg-success'; ?>">
+                                        <span
+                                            class="badge <?php echo congratulationsCertificateIsPdf($certificate) ? 'bg-danger' : 'bg-success'; ?>">
                                             <?php echo congratulationsCertificateIsPdf($certificate) ? 'PDF' : 'IMAGE'; ?>
                                         </span>
-                                        <span class="small text-muted"><?php echo date('d M Y', strtotime($certificate['created_at'])); ?></span>
+                                        <span
+                                            class="small text-muted"><?php echo date('d M Y', strtotime($certificate['created_at'])); ?></span>
                                     </div>
-                                    <h5 class="card-title"><?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?></h5>
+                                    <h5 class="card-title">
+                                        <?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?></h5>
                                     <p class="mb-0 text-muted">
                                         <?php echo congratulationsCertificateIsPdf($certificate) ? 'Click to download the PDF certificate.' : 'Click to open the full-size certificate image.'; ?>
                                     </p>
@@ -77,66 +73,65 @@ include 'navbar.php';
 </div>
 
 <style>
-.page-header-inline .section-heading {
-    text-align: left;
-}
-
-.page-header-inline .section-heading span::after {
-    left: 0;
-    transform: none;
-}
-
-.congratulations-certificate-list-card {
-    overflow: hidden;
-    border-radius: 16px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.congratulations-certificate-list-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
-}
-
-.congratulations-certificate-list-preview {
-    height: 280px;
-    background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(255, 255, 255, 0.9));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.congratulations-certificate-list-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.congratulations-certificate-list-pdf {
-    color: #dc3545;
-    font-weight: 700;
-    text-align: center;
-}
-
-.congratulations-certificate-list-pdf i {
-    display: block;
-    font-size: 4rem;
-    margin-bottom: 1rem;
-}
-
-.congratulations-certificate-list-card .card-title {
-    color: var(--primary-color, #0d6efd);
-    font-family: 'Bakbak One', sans-serif;
-    font-size: 1.2rem;
-    line-height: 1.45;
-}
-
-@media (max-width: 767.98px) {
-    .congratulations-certificate-list-preview {
-        height: 230px;
+    .page-header-inline .section-heading {
+        text-align: left;
     }
-}
+
+    .page-header-inline .section-heading span::after {
+        left: 0;
+        transform: none;
+    }
+
+    .congratulations-certificate-list-card {
+        overflow: hidden;
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .congratulations-certificate-list-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .congratulations-certificate-list-preview {
+        background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(255, 255, 255, 0.9));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .congratulations-certificate-list-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .congratulations-certificate-list-pdf {
+        color: #dc3545;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .congratulations-certificate-list-pdf i {
+        display: block;
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .congratulations-certificate-list-card .card-title {
+        color: var(--primary-color, #0d6efd);
+        font-family: 'Bakbak One', sans-serif;
+        font-size: 1.2rem;
+        line-height: 1.45;
+    }
+
+    @media (max-width: 767.98px) {
+        .congratulations-certificate-list-preview {
+            height: 230px;
+        }
+    }
 </style>
 
 <?php include 'footer.php'; ?>
