@@ -70,13 +70,34 @@ $awardContent = [
     'website' => 'http://honorarydoctorateawards.org/'
 ];
 
+function getAwardPrefixAndStart() {
+    $map = [
+        'GHDAF' => ['GHDAF/', 7001],
+        'WCWF'  => ['WCWF/', 3001],
+        'WPEWF' => ['WPEWF/', 9003],
+        'PCWWF' => ['PCWWF/', 7003]
+    ];
+    $shortName = defined('ORGANIZATION_NAME_SHORT') ? ORGANIZATION_NAME_SHORT : 'DEFAULT';
+    return $map[$shortName] ?? ['PREFIX/', 1001];
+}
+
 // Function to generate unique award number
 function generateAwardNumber() {
     global $db;
-    $stmt = $db->query("SELECT award_no FROM honorary_awards ORDER BY id DESC LIMIT 1");
+    list($prefix, $start) = getAwardPrefixAndStart();
+    
+    $stmt = $db->prepare("SELECT award_no FROM honorary_awards WHERE award_no LIKE ? ORDER BY id DESC LIMIT 1");
+    $stmt->execute([$prefix . '%']);
     $lastAward = $stmt->fetch();
-    $newNumber = $lastAward ? ((int) substr($lastAward['award_no'], 3)) + 1 : 1;
-    return 'HA' . str_pad($newNumber, 6, '0', STR_PAD_LEFT);
+    
+    if ($lastAward) {
+        $parts = explode('/', $lastAward['award_no']);
+        $lastNum = isset($parts[1]) ? (int)$parts[1] : ($start - 1);
+        $newNumber = $lastNum + 1;
+    } else {
+        $newNumber = $start;
+    }
+    return $prefix . $newNumber;
 }
 
 // Handle form submission (Same as Honorary Awards)
@@ -525,7 +546,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 pdf.addImage(imgData, 'JPEG', 0, 0, 3375, 3375);
-                pdf.save(`Congratulations_${awardData.award_no}.pdf`);
+                pdf.save(`Congratulations_${awardData.award_no.replace(/\//g, '-')}.pdf`);
                 
                 document.body.removeChild(container);
             } catch (err) {

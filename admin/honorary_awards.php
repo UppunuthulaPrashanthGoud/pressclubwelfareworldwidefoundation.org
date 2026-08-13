@@ -90,40 +90,53 @@ try {
     $masterCategories = ['Education Excellence', 'Social Service', 'Healthcare', 'Literature', 'Arts & Culture', 'Science & Technology', 'Business Leadership', 'Sports', 'Environmental Conservation', 'Other']; 
 }
 
+function getAwardPrefixAndStart() {
+    $map = [
+        'GHDAF' => ['GHDAF/', 7001],
+        'WCWF'  => ['WCWF/', 3001],
+        'WPEWF' => ['WPEWF/', 9003],
+        'PCWWF' => ['PCWWF/', 7003]
+    ];
+    $shortName = defined('ORGANIZATION_NAME_SHORT') ? ORGANIZATION_NAME_SHORT : 'DEFAULT';
+    return $map[$shortName] ?? ['PREFIX/', 1001];
+}
+
 // Function to generate unique award number
 function generateAwardNumber() {
     global $db;
-    $stmt = $db->query("SELECT award_no FROM honorary_awards ORDER BY id DESC LIMIT 1");
+    list($prefix, $start) = getAwardPrefixAndStart();
+    
+    $stmt = $db->prepare("SELECT award_no FROM honorary_awards WHERE award_no LIKE ? ORDER BY id DESC LIMIT 1");
+    $stmt->execute([$prefix . '%']);
     $lastAward = $stmt->fetch();
-    $newNumber = $lastAward ? ((int) substr($lastAward['award_no'], 3)) + 1 : 1;
-    return 'HA' . str_pad($newNumber, 6, '0', STR_PAD_LEFT);
+    
+    if ($lastAward) {
+        $parts = explode('/', $lastAward['award_no']);
+        $lastNum = isset($parts[1]) ? (int)$parts[1] : ($start - 1);
+        $newNumber = $lastNum + 1;
+    } else {
+        $newNumber = $start;
+    }
+    return $prefix . $newNumber;
 }
 
 // Function to generate unique registration number using short name from config
 function generateRegistrationNumber() {
     global $db;
+    list($prefix, $start) = getAwardPrefixAndStart();
     
-    // Get the organization short name from config
-    $shortName = ORGANIZATION_NAME_SHORT; // e.g., "WPEWF"
-    $currentYear = date('Y'); // e.g., "2026"
-    
-    // Get the last registration number for this year
-    $pattern = $shortName . '/' . $currentYear . '/%';
     $stmt = $db->prepare("SELECT registration_no FROM honorary_awards WHERE registration_no LIKE ? ORDER BY id DESC LIMIT 1");
-    $stmt->execute([$pattern]);
-    $lastRegistration = $stmt->fetch();
+    $stmt->execute([$prefix . '%']);
+    $lastReg = $stmt->fetch();
     
-    // Extract the sequential number and increment it
-    if ($lastRegistration) {
-        $parts = explode('/', $lastRegistration['registration_no']);
-        $lastNumber = isset($parts[2]) ? (int)$parts[2] : 0;
-        $newNumber = $lastNumber + 1;
+    if ($lastReg) {
+        $parts = explode('/', $lastReg['registration_no']);
+        $lastNum = isset($parts[1]) ? (int)$parts[1] : ($start - 1);
+        $newNumber = $lastNum + 1;
     } else {
-        $newNumber = 1;
+        $newNumber = $start;
     }
-    
-    // Format: WPEWF/2026/0001
-    return $shortName . '/' . $currentYear . '/' . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
+    return $prefix . $newNumber;
 }
 
 // Handle form submission
@@ -956,7 +969,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdf.addImage(imgData, 'JPEG', 0, 0, 1419, 2125);
                 console.log('PDF created');
                 
-                const filename = `${awardData.award_no}_${awardData.recipient_name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+                const filename = `${awardData.award_no.replace(/\//g, '-')}_${awardData.recipient_name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
                 pdf.save(filename);
                 console.log('PDF saved as', filename);
                 
