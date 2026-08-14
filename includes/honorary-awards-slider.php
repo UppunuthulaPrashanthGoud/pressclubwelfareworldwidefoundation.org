@@ -48,7 +48,7 @@ $awardSlides = array_chunk($awards, 3);
                                     
                                     <!-- Award Title -->
                                     <div class="award-main-title">
-                                        HONORARY DOCTORATE AWARD
+                                        ACHIEVER
                                     </div>
                                 </div>
                                 

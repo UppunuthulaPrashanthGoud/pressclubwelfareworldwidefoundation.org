@@ -85,9 +85,11 @@ include 'navbar.php';
 ?>
 
 <main>
+    <?php include 'includes/notice-marquee.php'; ?>
     <?php include 'includes/hero-slider.php'; ?>
+    <?php include 'includes/congratulations-certificates-section.php'; ?>
     <?php include 'includes/e-certificates-section.php'; ?>
-      <?php include 'includes/congratulations-certificates-section.php'; ?>
+    <?php include 'includes/verified-members-section.php'; ?>
     <?php include 'includes/gallery-section.php'; ?>
     <?php include 'includes/about-section.php'; ?>
 

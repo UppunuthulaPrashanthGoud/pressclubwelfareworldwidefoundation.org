@@ -35,6 +35,10 @@ require_once __DIR__ . '/auth_check.php';
                     <i class="fas fa-newspaper"></i>
                     <span>News Management</span>
                 </a>
+                <a href="<?php echo SITE_URL; ?>/admin/notice_board.php" class="dropdown-item <?php echo basename($_SERVER['PHP_SELF']) == 'notice_board.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>Notice Board</span>
+                </a>
                 <a href="<?php echo SITE_URL; ?>/admin/events.php" class="dropdown-item">
                     <i class="fas fa-calendar"></i>
                     <span>Event Management</span>
