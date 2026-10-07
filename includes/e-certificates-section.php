@@ -18,9 +18,9 @@ try {
                 <!-- View All removed -->
             </div>
 
-            <div class="owl-carousel owl-theme e-certificate-slider">
+            <div class="e-certificate-slider">
                 <?php foreach ($homepageECertificates as $certificate): ?>
-                    <div class="item h-100 p-2">
+                    <div class="item p-2">
                         <a href="<?php echo SITE_URL; ?>/e-certificate-view.php?id=<?php echo (int) $certificate['id']; ?>"
                             class="text-decoration-none" target="_blank" rel="noopener">
                             <div class="card-custom e-certificate-card h-100">
@@ -74,6 +74,10 @@ try {
             left: 0;
             transform: none;
         }
+        
+        .e-certificate-slider {
+            position: relative;
+        }
 
         .e-certificate-card {
             overflow: hidden;
@@ -125,8 +129,8 @@ try {
             text-overflow: ellipsis;
         }
         
-        /* Owl Carousel Navigation Styling */
-        .e-certificate-slider .owl-nav {
+        /* Owl Carousel 1.3.3 Navigation Styling */
+        .e-certificate-slider .owl-controls .owl-buttons {
             position: absolute;
             top: 50%;
             width: 100%;
@@ -137,7 +141,7 @@ try {
             margin-top: -30px;
         }
 
-        .e-certificate-slider .owl-nav button {
+        .e-certificate-slider .owl-controls .owl-buttons div {
             pointer-events: auto;
             width: 45px;
             height: 45px;
@@ -149,17 +153,20 @@ try {
             justify-content: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             transition: all 0.3s ease;
+            opacity: 1 !important;
+            padding: 0;
+            margin: 0;
         }
         
-        .e-certificate-slider .owl-nav button:hover {
+        .e-certificate-slider .owl-controls .owl-buttons div:hover {
             transform: scale(1.1);
         }
 
-        .e-certificate-slider .owl-nav button.owl-prev {
+        .e-certificate-slider .owl-controls .owl-buttons .owl-prev {
             margin-left: -20px;
         }
 
-        .e-certificate-slider .owl-nav button.owl-next {
+        .e-certificate-slider .owl-controls .owl-buttons .owl-next {
             margin-right: -20px;
         }
         
@@ -167,10 +174,10 @@ try {
             .e-certificate-section-header {
                 align-items: flex-start !important;
             }
-            .e-certificate-slider .owl-nav button.owl-prev {
+            .e-certificate-slider .owl-controls .owl-buttons .owl-prev {
                 margin-left: -5px;
             }
-            .e-certificate-slider .owl-nav button.owl-next {
+            .e-certificate-slider .owl-controls .owl-buttons .owl-next {
                 margin-right: -5px;
             }
         }
@@ -180,22 +187,19 @@ try {
     document.addEventListener("DOMContentLoaded", function() {
         if(typeof $ !== 'undefined' && $.fn.owlCarousel) {
             $('.e-certificate-slider').owlCarousel({
-                loop: true,
-                margin: 20,
-                nav: true,
-                dots: true,
-                autoplay: true,
-                autoplayTimeout: 4000,
-                autoplayHoverPause: true,
-                navText: [
+                items: 3,
+                itemsDesktop: [1199, 3],
+                itemsDesktopSmall: [992, 2],
+                itemsTablet: [768, 2],
+                itemsMobile: [576, 1],
+                navigation: true,
+                pagination: true,
+                autoPlay: 4000,
+                stopOnHover: true,
+                navigationText: [
                     '<i class="fas fa-chevron-left"></i>',
                     '<i class="fas fa-chevron-right"></i>'
-                ],
-                responsive: {
-                    0: { items: 1 },
-                    576: { items: 2 },
-                    992: { items: 3 }
-                }
+                ]
             });
         }
     });
