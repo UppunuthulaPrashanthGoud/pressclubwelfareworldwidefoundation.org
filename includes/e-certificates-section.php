@@ -4,7 +4,7 @@ require_once __DIR__ . '/e_certificate_helpers.php';
 $homepageECertificates = [];
 
 try {
-    $homepageECertificates = fetchECertificates($db, 6);
+    $homepageECertificates = fetchECertificates($db, 9);
 } catch (Exception $e) {
     logError('E-certificate homepage section error: ' . $e->getMessage());
 }
@@ -18,44 +18,75 @@ try {
                 <!-- View All removed -->
             </div>
 
-            <div class="e-certificate-slider">
-                <?php foreach ($homepageECertificates as $certificate): ?>
-                    <div class="item p-2">
-                        <a href="<?php echo SITE_URL; ?>/e-certificate-view.php?id=<?php echo (int) $certificate['id']; ?>"
-                            class="text-decoration-none" target="_blank" rel="noopener">
-                            <div class="card-custom e-certificate-card h-100">
-                                <div class="e-certificate-preview">
-                                    <?php if (eCertificateIsPdf($certificate)): ?>
-                                        <div class="e-certificate-pdf">
-                                            <i class="fas fa-file-pdf"></i>
-                                            <span>PDF Certificate</span>
-                                        </div>
-                                    <?php else: ?>
-                                        <img src="<?php echo htmlspecialchars(eCertificateGetUrl($certificate), ENT_QUOTES, 'UTF-8'); ?>"
-                                            alt="<?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?>"
-                                            class="e-certificate-image" loading="lazy">
-                                    <?php endif; ?>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                                        <span class="badge <?php echo eCertificateIsPdf($certificate) ? 'bg-danger' : 'bg-success'; ?>">
-                                            <?php echo eCertificateIsPdf($certificate) ? 'PDF' : 'IMAGE'; ?>
-                                        </span>
-                                        <span class="small text-muted">
-                                            <?php echo date('d M Y', strtotime($certificate['created_at'])); ?>
-                                        </span>
+            <?php $eCertificateChunks = array_chunk($homepageECertificates, 3); // 3 per row on desktop ?>
+
+            <div id="eCertificateCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+                <div class="carousel-inner pb-4">
+                    <?php foreach ($eCertificateChunks as $chunkIndex => $chunk): ?>
+                        <div class="carousel-item <?php echo $chunkIndex === 0 ? 'active' : ''; ?>">
+                            <div class="row g-4 justify-content-center">
+                                <?php foreach ($chunk as $certificate): ?>
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <a href="<?php echo SITE_URL; ?>/e-certificate-view.php?id=<?php echo (int) $certificate['id']; ?>"
+                                            class="text-decoration-none" target="_blank" rel="noopener">
+                                            <div class="card-custom e-certificate-card h-100">
+                                                <div class="e-certificate-preview">
+                                                    <?php if (eCertificateIsPdf($certificate)): ?>
+                                                        <div class="e-certificate-pdf">
+                                                            <i class="fas fa-file-pdf"></i>
+                                                            <span>PDF Certificate</span>
+                                                        </div>
+                                                    <?php else: ?>
+                                                        <img src="<?php echo htmlspecialchars(eCertificateGetUrl($certificate), ENT_QUOTES, 'UTF-8'); ?>"
+                                                            alt="<?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?>"
+                                                            class="e-certificate-image img-fluid" loading="<?php echo $chunkIndex === 0 ? 'eager' : 'lazy'; ?>">
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                                        <span class="badge <?php echo eCertificateIsPdf($certificate) ? 'bg-danger' : 'bg-success'; ?>">
+                                                            <?php echo eCertificateIsPdf($certificate) ? 'PDF' : 'IMAGE'; ?>
+                                                        </span>
+                                                        <span class="small text-muted">
+                                                            <?php echo date('d M Y', strtotime($certificate['created_at'])); ?>
+                                                        </span>
+                                                    </div>
+                                                    <h5 class="card-title mb-3">
+                                                        <?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?>
+                                                    </h5>
+                                                    <span class="btn btn-outline-primary btn-sm">
+                                                        <?php echo eCertificateIsPdf($certificate) ? 'Download' : 'Preview'; ?>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
                                     </div>
-                                    <h5 class="card-title mb-3">
-                                        <?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?>
-                                    </h5>
-                                    <span class="btn btn-outline-primary btn-sm">
-                                        <?php echo eCertificateIsPdf($certificate) ? 'Download' : 'Preview'; ?>
-                                    </span>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
-                        </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <?php if (count($eCertificateChunks) > 1): ?>
+                    <!-- Navigation Arrows -->
+                    <button class="carousel-control-prev custom-carousel-btn" type="button" data-bs-target="#eCertificateCarousel" data-bs-slide="prev">
+                        <span class="custom-carousel-icon"><i class="fas fa-chevron-left"></i></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next custom-carousel-btn" type="button" data-bs-target="#eCertificateCarousel" data-bs-slide="next">
+                        <span class="custom-carousel-icon"><i class="fas fa-chevron-right"></i></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    
+                    <!-- Indicators -->
+                    <div class="carousel-indicators" style="bottom: -15px;">
+                        <?php foreach ($eCertificateChunks as $index => $unusedChunk): ?>
+                            <button type="button" data-bs-target="#eCertificateCarousel"
+                                data-bs-slide-to="<?php echo $index; ?>" class="<?php echo $index === 0 ? 'active' : ''; ?>"
+                                aria-label="Slide <?php echo $index + 1; ?>" style="background-color: var(--primary-color, #0a1f44); width: 12px; height: 12px; border-radius: 50%;"></button>
+                        <?php endforeach; ?>
                     </div>
-                <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -73,24 +104,6 @@ try {
         .e-certificate-section-header .section-heading span::after {
             left: 0;
             transform: none;
-        }
-        
-        .e-certificate-slider {
-            position: relative;
-        }
-
-        /* FIX for Owl Carousel 1.3.3 vs 2.3.4 conflict */
-        .e-certificate-slider.owl-carousel {
-            display: block !important;
-        }
-        
-        .e-certificate-slider .owl-wrapper:after {
-            content: ".";
-            display: block;
-            clear: both;
-            visibility: hidden;
-            line-height: 0;
-            height: 0;
         }
 
         .e-certificate-card {
@@ -143,82 +156,51 @@ try {
             text-overflow: ellipsis;
         }
         
-        /* Owl Carousel 1.3.3 Navigation Styling */
-        .e-certificate-slider .owl-controls .owl-buttons {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            transform: translateY(-50%);
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            margin-top: -30px;
-        }
-
-        .e-certificate-slider .owl-controls .owl-buttons div {
-            pointer-events: auto;
+        /* Custom Bootstrap Carousel Arrows */
+        .custom-carousel-btn {
             width: 45px;
             height: 45px;
             background: var(--gradient-primary, #0d6efd) !important;
             color: #fff !important;
             border-radius: 50% !important;
-            display: flex !important;
+            display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
             transition: all 0.3s ease;
             opacity: 1 !important;
-            padding: 0;
-            margin: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            position: absolute;
+            z-index: 10;
         }
-        
-        .e-certificate-slider .owl-controls .owl-buttons div:hover {
-            transform: scale(1.1);
+        .carousel-control-prev.custom-carousel-btn {
+            left: -20px;
         }
-
-        .e-certificate-slider .owl-controls .owl-buttons .owl-prev {
-            margin-left: -20px;
+        .carousel-control-next.custom-carousel-btn {
+            right: -20px;
         }
-
-        .e-certificate-slider .owl-controls .owl-buttons .owl-next {
-            margin-right: -20px;
+        .custom-carousel-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+        .custom-carousel-icon {
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         @media (max-width: 767.98px) {
             .e-certificate-section-header {
+                flex-direction: column;
                 align-items: flex-start !important;
             }
-            .e-certificate-slider .owl-controls .owl-buttons {
-                width: calc(100% - 20px);
-                margin-left: 10px;
-                margin-right: 10px;
+            .carousel-control-prev.custom-carousel-btn {
+                left: 10px;
             }
-            .e-certificate-slider .owl-controls .owl-buttons .owl-prev,
-            .e-certificate-slider .owl-controls .owl-buttons .owl-next {
-                margin: 0;
+            .carousel-control-next.custom-carousel-btn {
+                right: 10px;
             }
         }
     </style>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        if(typeof $ !== 'undefined' && $.fn.owlCarousel) {
-            $('.e-certificate-slider').owlCarousel({
-                items: 3,
-                itemsDesktop: [1199, 3],
-                itemsDesktopSmall: [992, 2],
-                itemsTablet: [768, 1],
-                itemsMobile: [576, 1],
-                navigation: true,
-                pagination: true,
-                autoPlay: 4000,
-                stopOnHover: true,
-                navigationText: [
-                    '<i class="fas fa-chevron-left"></i>',
-                    '<i class="fas fa-chevron-right"></i>'
-                ]
-            });
-        }
-    });
-    </script>
 <?php endif; ?>
