@@ -1,4 +1,6 @@
 <?php
+header("Location: index.php");
+exit();
 session_start();
 require_once 'config/config.php';
 require_once __DIR__ . '/includes/e_certificate_helpers.php';

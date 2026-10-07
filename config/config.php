@@ -417,7 +417,9 @@ if (!function_exists('uploadFile')) {
         
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mimeType = finfo_file($finfo, $file['tmp_name']);
-        finfo_close($finfo);
+        if (is_resource($finfo)) {
+            finfo_close($finfo);
+        }
         
         if (!in_array($mimeType, $allowedTypes)) {
             return ['success' => false, 'message' => 'Invalid file type.'];

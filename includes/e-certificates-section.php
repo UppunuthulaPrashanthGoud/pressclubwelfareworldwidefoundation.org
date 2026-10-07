@@ -16,9 +16,7 @@ try {
             <div
                 class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 e-certificate-section-header">
                 <h3 class="section-heading mb-0"><span>E-Certificates</span></h3>
-                <a href="<?php echo SITE_URL; ?>/e-certificates.php" class="btn btn-primary">
-                    <i class="fas fa-th-large me-2"></i>View All
-                </a>
+                <!-- View All removed -->
             </div>
 
             <?php $certificateChunks = array_chunk($homepageECertificates, 3); ?>
