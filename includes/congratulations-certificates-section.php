@@ -125,7 +125,6 @@ try {
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            height: 220px;
         }
 
         .congratulations-certificate-image {
