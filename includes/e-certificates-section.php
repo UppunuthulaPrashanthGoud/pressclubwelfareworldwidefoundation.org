@@ -188,11 +188,14 @@ try {
             .e-certificate-section-header {
                 align-items: flex-start !important;
             }
-            .e-certificate-slider .owl-controls .owl-buttons .owl-prev {
-                margin-left: -5px;
+            .e-certificate-slider .owl-controls .owl-buttons {
+                width: calc(100% - 20px);
+                margin-left: 10px;
+                margin-right: 10px;
             }
+            .e-certificate-slider .owl-controls .owl-buttons .owl-prev,
             .e-certificate-slider .owl-controls .owl-buttons .owl-next {
-                margin-right: -5px;
+                margin: 0;
             }
         }
     </style>
@@ -204,7 +207,7 @@ try {
                 items: 3,
                 itemsDesktop: [1199, 3],
                 itemsDesktopSmall: [992, 2],
-                itemsTablet: [768, 2],
+                itemsTablet: [768, 1],
                 itemsMobile: [576, 1],
                 navigation: true,
                 pagination: true,
