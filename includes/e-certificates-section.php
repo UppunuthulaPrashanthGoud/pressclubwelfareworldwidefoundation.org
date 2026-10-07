@@ -79,6 +79,20 @@ try {
             position: relative;
         }
 
+        /* FIX for Owl Carousel 1.3.3 vs 2.3.4 conflict */
+        .e-certificate-slider.owl-carousel {
+            display: block !important;
+        }
+        
+        .e-certificate-slider .owl-wrapper:after {
+            content: ".";
+            display: block;
+            clear: both;
+            visibility: hidden;
+            line-height: 0;
+            height: 0;
+        }
+
         .e-certificate-card {
             overflow: hidden;
             border-radius: 16px;
