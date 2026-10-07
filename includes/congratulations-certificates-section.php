@@ -13,84 +13,49 @@ try {
 <?php if (!empty($homepageCongratulationsCertificates)): ?>
     <div class="container-fluid my-5 congratulations-certificate-section" id="congratulations-certificates-section">
         <div class="container">
-            <div
-                class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 congratulations-certificate-section-header">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4 congratulations-certificate-section-header">
                 <h3 class="section-heading mb-0"><span>Congratulations Certificates</span></h3>
                 <!-- View All removed -->
             </div>
 
-            <?php $certificateChunks = array_chunk($homepageCongratulationsCertificates, 3); ?>
-
-            <div id="congratulationsCertificateCarousel" class="carousel slide" data-bs-ride="carousel"
-                data-bs-interval="4500">
-                <div class="carousel-inner">
-                    <?php foreach ($certificateChunks as $chunkIndex => $chunk): ?>
-                        <div class="carousel-item <?php echo $chunkIndex === 0 ? 'active' : ''; ?>">
-                            <div class="row g-4">
-                                <?php foreach ($chunk as $certificate): ?>
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <a href="<?php echo SITE_URL; ?>/congratulations-certificate-view.php?id=<?php echo (int) $certificate['id']; ?>"
-                                            class="text-decoration-none" target="_blank" rel="noopener">
-                                            <div class="card-custom congratulations-certificate-card h-100">
-                                                <div class="congratulations-certificate-preview">
-                                                    <?php if (congratulationsCertificateIsPdf($certificate)): ?>
-                                                        <div class="congratulations-certificate-pdf">
-                                                            <i class="fas fa-file-pdf"></i>
-                                                            <span>PDF Certificate</span>
-                                                        </div>
-                                                    <?php else: ?>
-                                                        <img src="<?php echo htmlspecialchars(congratulationsCertificateGetUrl($certificate), ENT_QUOTES, 'UTF-8'); ?>"
-                                                            alt="<?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?>"
-                                                            class="congratulations-certificate-image"
-                                                            loading="<?php echo $chunkIndex === 0 ? 'eager' : 'lazy'; ?>">
-                                                    <?php endif; ?>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
-                                                        <span
-                                                            class="badge <?php echo congratulationsCertificateIsPdf($certificate) ? 'bg-danger' : 'bg-success'; ?>">
-                                                            <?php echo congratulationsCertificateIsPdf($certificate) ? 'PDF' : 'IMAGE'; ?>
-                                                        </span>
-                                                        <span class="small text-muted">
-                                                            <?php echo date('d M Y', strtotime($certificate['created_at'])); ?>
-                                                        </span>
-                                                    </div>
-                                                    <h5 class="card-title mb-3">
-                                                        <?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?>
-                                                    </h5>
-                                                    <span class="btn btn-outline-primary btn-sm">
-                                                        <?php echo congratulationsCertificateIsPdf($certificate) ? 'Download' : 'Preview'; ?>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </a>
+            <div class="owl-carousel owl-theme congratulations-certificate-slider">
+                <?php foreach ($homepageCongratulationsCertificates as $certificate): ?>
+                    <div class="item h-100 p-2">
+                        <a href="<?php echo SITE_URL; ?>/congratulations-certificate-view.php?id=<?php echo (int) $certificate['id']; ?>"
+                            class="text-decoration-none" target="_blank" rel="noopener">
+                            <div class="card-custom congratulations-certificate-card h-100">
+                                <div class="congratulations-certificate-preview">
+                                    <?php if (congratulationsCertificateIsPdf($certificate)): ?>
+                                        <div class="congratulations-certificate-pdf">
+                                            <i class="fas fa-file-pdf"></i>
+                                            <span>PDF Certificate</span>
+                                        </div>
+                                    <?php else: ?>
+                                        <img src="<?php echo htmlspecialchars(congratulationsCertificateGetUrl($certificate), ENT_QUOTES, 'UTF-8'); ?>"
+                                            alt="<?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?>"
+                                            class="congratulations-certificate-image" loading="lazy">
+                                    <?php endif; ?>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                        <span class="badge <?php echo congratulationsCertificateIsPdf($certificate) ? 'bg-danger' : 'bg-success'; ?>">
+                                            <?php echo congratulationsCertificateIsPdf($certificate) ? 'PDF' : 'IMAGE'; ?>
+                                        </span>
+                                        <span class="small text-muted">
+                                            <?php echo date('d M Y', strtotime($certificate['created_at'])); ?>
+                                        </span>
                                     </div>
-                                <?php endforeach; ?>
+                                    <h5 class="card-title mb-3">
+                                        <?php echo htmlspecialchars($certificate['title'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </h5>
+                                    <span class="btn btn-outline-primary btn-sm">
+                                        <?php echo congratulationsCertificateIsPdf($certificate) ? 'Download' : 'Preview'; ?>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-
-                <?php if (count($certificateChunks) > 1): ?>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#congratulationsCertificateCarousel"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#congratulationsCertificateCarousel"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-
-                    <div class="carousel-indicators">
-                        <?php foreach ($certificateChunks as $index => $unusedChunk): ?>
-                            <button type="button" data-bs-target="#congratulationsCertificateCarousel"
-                                data-bs-slide-to="<?php echo $index; ?>" class="<?php echo $index === 0 ? 'active' : ''; ?>"
-                                aria-label="Slide <?php echo $index + 1; ?>"></button>
-                        <?php endforeach; ?>
+                        </a>
                     </div>
-                <?php endif; ?>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
@@ -115,6 +80,7 @@ try {
             border-radius: 16px;
             border: 1px solid rgba(0, 0, 0, 0.06);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #fff;
         }
 
         .congratulations-certificate-card:hover {
@@ -128,12 +94,13 @@ try {
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            height: 220px;
         }
 
         .congratulations-certificate-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
         }
 
         .congratulations-certificate-pdf {
@@ -153,53 +120,84 @@ try {
             font-family: 'Bakbak One', sans-serif;
             font-size: 1.15rem;
             line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-
-        #congratulationsCertificateCarousel .carousel-control-prev,
-        #congratulationsCertificateCarousel .carousel-control-next {
-            width: 48px;
-            height: 48px;
+        
+        /* Owl Carousel Navigation Styling */
+        .congratulations-certificate-slider .owl-nav {
+            position: absolute;
             top: 50%;
+            width: 100%;
             transform: translateY(-50%);
-            background: var(--gradient-primary, #0d6efd);
-            border-radius: 50%;
-            opacity: 0.85;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            margin-top: -30px;
         }
 
-        #congratulationsCertificateCarousel .carousel-control-prev:hover,
-        #congratulationsCertificateCarousel .carousel-control-next:hover {
-            opacity: 1;
+        .congratulations-certificate-slider .owl-nav button {
+            pointer-events: auto;
+            width: 45px;
+            height: 45px;
+            background: var(--gradient-primary, #0d6efd) !important;
+            color: #fff !important;
+            border-radius: 50% !important;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .congratulations-certificate-slider .owl-nav button:hover {
+            transform: scale(1.1);
         }
 
-        #congratulationsCertificateCarousel .carousel-indicators {
-            bottom: -42px;
+        .congratulations-certificate-slider .owl-nav button.owl-prev {
+            margin-left: -20px;
         }
 
-        #congratulationsCertificateCarousel .carousel-indicators [data-bs-target] {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #c7d0da;
-            border: none;
+        .congratulations-certificate-slider .owl-nav button.owl-next {
+            margin-right: -20px;
         }
-
-        #congratulationsCertificateCarousel .carousel-indicators .active {
-            background-color: var(--primary-color, #0d6efd);
-        }
-
+        
         @media (max-width: 767.98px) {
             .congratulations-certificate-section-header {
                 align-items: flex-start !important;
             }
-
-            .congratulations-certificate-preview {
-                height: 220px;
+            .congratulations-certificate-slider .owl-nav button.owl-prev {
+                margin-left: -5px;
             }
-
-            #congratulationsCertificateCarousel .carousel-control-prev,
-            #congratulationsCertificateCarousel .carousel-control-next {
-                display: none;
+            .congratulations-certificate-slider .owl-nav button.owl-next {
+                margin-right: -5px;
             }
         }
     </style>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        if(typeof $ !== 'undefined' && $.fn.owlCarousel) {
+            $('.congratulations-certificate-slider').owlCarousel({
+                loop: true,
+                margin: 20,
+                nav: true,
+                dots: true,
+                autoplay: true,
+                autoplayTimeout: 4000,
+                autoplayHoverPause: true,
+                navText: [
+                    '<i class="fas fa-chevron-left"></i>',
+                    '<i class="fas fa-chevron-right"></i>'
+                ],
+                responsive: {
+                    0: { items: 1 },
+                    576: { items: 2 },
+                    992: { items: 3 }
+                }
+            });
+        }
+    });
+    </script>
 <?php endif; ?>
