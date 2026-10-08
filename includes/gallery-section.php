@@ -1,4 +1,4 @@
-<!-- GALLERY SECTION -->
+﻿<!-- GALLERY SECTION -->
 <div class="container-fluid py-5" style="background: #fff;">
     <div class="container">
         <h3 class="section-heading text-center mb-4"><span>Gallery</span></h3>
@@ -9,21 +9,19 @@
             </div>
         <?php else: ?>
             
-            <div id="gallerySectionCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-                <div class="carousel-inner">
+            <!-- Desktop Carousel (3 items) -->
+            <div id="gallerySectionCarouselDesktop" class="carousel slide d-none d-lg-block" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner pb-4">
                     <?php 
-                    // Group gallery images in chunks of 3 for desktop view
-                    // We use 3 instead of 2 (like ads) because gallery images are typically better viewed in a slightly denser layout
-                    $chunkSize = 3;
-                    $galleryChunks = array_chunk($gallery_images, $chunkSize);
-                    $globalIndex = 0; // Track global index for modal opening
-                    
-                    foreach ($galleryChunks as $chunkIndex => $chunk): 
+                    $chunkSizeDesktop = 3;
+                    $galleryChunksDesktop = array_chunk($gallery_images, $chunkSizeDesktop);
+                    $globalIndex = 0;
+                    foreach ($galleryChunksDesktop as $chunkIndex => $chunk): 
                     ?>
                     <div class="carousel-item <?php echo $chunkIndex === 0 ? 'active' : ''; ?>">
                         <div class="row g-3">
                             <?php foreach ($chunk as $image): ?>
-                            <div class="col-12 col-md-6 col-lg-4">
+                            <div class="col-4">
                                 <div class="gallery-slide-custom" onclick="openGalleryModal(<?php echo $globalIndex; ?>)">
                                     <img src="img/gallery/<?php echo htmlspecialchars($image['image']); ?>" 
                                          class="gallery-image-custom" 
@@ -45,19 +43,122 @@
                     <?php endforeach; ?>
                 </div>
                 
-                <?php if (count($gallery_images) > $chunkSize): ?>
-                <button class="carousel-control-prev" type="button" data-bs-target="#gallerySectionCarousel" data-bs-slide="prev">
+                <?php if (count($gallery_images) > $chunkSizeDesktop): ?>
+                <button class="carousel-control-prev" type="button" data-bs-target="#gallerySectionCarouselDesktop" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#gallerySectionCarousel" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#gallerySectionCarouselDesktop" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
-                
                 <div class="carousel-indicators">
-                    <?php foreach ($galleryChunks as $index => $chunk): ?>
-                    <button type="button" data-bs-target="#gallerySectionCarousel" data-bs-slide-to="<?php echo $index; ?>" 
+                    <?php foreach ($galleryChunksDesktop as $index => $chunk): ?>
+                    <button type="button" data-bs-target="#gallerySectionCarouselDesktop" data-bs-slide-to="<?php echo $index; ?>" 
+                            class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- Tablet Carousel (2 items) -->
+            <div id="gallerySectionCarouselTablet" class="carousel slide d-none d-md-block d-lg-none" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner pb-4">
+                    <?php 
+                    $chunkSizeTablet = 2;
+                    $galleryChunksTablet = array_chunk($gallery_images, $chunkSizeTablet);
+                    $globalIndex = 0;
+                    foreach ($galleryChunksTablet as $chunkIndex => $chunk): 
+                    ?>
+                    <div class="carousel-item <?php echo $chunkIndex === 0 ? 'active' : ''; ?>">
+                        <div class="row g-3">
+                            <?php foreach ($chunk as $image): ?>
+                            <div class="col-6">
+                                <div class="gallery-slide-custom" onclick="openGalleryModal(<?php echo $globalIndex; ?>)">
+                                    <img src="img/gallery/<?php echo htmlspecialchars($image['image']); ?>" 
+                                         class="gallery-image-custom" 
+                                         alt="Gallery Image"
+                                         loading="<?php echo $chunkIndex === 0 ? 'eager' : 'lazy'; ?>"
+                                         onerror="this.parentElement.innerHTML='<div class=\'d-flex align-items-center justify-content-center h-100 text-muted\'><i class=\'fas fa-image fa-2x\'></i></div>'">
+                                    
+                                    <div class="gallery-overlay-custom">
+                                        <i class="fas fa-search-plus"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php 
+                                $globalIndex++;
+                                endforeach; 
+                            ?>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                
+                <?php if (count($gallery_images) > $chunkSizeTablet): ?>
+                <button class="carousel-control-prev" type="button" data-bs-target="#gallerySectionCarouselTablet" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#gallerySectionCarouselTablet" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                <div class="carousel-indicators">
+                    <?php foreach ($galleryChunksTablet as $index => $chunk): ?>
+                    <button type="button" data-bs-target="#gallerySectionCarouselTablet" data-bs-slide-to="<?php echo $index; ?>" 
+                            class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- Mobile Carousel (1 item) -->
+            <div id="gallerySectionCarouselMobile" class="carousel slide d-block d-md-none" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner pb-4">
+                    <?php 
+                    $chunkSizeMobile = 1;
+                    $galleryChunksMobile = array_chunk($gallery_images, $chunkSizeMobile);
+                    $globalIndex = 0;
+                    foreach ($galleryChunksMobile as $chunkIndex => $chunk): 
+                    ?>
+                    <div class="carousel-item <?php echo $chunkIndex === 0 ? 'active' : ''; ?>">
+                        <div class="row g-3">
+                            <?php foreach ($chunk as $image): ?>
+                            <div class="col-12">
+                                <div class="gallery-slide-custom" onclick="openGalleryModal(<?php echo $globalIndex; ?>)">
+                                    <img src="img/gallery/<?php echo htmlspecialchars($image['image']); ?>" 
+                                         class="gallery-image-custom" 
+                                         alt="Gallery Image"
+                                         loading="<?php echo $chunkIndex === 0 ? 'eager' : 'lazy'; ?>"
+                                         onerror="this.parentElement.innerHTML='<div class=\'d-flex align-items-center justify-content-center h-100 text-muted\'><i class=\'fas fa-image fa-2x\'></i></div>'">
+                                    
+                                    <div class="gallery-overlay-custom">
+                                        <i class="fas fa-search-plus"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php 
+                                $globalIndex++;
+                                endforeach; 
+                            ?>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                
+                <?php if (count($gallery_images) > $chunkSizeMobile): ?>
+                <button class="carousel-control-prev" type="button" data-bs-target="#gallerySectionCarouselMobile" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#gallerySectionCarouselMobile" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                <div class="carousel-indicators">
+                    <?php foreach ($galleryChunksMobile as $index => $chunk): ?>
+                    <button type="button" data-bs-target="#gallerySectionCarouselMobile" data-bs-slide-to="<?php echo $index; ?>" 
                             class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
                     <?php endforeach; ?>
                 </div>
@@ -72,7 +173,7 @@
     </div>
 </div>
 
-<!-- Modal for Gallery (Kept exactly as requested to maintain view functionality) -->
+<!-- Modal for Gallery -->
 <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content bg-dark">
@@ -122,15 +223,14 @@
 
 <!-- Gallery Styles -->
 <style>
-/* Styles ported from Advertisement Slider */
 .gallery-slide-custom {
     position: relative;
     width: 100%;
-    height: 300px; /* Slightly shorter than ads for gallery aesthetics */
+    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: white; /* Keep white background for cleaner look when images don't fill space */
+    background: white;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -145,7 +245,7 @@
 .gallery-image-custom {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Changed from cover to contain to prevent cropping */
+    object-fit: cover;
     border-radius: 12px;
     transition: transform 0.5s ease;
 }
@@ -154,13 +254,9 @@
     transform: scale(1.05);
 }
 
-/* Overlay for gallery items */
 .gallery-overlay-custom {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
@@ -179,30 +275,39 @@
     color: white;
 }
 
-/* Carousel Control Styles - Matches Ad Slider */
-#gallerySectionCarousel .carousel-control-prev,
-#gallerySectionCarousel .carousel-control-next {
+/* Base Carousel Controls - Make sure they don't break horizontal bound */
+.carousel-control-prev,
+.carousel-control-next {
     width: 50px;
     height: 50px;
-    background: var(--gradient-primary, #0d6efd); /* Fallback to primary color if var not defined */
+    background: var(--gradient-primary, #0d6efd);
     border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
     opacity: 0.8;
     transition: all 0.3s ease;
+    z-index: 5;
 }
 
-#gallerySectionCarousel .carousel-control-prev:hover,
-#gallerySectionCarousel .carousel-control-next:hover {
+.carousel-control-prev {
+    left: -10px;
+}
+
+.carousel-control-next {
+    right: -10px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
     opacity: 1;
     transform: translateY(-50%) scale(1.1);
 }
 
-#gallerySectionCarousel .carousel-indicators {
-    bottom: -40px;
+.carousel-indicators {
+    bottom: -15px;
 }
 
-#gallerySectionCarousel .carousel-indicators [data-bs-target] {
+.carousel-indicators [data-bs-target] {
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -212,12 +317,11 @@
     transition: all 0.3s ease;
 }
 
-#gallerySectionCarousel .carousel-indicators [data-bs-target].active {
+.carousel-indicators [data-bs-target].active {
     background: var(--gradient-primary, #0d6efd);
     transform: scale(1.3);
 }
 
-/* Modal specific styles */
 .modal-gallery-image-section {
     max-height: 75vh;
     max-width: 100%;
@@ -239,6 +343,12 @@
     .gallery-slide-custom {
         height: 250px;
     }
+    .carousel-control-prev {
+        left: 0px;
+    }
+    .carousel-control-next {
+        right: 0px;
+    }
 }
 </style>
 
@@ -251,16 +361,13 @@ function openGalleryModal(index) {
     const modalElement = document.getElementById('galleryModal');
     const modal = new bootstrap.Modal(modalElement);
     
-    // Initialize the carousel inside the modal
     galleryCarousel = new bootstrap.Carousel(document.getElementById('galleryCarousel'), {
         interval: 3000,
         ride: 'carousel'
     });
     
-    // Go to the specific slide
     galleryCarousel.to(index);
     modal.show();
-    
     updateImageCounter(index + 1);
 }
 
@@ -284,23 +391,25 @@ function toggleAutoplay() {
 function updateImageCounter(current) {
     const counterElement = document.getElementById('imageCounter');
     if (counterElement && galleryImages) {
-        counterElement.textContent = `${current} of ${galleryImages.length}`;
+        counterElement.textContent = + "" + $current of + "$" + {galleryImages.length} + "" + ;
     }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the main Section Carousel
-    const sectionCarousel = document.getElementById('gallerySectionCarousel');
-    if (sectionCarousel) {
-        new bootstrap.Carousel(sectionCarousel, {
-            interval: 3000,
-            wrap: true,
-            touch: true,
-            ride: 'carousel'
-        });
-    }
+    // Initialize Carousels
+    const carousels = ['gallerySectionCarouselDesktop', 'gallerySectionCarouselTablet', 'gallerySectionCarouselMobile'];
+    carousels.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            new bootstrap.Carousel(el, {
+                interval: 3000,
+                wrap: true,
+                touch: true,
+                ride: 'carousel'
+            });
+        }
+    });
 
-    // Modal Carousel event listener
     const modalCarouselElement = document.getElementById('galleryCarousel');
     if (modalCarouselElement) {
         modalCarouselElement.addEventListener('slide.bs.carousel', function (e) {
