@@ -4,7 +4,7 @@ require_once __DIR__ . '/e_certificate_helpers.php';
 $homepageECertificates = [];
 
 try {
-    $homepageECertificates = fetchECertificates($db, 9);
+    $homepageECertificates = fetchECertificates($db);
 } catch (Exception $e) {
     logError('E-certificate homepage section error: ' . $e->getMessage());
 }
@@ -125,6 +125,7 @@ try {
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            height: 220px;
         }
 
         .e-certificate-image {

@@ -4,7 +4,7 @@ require_once __DIR__ . '/congratulations_certificate_helpers.php';
 $homepageCongratulationsCertificates = [];
 
 try {
-    $homepageCongratulationsCertificates = fetchCongratulationsCertificates($db, 9);
+    $homepageCongratulationsCertificates = fetchCongratulationsCertificates($db);
 } catch (Exception $e) {
     logError('Congratulations certificate homepage section error: ' . $e->getMessage());
 }
@@ -125,6 +125,7 @@ try {
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            height: 220px;
         }
 
         .congratulations-certificate-image {
