@@ -52,12 +52,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
-                <div class="carousel-indicators">
-                    <?php foreach ($galleryChunksDesktop as $index => $chunk): ?>
-                    <button type="button" data-bs-target="#gallerySectionCarouselDesktop" data-bs-slide-to="<?php echo $index; ?>" 
-                            class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
-                    <?php endforeach; ?>
-                </div>
+
                 <?php endif; ?>
             </div>
 
@@ -104,12 +99,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
-                <div class="carousel-indicators">
-                    <?php foreach ($galleryChunksTablet as $index => $chunk): ?>
-                    <button type="button" data-bs-target="#gallerySectionCarouselTablet" data-bs-slide-to="<?php echo $index; ?>" 
-                            class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
-                    <?php endforeach; ?>
-                </div>
+
                 <?php endif; ?>
             </div>
 
@@ -156,12 +146,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
-                <div class="carousel-indicators">
-                    <?php foreach ($galleryChunksMobile as $index => $chunk): ?>
-                    <button type="button" data-bs-target="#gallerySectionCarouselMobile" data-bs-slide-to="<?php echo $index; ?>" 
-                            class="<?php echo $index === 0 ? 'active' : ''; ?>" aria-label="Slide <?php echo $index + 1; ?>"></button>
-                    <?php endforeach; ?>
-                </div>
+
                 <?php endif; ?>
             </div>
             
@@ -202,13 +187,7 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
-                    <div class="carousel-indicators">
-                        <?php foreach ($gallery_images as $index => $image): ?>
-                        <button type="button" data-bs-target="#galleryCarousel" data-bs-slide-to="<?php echo $index; ?>" 
-                                <?php echo $index === 0 ? 'class="active" aria-current="true"' : ''; ?> 
-                                aria-label="Slide <?php echo $index + 1; ?>"></button>
-                        <?php endforeach; ?>
-                    </div>
+
                 </div>
             </div>
             <div class="modal-footer border-0 justify-content-center">
@@ -303,24 +282,7 @@
     transform: translateY(-50%) scale(1.1);
 }
 
-.carousel-indicators {
-    bottom: -15px;
-}
 
-.carousel-indicators [data-bs-target] {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #dee2e6;
-    border: 2px solid #6c757d;
-    margin: 0 6px;
-    transition: all 0.3s ease;
-}
-
-.carousel-indicators [data-bs-target].active {
-    background: var(--gradient-primary, #0d6efd);
-    transform: scale(1.3);
-}
 
 .modal-gallery-image-section {
     max-height: 75vh;
