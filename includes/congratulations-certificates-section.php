@@ -77,15 +77,6 @@ try {
                         <span class="custom-carousel-icon"><i class="fas fa-chevron-right"></i></span>
                         <span class="visually-hidden">Next</span>
                     </button>
-                    
-                    <!-- Indicators -->
-                    <div class="carousel-indicators" style="bottom: -15px;">
-                        <?php foreach ($certificateChunks as $index => $unusedChunk): ?>
-                            <button type="button" data-bs-target="#congratulationsCertificateCarousel"
-                                data-bs-slide-to="<?php echo $index; ?>" class="<?php echo $index === 0 ? 'active' : ''; ?>"
-                                aria-label="Slide <?php echo $index + 1; ?>" style="background-color: var(--primary-color, #0a1f44); width: 12px; height: 12px; border-radius: 50%;"></button>
-                        <?php endforeach; ?>
-                    </div>
                 <?php endif; ?>
             </div>
         </div>
@@ -107,81 +98,115 @@ try {
         }
 
         .congratulations-certificate-card {
+            padding: 0 !important;
             overflow: hidden;
             border-radius: 16px;
-            border: 1px solid rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             background: #fff;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
         }
 
         .congratulations-certificate-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
         }
 
         .congratulations-certificate-preview {
-            background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(255, 255, 255, 0.85));
+            width: 100%;
+            aspect-ratio: 210 / 297;
+            background: #f8f9fa;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            height: 220px;
+            position: relative;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
         }
 
         .congratulations-certificate-image {
             width: 100% !important;
             height: 100% !important;
             object-fit: contain !important;
+            display: block;
+            transition: transform 0.35s ease;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+        }
+
+        .congratulations-certificate-card:hover .congratulations-certificate-image {
+            transform: scale(1.02);
         }
 
         .congratulations-certificate-pdf {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
             color: #dc3545;
             font-weight: 700;
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.05), rgba(255, 255, 255, 0.95));
         }
 
         .congratulations-certificate-pdf i {
             display: block;
-            font-size: 4rem;
+            font-size: 4.5rem;
             margin-bottom: 0.75rem;
+            color: #dc3545;
+        }
+
+        .congratulations-certificate-card .card-body {
+            padding: 1.25rem 1.25rem 1.5rem !important;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
         }
 
         .congratulations-certificate-card .card-title {
-            color: var(--primary-color, #0d6efd);
+            color: var(--primary-color, #0a1f44);
             font-family: 'Bakbak One', sans-serif;
             font-size: 1.15rem;
             line-height: 1.4;
-            white-space: nowrap;
+            margin-bottom: 0.85rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            text-overflow: ellipsis;
         }
         
         /* Custom Bootstrap Carousel Arrows */
         .custom-carousel-btn {
-            width: 45px;
-            height: 45px;
+            width: 48px;
+            height: 48px;
             background: var(--gradient-primary, #0d6efd) !important;
             color: #fff !important;
             border-radius: 50% !important;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.18);
             transition: all 0.3s ease;
             opacity: 1 !important;
-            top: 50%;
+            top: 45%;
             transform: translateY(-50%);
             position: absolute;
             z-index: 10;
+            border: 2px solid #fff !important;
         }
         .carousel-control-prev.custom-carousel-btn {
-            left: -20px;
+            left: -22px;
         }
         .carousel-control-next.custom-carousel-btn {
-            right: -20px;
+            right: -22px;
         }
         .custom-carousel-btn:hover {
             transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
         }
         .custom-carousel-icon {
             font-size: 1.2rem;
@@ -196,10 +221,14 @@ try {
                 align-items: flex-start !important;
             }
             .carousel-control-prev.custom-carousel-btn {
-                left: 10px;
+                left: 8px;
             }
             .carousel-control-next.custom-carousel-btn {
-                right: 10px;
+                right: 8px;
+            }
+            .congratulations-certificate-preview {
+                aspect-ratio: 210 / 297;
+                min-height: 360px;
             }
         }
     </style>

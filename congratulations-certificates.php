@@ -85,53 +85,90 @@ include 'navbar.php';
     }
 
     .congratulations-certificate-list-card {
+        padding: 0 !important;
         overflow: hidden;
         border-radius: 16px;
-        border: 1px solid rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(0, 0, 0, 0.08);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
     }
 
     .congratulations-certificate-list-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
     }
 
     .congratulations-certificate-list-preview {
-        background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(255, 255, 255, 0.9));
+        width: 100%;
+        aspect-ratio: 210 / 297;
+        background: #f8f9fa;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
+        position: relative;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     }
 
     .congratulations-certificate-list-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+        display: block;
+        transition: transform 0.35s ease;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+    }
+
+    .congratulations-certificate-list-card:hover .congratulations-certificate-image {
+        transform: scale(1.02);
+    }
+
+    .congratulations-certificate-list-card .card-body {
+        padding: 1.25rem 1.25rem 1.5rem !important;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
     }
 
     .congratulations-certificate-list-pdf {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
         color: #dc3545;
         font-weight: 700;
-        text-align: center;
+        background: linear-gradient(135deg, rgba(220, 53, 69, 0.05), rgba(255, 255, 255, 0.95));
     }
 
     .congratulations-certificate-list-pdf i {
         display: block;
-        font-size: 4rem;
+        font-size: 4.5rem;
         margin-bottom: 1rem;
+        color: #dc3545;
     }
 
     .congratulations-certificate-list-card .card-title {
-        color: var(--primary-color, #0d6efd);
+        color: var(--primary-color, #0a1f44);
         font-family: 'Bakbak One', sans-serif;
         font-size: 1.2rem;
         line-height: 1.45;
+        margin-bottom: 0.75rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     @media (max-width: 767.98px) {
         .congratulations-certificate-list-preview {
-            height: 230px;
+            aspect-ratio: 210 / 297;
+            min-height: 360px;
         }
     }
 </style>
