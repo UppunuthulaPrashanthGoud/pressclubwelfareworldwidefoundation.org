@@ -112,6 +112,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $stmt->execute([$registration_id]);
     } while ($stmt->fetchColumn() > 0);
 
+    // Ensure nominations table exists
+try {
+    $db->exec("
+        CREATE TABLE IF NOT EXISTS nominations (
+            id INT(11) NOT NULL AUTO_INCREMENT,
+            registration_id VARCHAR(20) NOT NULL,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            mobile VARCHAR(20) NOT NULL,
+            category VARCHAR(100) DEFAULT NULL,
+            award VARCHAR(255) DEFAULT NULL,
+            venue VARCHAR(255) DEFAULT NULL,
+            profession VARCHAR(255) DEFAULT NULL,
+            about TEXT DEFAULT NULL,
+            talent TEXT DEFAULT NULL,
+            gender VARCHAR(50) DEFAULT NULL,
+            qualification VARCHAR(255) DEFAULT NULL,
+            address TEXT DEFAULT NULL,
+            state VARCHAR(100) DEFAULT NULL,
+            district VARCHAR(100) DEFAULT NULL,
+            pincode VARCHAR(20) DEFAULT NULL,
+            is_online TINYINT(1) DEFAULT 0,
+            is_offline TINYINT(1) DEFAULT 0,
+            is_ecert TINYINT(1) DEFAULT 0,
+            profile_image VARCHAR(255) DEFAULT NULL,
+            document_one VARCHAR(255) DEFAULT NULL,
+            document_two VARCHAR(255) DEFAULT NULL,
+            document_three VARCHAR(255) DEFAULT NULL,
+            document_four VARCHAR(255) DEFAULT NULL,
+            user_type VARCHAR(50) DEFAULT 'member',
+            status VARCHAR(50) DEFAULT 'pending',
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ");
+} catch (Exception $e) {}
+
     // --- Insert into nominations table ---
     try {
         $sql = "INSERT INTO nominations (

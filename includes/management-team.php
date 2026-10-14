@@ -71,11 +71,14 @@ if (!isset($management_team)) {
                         <div class="member-divider mx-auto mb-3"></div>
 
                         <!-- 4. Area of Working -->
-                        <?php if (!empty($member['area_of_work'])): ?>
+                        <?php 
+                        $areaOfWork = !empty($member['area_of_work']) ? $member['area_of_work'] : (!empty($member['description']) ? $member['description'] : '');
+                        if (!empty($areaOfWork)): 
+                        ?>
                         <div class="member-detail-box mb-2">
                             <span class="detail-label"><i class="fas fa-briefcase me-1"></i> Area of Working</span>
                             <span class="detail-value">
-                                <?php echo htmlspecialchars($member['area_of_work']); ?>
+                                <?php echo htmlspecialchars($areaOfWork); ?>
                             </span>
                         </div>
                         <?php endif; ?>

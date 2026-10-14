@@ -51,6 +51,24 @@ $social_item = [];
 
 $db = getDbConnection();
 
+// Ensure social_media table exists
+try {
+    $db->exec("
+        CREATE TABLE IF NOT EXISTS social_media (
+            id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+            type ENUM('image','video','post') NOT NULL DEFAULT 'post',
+            content_file VARCHAR(255) DEFAULT NULL,
+            link TEXT DEFAULT NULL,
+            caption TEXT DEFAULT NULL,
+            sort_order INT(11) NOT NULL DEFAULT 0,
+            status ENUM('active','inactive') NOT NULL DEFAULT 'active',
+            created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ");
+} catch (Exception $e) {}
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {

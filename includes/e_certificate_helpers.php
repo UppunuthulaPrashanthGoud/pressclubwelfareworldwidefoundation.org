@@ -20,6 +20,23 @@ if (!function_exists('ensureECertificatesTable')) {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ");
 
+        try {
+            $colsStmt = $db->query("SHOW COLUMNS FROM e_certificates");
+            $existingCols = $colsStmt ? $colsStmt->fetchAll(PDO::FETCH_COLUMN) : [];
+
+            if (!in_array('title', $existingCols)) {
+                $db->exec("ALTER TABLE e_certificates ADD COLUMN title VARCHAR(255) NULL AFTER id");
+            }
+            if (!in_array('file_path', $existingCols)) {
+                $db->exec("ALTER TABLE e_certificates ADD COLUMN file_path VARCHAR(500) NULL AFTER title");
+            }
+            if (!in_array('file_type', $existingCols)) {
+                $db->exec("ALTER TABLE e_certificates ADD COLUMN file_type ENUM('image', 'pdf') NOT NULL DEFAULT 'image' AFTER file_path");
+            }
+        } catch (Exception $e) {
+            // Ignore if columns already altered
+        }
+
         $tableEnsured = true;
     }
 }

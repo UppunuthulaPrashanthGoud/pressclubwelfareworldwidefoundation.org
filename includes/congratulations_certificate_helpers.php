@@ -20,6 +20,37 @@ if (!function_exists('ensureCongratulationsCertificatesTable')) {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
         ");
 
+        try {
+            $colsStmt = $db->query("SHOW COLUMNS FROM congratulations_certificates");
+            $existingCols = $colsStmt ? $colsStmt->fetchAll(PDO::FETCH_COLUMN) : [];
+
+            if (!in_array('title', $existingCols)) {
+                $db->exec("ALTER TABLE congratulations_certificates ADD COLUMN title VARCHAR(255) NULL AFTER id");
+            }
+            if (!in_array('file_path', $existingCols)) {
+                $db->exec("ALTER TABLE congratulations_certificates ADD COLUMN file_path VARCHAR(500) NULL AFTER title");
+            }
+            if (!in_array('file_type', $existingCols)) {
+                $db->exec("ALTER TABLE congratulations_certificates ADD COLUMN file_type ENUM('image', 'pdf') NOT NULL DEFAULT 'image' AFTER file_path");
+            }
+
+            // Ensure legacy NOT NULL columns without default values don't block inserts
+            if (in_array('certificate_no', $existingCols)) {
+                $db->exec("ALTER TABLE congratulations_certificates MODIFY certificate_no VARCHAR(50) NULL DEFAULT ''");
+            }
+            if (in_array('recipient_name', $existingCols)) {
+                $db->exec("ALTER TABLE congratulations_certificates MODIFY recipient_name VARCHAR(255) NULL DEFAULT ''");
+            }
+            if (in_array('recipient_address', $existingCols)) {
+                $db->exec("ALTER TABLE congratulations_certificates MODIFY recipient_address TEXT NULL");
+            }
+            if (in_array('certificate_date', $existingCols)) {
+                $db->exec("ALTER TABLE congratulations_certificates MODIFY certificate_date DATE NULL DEFAULT NULL");
+            }
+        } catch (Exception $e) {
+            // Ignore if columns already altered or permissions restricted
+        }
+
         $tableEnsured = true;
     }
 }

@@ -66,6 +66,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['ajax']) && $_GET['ajax'
     exit;
 }
 
+// Check users table columns dynamically for photo column name compatibility
+$userCols = [];
+try {
+    $colStmt = $db->query("SHOW COLUMNS FROM users");
+    if ($colStmt) {
+        $userCols = $colStmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+} catch (Exception $e) {}
+
+$hasAadharImage = in_array('aadhar_image', $userCols);
+$hasIdCardPhoto = in_array('id_card_photo', $userCols);
+$idCardCol = $hasIdCardPhoto ? 'id_card_photo' : ($hasAadharImage ? 'aadhar_image' : 'id_card_photo');
+
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['csrf_token']) || !verifyCSRF($_POST['csrf_token'])) {
@@ -171,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $stmt = $db->prepare("
                             INSERT INTO users (
                                 registration_id, name, email, mobile, gender, dob, profession, designation,
-                                state, district, address, pincode, membership_type, profile_image, aadhar_image, 
+                                state, district, address, pincode, membership_type, profile_image, " . $idCardCol . ", 
                                 status, user_type, created_at, valid_until, working_area
                             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)
                         ");
@@ -184,11 +197,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     } else {
                         // Keep existing photos if no new photos uploaded
                         if (empty($profile_image) || empty($id_card_photo)) {
-                            $stmt = $db->prepare("SELECT profile_image, aadhar_image FROM users WHERE id = ?");
+                            $stmt = $db->prepare("SELECT profile_image, " . $idCardCol . " FROM users WHERE id = ?");
                             $stmt->execute([$id]);
                             $existing = $stmt->fetch();
                             $profile_image = empty($profile_image) ? ($existing['profile_image'] ?? '') : $profile_image;
-                            $id_card_photo = empty($id_card_photo) ? ($existing['aadhar_image'] ?? '') : $id_card_photo;
+                            $id_card_photo = empty($id_card_photo) ? ($existing[$idCardCol] ?? $existing['id_card_photo'] ?? $existing['aadhar_image'] ?? '') : $id_card_photo;
                         }
 
                         $stmt = $db->prepare("
@@ -196,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 registration_id = ?, name = ?, email = ?, mobile = ?, gender = ?, 
                                 dob = ?, profession = ?, designation = ?, state = ?, district = ?, 
                                 address = ?, pincode = ?, membership_type = ?, profile_image = ?, 
-                                aadhar_image = ?, status = ?, user_type = ?, updated_at = NOW(),
+                                " . $idCardCol . " = ?, status = ?, user_type = ?, updated_at = NOW(),
                                 valid_until = ?, working_area = ?
                             WHERE id = ?
                         ");
@@ -223,7 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $delete_id = $_POST['id'];
 
                     // Get photo filenames before deleting
-                    $stmt = $db->prepare("SELECT profile_image, aadhar_image FROM users WHERE id = ?");
+                    $stmt = $db->prepare("SELECT profile_image, " . $idCardCol . " FROM users WHERE id = ?");
                     $stmt->execute([$delete_id]);
                     $user = $stmt->fetch();
 
@@ -630,10 +643,12 @@ include 'includes/header.php';
                             <div class="mb-3">
                                 <label for="id_card_photo" class="form-label">आईडी कार्ड फोटो</label>
                                 <input type="file" class="form-control" id="id_card_photo" name="id_card_photo" accept="image/*">
-                                <?php if (!empty($user_data['aadhar_image'])): ?>
+                                <?php 
+                                $currentIdPhoto = $user_data[$idCardCol] ?? $user_data['id_card_photo'] ?? $user_data['aadhar_image'] ?? '';
+                                if (!empty($currentIdPhoto)): ?>
                                 <div class="mt-2">
                                     <?php 
-                                    $idCardImageUrl = getImageUrl($user_data['aadhar_image']);
+                                    $idCardImageUrl = getImageUrl($currentIdPhoto);
                                     if ($idCardImageUrl): ?>
                                     <img src="<?php echo $idCardImageUrl; ?>" 
                                          alt="Current ID Card Photo" class="img-thumbnail" style="max-width: 150px;"

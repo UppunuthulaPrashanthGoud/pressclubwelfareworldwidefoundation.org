@@ -11,6 +11,14 @@ $user = [];
 
 $db = getDbConnection();
 
+// Ensure press_card column exists in users table
+try {
+    $colStmt = $db->query("SHOW COLUMNS FROM users LIKE 'press_card'");
+    if ($colStmt && $colStmt->rowCount() == 0) {
+        $db->exec("ALTER TABLE users ADD COLUMN press_card VARCHAR(255) DEFAULT NULL AFTER aadhar_back");
+    }
+} catch (Exception $e) {}
+
 $currentUserType = $_SESSION['user_type'] ?? 'member';
 if (!in_array($currentUserType, ['admin', 'coordinator'])) {
     header("Location: " . SITE_URL . "/admin/index.php");

@@ -65,13 +65,17 @@ $error = '';
 try {
     $db = getDbConnection();
     // Verify table existence
-    $stmt = $db->query("SHOW TABLES LIKE 'about_content'");
-    if ($stmt->rowCount() == 0) {
-        logError("Table 'about_content' does not exist in database.");
-        $error = "Table 'about_content' not found in database.";
-        $aboutItems = [];
-        $totalPages = 0;
-    }
+    $db->exec("CREATE TABLE IF NOT EXISTS about_content (
+        id INT(11) NOT NULL AUTO_INCREMENT,
+        title VARCHAR(255) NOT NULL,
+        description TEXT NOT NULL,
+        image VARCHAR(255) DEFAULT NULL,
+        sort_order INT(11) NOT NULL DEFAULT 1,
+        status ENUM('active','inactive') NOT NULL DEFAULT 'active',
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 } catch (PDOException $e) {
     logError("Database connection error: " . $e->getMessage());
     $error = "Database error: " . $e->getMessage();

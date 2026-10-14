@@ -16,6 +16,26 @@ if (!isAdmin() && !isCoordinator()) {
 
 $db = getDbConnection();
 
+// Check team_members table columns dynamically
+$teamCols = [];
+try {
+    $colStmt = $db->query("SHOW COLUMNS FROM team_members");
+    if ($colStmt) {
+        $teamCols = $colStmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+} catch (Exception $e) {}
+
+$hasAreaOfWork = in_array('area_of_work', $teamCols);
+$hasDescription = in_array('description', $teamCols);
+
+// If neither exists, add area_of_work
+if (!$hasAreaOfWork && !$hasDescription && !empty($teamCols)) {
+    try {
+        $db->exec("ALTER TABLE team_members ADD COLUMN area_of_work VARCHAR(255) NULL");
+        $hasAreaOfWork = true;
+    } catch (Exception $e) {}
+}
+
 $action = $_GET['action'] ?? 'list';
 $id = $_GET['id'] ?? 0;
 
@@ -31,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 try {
                     $name = sanitizeInput($_POST['name']);
                     $designation = sanitizeInput($_POST['designation']);
-                    // Variable name kept as area_of_work for logic, but stored in 'description' column
                     $area_of_work = sanitizeInput($_POST['area_of_work'] ?? '');
                     $phone = sanitizeInput($_POST['phone'] ?? '');
                     $sort_order = filter_var($_POST['sort_order'] ?? 0, FILTER_VALIDATE_INT) ?: 0;
@@ -58,12 +77,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     
                     if ($_POST['action'] === 'add') {
-                        // Fixed: Using 'description' column name
-                        $stmt = $db->prepare("
-                            INSERT INTO team_members (name, designation, description, image, phone, sort_order, member_type, status, created_at) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())
-                        ");
-                        $stmt->execute([$name, $designation, $area_of_work, $image, $phone, $sort_order, $member_type, $status]);
+                        if ($hasAreaOfWork && $hasDescription) {
+                            $stmt = $db->prepare("
+                                INSERT INTO team_members (name, designation, area_of_work, description, image, phone, sort_order, member_type, status, created_at) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+                            ");
+                            $stmt->execute([$name, $designation, $area_of_work, $area_of_work, $image, $phone, $sort_order, $member_type, $status]);
+                        } elseif ($hasAreaOfWork) {
+                            $stmt = $db->prepare("
+                                INSERT INTO team_members (name, designation, area_of_work, image, phone, sort_order, member_type, status, created_at) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())
+                            ");
+                            $stmt->execute([$name, $designation, $area_of_work, $image, $phone, $sort_order, $member_type, $status]);
+                        } else {
+                            $stmt = $db->prepare("
+                                INSERT INTO team_members (name, designation, description, image, phone, sort_order, member_type, status, created_at) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())
+                            ");
+                            $stmt->execute([$name, $designation, $area_of_work, $image, $phone, $sort_order, $member_type, $status]);
+                        }
                         $message = 'Team member added successfully!';
                     } else {
                         // Keep existing image if no new image uploaded
@@ -74,13 +106,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $image = $existing['image'] ?? '';
                         }
                         
-                        // Fixed: Using 'description' column name
-                        $stmt = $db->prepare("
-                            UPDATE team_members 
-                            SET name = ?, designation = ?, description = ?, image = ?, phone = ?, sort_order = ?, member_type = ?, status = ? 
-                            WHERE id = ?
-                        ");
-                        $stmt->execute([$name, $designation, $area_of_work, $image, $phone, $sort_order, $member_type, $status, $id]);
+                        if ($hasAreaOfWork && $hasDescription) {
+                            $stmt = $db->prepare("
+                                UPDATE team_members 
+                                SET name = ?, designation = ?, area_of_work = ?, description = ?, image = ?, phone = ?, sort_order = ?, member_type = ?, status = ? 
+                                WHERE id = ?
+                            ");
+                            $stmt->execute([$name, $designation, $area_of_work, $area_of_work, $image, $phone, $sort_order, $member_type, $status, $id]);
+                        } elseif ($hasAreaOfWork) {
+                            $stmt = $db->prepare("
+                                UPDATE team_members 
+                                SET name = ?, designation = ?, area_of_work = ?, image = ?, phone = ?, sort_order = ?, member_type = ?, status = ? 
+                                WHERE id = ?
+                            ");
+                            $stmt->execute([$name, $designation, $area_of_work, $image, $phone, $sort_order, $member_type, $status, $id]);
+                        } else {
+                            $stmt = $db->prepare("
+                                UPDATE team_members 
+                                SET name = ?, designation = ?, description = ?, image = ?, phone = ?, sort_order = ?, member_type = ?, status = ? 
+                                WHERE id = ?
+                            ");
+                            $stmt->execute([$name, $designation, $area_of_work, $image, $phone, $sort_order, $member_type, $status, $id]);
+                        }
                         $message = 'Team member updated successfully!';
                     }
                     
@@ -207,10 +254,12 @@ include 'includes/header.php';
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($team_members as $member): ?>
+                            <?php foreach ($team_members as $member): 
+                                $displayArea = !empty($member['area_of_work']) ? $member['area_of_work'] : (!empty($member['description']) ? $member['description'] : '');
+                            ?>
                             <tr data-name="<?php echo strtolower(htmlspecialchars($member['name'])); ?>" 
                                 data-designation="<?php echo strtolower(htmlspecialchars($member['designation'])); ?>"
-                                data-area="<?php echo strtolower(htmlspecialchars($member['description'] ?? '')); ?>">
+                                data-area="<?php echo strtolower(htmlspecialchars($displayArea)); ?>">
                                 <td>
                                     <?php if (!empty($member['image'])): ?>
                                     <img src="<?php echo SITE_URL . '/uploads/team/' . $member['image']; ?>" 
@@ -224,7 +273,7 @@ include 'includes/header.php';
                                 </td>
                                 <td><?php echo htmlspecialchars($member['name']); ?></td>
                                 <td><?php echo htmlspecialchars($member['designation']); ?></td>
-                                <td><?php echo htmlspecialchars($member['description'] ?? '-'); ?></td>
+                                <td><?php echo htmlspecialchars($displayArea ?: '-'); ?></td>
                                 <td><?php echo htmlspecialchars($member['phone'] ?? '-'); ?></td>
                                 <td><?php echo htmlspecialchars($member['member_type']); ?></td>
                                 <td>
@@ -286,9 +335,10 @@ include 'includes/header.php';
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
+                                <?php $editArea = !empty($member_data['area_of_work']) ? $member_data['area_of_work'] : (!empty($member_data['description']) ? $member_data['description'] : ''); ?>
                                 <label for="area_of_work" class="form-label">Area of Working</label>
                                 <input type="text" class="form-control" id="area_of_work" name="area_of_work"
-                                       value="<?php echo htmlspecialchars($member_data['description'] ?? ''); ?>"
+                                       value="<?php echo htmlspecialchars($editArea); ?>"
                                        placeholder="e.g., Social Welfare & Human Rights">
                             </div>
                         </div>

@@ -6,6 +6,15 @@ if (!isset($db)) {
 }
 
 try {
+    $db->exec("CREATE TABLE IF NOT EXISTS notice_board (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        notice_text TEXT NOT NULL,
+        status ENUM('active', 'inactive') DEFAULT 'active',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+} catch (Exception $e) {}
+
+try {
     $stmt = $db->prepare("SELECT notice_text FROM notice_board WHERE status = 'active' ORDER BY created_at DESC");
     $stmt->execute();
     $notices = $stmt->fetchAll(PDO::FETCH_ASSOC);
