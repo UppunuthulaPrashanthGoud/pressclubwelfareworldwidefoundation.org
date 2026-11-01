@@ -345,12 +345,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Get certificates for list with pagination
+// Active tab state
+$currentTab = (isset($_GET['tab']) && $_GET['tab'] === 'users') ? 'users' : 'certificates';
+
+// 1. Certificates Pagination & Search
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($page < 1) $page = 1;
 $limit = 12;
 $offset = ($page - 1) * $limit;
 
-// Search term handling
 $searchTerm = isset($_GET['search']) ? trim(sanitizeInput($_GET['search'])) : '';
 $whereClause = '';
 $queryParams = [];
@@ -361,11 +364,28 @@ if ($searchTerm !== '') {
     $queryParams = [$like, $like, $like, $like, $like, $like, $like];
 }
 
+// 2. Users Pagination & Search
+$userPage = isset($_GET['user_page']) ? (int)$_GET['user_page'] : 1;
+if ($userPage < 1) $userPage = 1;
+$userLimit = 12;
+$userOffset = ($userPage - 1) * $userLimit;
+
+$userSearchTerm = isset($_GET['user_search']) ? trim(sanitizeInput($_GET['user_search'])) : '';
+$userWhereClause = "WHERE status = 'approved'";
+$userQueryParams = [];
+
+if ($userSearchTerm !== '') {
+    $userWhereClause .= " AND (name LIKE ? OR email LIKE ? OR mobile LIKE ? OR dob LIKE ?)";
+    $uLike = '%' . $userSearchTerm . '%';
+    $userQueryParams = [$uLike, $uLike, $uLike, $uLike];
+}
+
 try {
+    // Fetch Certificates
     $countSql = "SELECT COUNT(*) FROM certificates c LEFT JOIN users u ON c.user_id = u.id " . $whereClause;
     $stmt = $db->prepare($countSql);
     $stmt->execute($queryParams);
-    $totalRecords = $stmt->fetchColumn();
+    $totalRecords = (int)$stmt->fetchColumn();
     
     $dataSql = "SELECT c.*, u.name as user_name, u.profile_image AS profile_photo, u.dob FROM certificates c LEFT JOIN users u ON c.user_id = u.id " . $whereClause . " ORDER BY c.created_at DESC LIMIT $limit OFFSET $offset";
     $stmt = $db->prepare($dataSql);
@@ -377,9 +397,22 @@ try {
     $allDesignations = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     $totalPages = ceil($totalRecords / $limit);
+
+    // Fetch Approved Users with Pagination
+    $userCountSql = "SELECT COUNT(*) FROM users " . $userWhereClause;
+    $userCountStmt = $db->prepare($userCountSql);
+    $userCountStmt->execute($userQueryParams);
+    $totalUsers = (int)$userCountStmt->fetchColumn();
+
+    $userDataSql = "SELECT id, name, email, mobile, dob FROM users " . $userWhereClause . " ORDER BY name ASC LIMIT $userLimit OFFSET $userOffset";
+    $userDataStmt = $db->prepare($userDataSql);
+    $userDataStmt->execute($userQueryParams);
+    $users = $userDataStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $totalUserPages = ceil($totalUsers / $userLimit);
     
     // Fetch users with birthdays today
-    $today = date('Y-m-d'); // For testing, use '2025-09-14'; in production, use CURRENT_DATE
+    $today = date('Y-m-d');
     $stmt = $db->prepare("SELECT id, name, email, mobile, dob FROM users WHERE DAY(dob) = DAY(CURRENT_DATE) AND MONTH(dob) = MONTH(CURRENT_DATE) AND status = 'approved' ORDER BY name");
     $stmt->execute();
     $birthdayUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -389,7 +422,11 @@ try {
     $certificates = [];
     $allDesignations = [];
     $birthdayUsers = [];
+    $users = [];
     $totalPages = 0;
+    $totalRecords = 0;
+    $totalUsers = 0;
+    $totalUserPages = 0;
 }
 
 $pageTitle = ($action === 'add') ? "Add New Certificate" : (($action === 'edit') ? "Edit Certificate" : "Certificate Management");
@@ -571,217 +608,311 @@ include 'includes/header.php';
                 </div>
             </div>
         <?php else: ?>
-            <div class="admin-card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-users"></i> User List
-                </div>
-                <div class="card-body">
-                    <?php if (count($birthdayUsers) > 0): ?>
-                        <div class="alert alert-info mb-4">
-                            <i class="fas fa-birthday-cake"></i> Today's Birthdays: 
-                            <?php 
-                            $birthdayNames = array_map(function($user) { return htmlspecialchars($user['name']); }, $birthdayUsers);
-                            echo implode(', ', $birthdayNames); 
-                            ?>
-                        </div>
-                    <?php else: ?>
-                        <div class="alert alert-info mb-4">
-                            <i class="fas fa-info-circle"></i> No birthdays today.
-                        </div>
-                    <?php endif; ?>
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Birth Date</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $userStmt = $db->query("SELECT id, name, email, mobile, dob FROM users WHERE status = 'approved' ORDER BY name");
-                                $users = $userStmt->fetchAll(PDO::FETCH_ASSOC);
-                                foreach ($users as $user):
-                                    $isBirthdayToday = in_array($user['id'], array_column($birthdayUsers, 'id'));
-                                ?>
-                                    <tr>
-                                        <td>
-                                            <?php echo htmlspecialchars($user['name']); ?>
-                                            <?php if ($isBirthdayToday): ?>
-                                                <span class="badge bg-success ms-2" title="Today is birthday">
-                                                    <i class="fas fa-birthday-cake"></i>
-                                                </span>
-                                            <?php endif; ?>
-                                        </td>
-                                        <td><?php echo $user['dob'] ? date('d-m-Y', strtotime($user['dob'])) : '-'; ?></td>
-                                        <td><?php echo htmlspecialchars($user['email'] ?? '-'); ?></td>
-                                        <td><?php echo htmlspecialchars($user['mobile']); ?></td>
-                                        <td>
-                                            <a href="certificates.php?action=add&user_id=<?php echo $user['id']; ?><?php echo $isBirthdayToday ? '&certificate_type=Birthday Wishes' : ''; ?>" 
-                                               class="btn btn-sm btn-primary" 
-                                               title="<?php echo $isBirthdayToday ? 'Create Birthday Wishes Certificate' : 'Create Certificate'; ?>">
-                                                <i class="fas fa-plus"></i> 
-                                                <?php echo $isBirthdayToday ? 'Birthday Wishes' : 'Create Certificate'; ?>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="admin-card">
-                <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
-                    <span><i class="fas fa-certificate me-1"></i> Certificate List</span>
-                    <?php if (!empty($searchTerm)): ?>
-                        <span class="badge bg-warning text-dark">
-                            Filtered by: "<?php echo htmlspecialchars($searchTerm); ?>" 
-                            <a href="certificates.php" class="text-dark ms-1 text-decoration-none" title="Clear filter">&times;</a>
-                        </span>
-                    <?php endif; ?>
-                </div>
-                <div class="card-body">
-                    <!-- Global Live Search Bar -->
-                    <div class="row mb-3 align-items-center">
-                        <div class="col-md-6 col-lg-5">
-                            <div class="input-group shadow-sm">
-                                <span class="input-group-text bg-white border-end-0 text-muted">
-                                    <i class="fas fa-search"></i>
+            <!-- Tabs for switching between Certificates and Registered Users -->
+            <ul class="nav nav-tabs nav-fill mb-4 shadow-sm bg-white rounded-top" id="certificateTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link py-3 fw-bold fs-6 <?php echo ($currentTab !== 'users') ? 'active border-primary border-3 border-bottom' : 'text-muted'; ?>" 
+                            id="certificates-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#tab-certificates" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="tab-certificates" 
+                            aria-selected="<?php echo ($currentTab !== 'users') ? 'true' : 'false'; ?>">
+                        <i class="fas fa-certificate me-2 text-primary"></i> Certificates List
+                        <span class="badge bg-primary ms-2"><?php echo $totalRecords; ?></span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link py-3 fw-bold fs-6 <?php echo ($currentTab === 'users') ? 'active border-primary border-3 border-bottom' : 'text-muted'; ?>" 
+                            id="users-tab" 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#tab-users" 
+                            type="button" 
+                            role="tab" 
+                            aria-controls="tab-users" 
+                            aria-selected="<?php echo ($currentTab === 'users') ? 'true' : 'false'; ?>">
+                        <i class="fas fa-users me-2 text-info"></i> Registered Users
+                        <span class="badge bg-info text-dark ms-2"><?php echo $totalUsers; ?></span>
+                        <?php if (count($birthdayUsers) > 0): ?>
+                            <span class="badge bg-danger ms-1" title="<?php echo count($birthdayUsers); ?> Birthdays Today!">🎂 <?php echo count($birthdayUsers); ?></span>
+                        <?php endif; ?>
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="certificateTabsContent">
+                <!-- TAB 1: CERTIFICATES LIST -->
+                <div class="tab-pane fade <?php echo ($currentTab !== 'users') ? 'show active' : ''; ?>" id="tab-certificates" role="tabpanel" aria-labelledby="certificates-tab">
+                    <div class="admin-card">
+                        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <span><i class="fas fa-certificate me-1 text-primary"></i> Certificates List</span>
+                            <?php if (!empty($searchTerm)): ?>
+                                <span class="badge bg-warning text-dark">
+                                    Filtered by: "<?php echo htmlspecialchars($searchTerm); ?>" 
+                                    <a href="?tab=certificates<?php echo !empty($userSearchTerm) ? '&user_search=' . urlencode($userSearchTerm) : ''; ?><?php echo $userPage > 1 ? '&user_page=' . $userPage : ''; ?>" class="text-dark ms-1 text-decoration-none" title="Clear filter">&times;</a>
                                 </span>
-                                <input type="text" id="globalTableSearch" class="form-control border-start-0" 
-                                       placeholder="Live search all columns (cert no, recipient, designation, type)..." 
-                                       value="<?php echo htmlspecialchars($searchTerm); ?>" 
-                                       autocomplete="off">
-                                <button class="btn btn-outline-secondary" type="button" id="clearSearchBtn" 
-                                        style="<?php echo empty($searchTerm) ? 'display:none;' : ''; ?>" title="Clear Search">
-                                    <i class="fas fa-times"></i>
-                                </button>
+                            <?php endif; ?>
+                        </div>
+                        <div class="card-body">
+                            <!-- Global Live Search Bar for Certificates -->
+                            <div class="row mb-3 align-items-center">
+                                <div class="col-md-6 col-lg-5">
+                                    <div class="input-group shadow-sm">
+                                        <span class="input-group-text bg-white border-end-0 text-muted">
+                                            <i class="fas fa-search"></i>
+                                        </span>
+                                        <input type="text" id="certTableSearch" class="form-control border-start-0" 
+                                               placeholder="Live search certificates (cert no, recipient, designation, type)..." 
+                                               value="<?php echo htmlspecialchars($searchTerm); ?>" 
+                                               autocomplete="off">
+                                        <button class="btn btn-outline-secondary" type="button" id="clearCertSearchBtn" 
+                                                style="<?php echo empty($searchTerm) ? 'display:none;' : ''; ?>" title="Clear Search">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-7 text-md-end mt-2 mt-md-0">
+                                    <span class="badge bg-light text-dark border py-2 px-3" id="certSearchMatchCount">
+                                        Showing <?php echo count($certificates); ?> of <?php echo $totalRecords; ?> certificates
+                                    </span>
+                                </div>
                             </div>
+
+                            <?php if (count($certificates) > 0): ?>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover align-middle" id="certificatesTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Certificate No.</th>
+                                                <th>Type</th>
+                                                <th>Name</th>
+                                                <th>Birth Date</th>
+                                                <th>Designation</th>
+                                                <th>Subject</th>
+                                                <th>Issue Date</th>
+                                                <th>End Date</th>
+                                                <th>Status</th>
+                                                <th class="text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($certificates as $cert): ?>
+                                                <tr>
+                                                    <td><strong><?php echo htmlspecialchars($cert['certificate_no']); ?></strong></td>
+                                                    <td><?php echo htmlspecialchars($cert['certificate_type']); ?></td>
+                                                    <td><?php echo htmlspecialchars($cert['recipient_name']); ?></td>
+                                                    <td><?php echo $cert['dob'] ? date('d-m-Y', strtotime($cert['dob'])) : '-'; ?></td>
+                                                    <td><?php echo htmlspecialchars($cert['post_name']); ?></td>
+                                                    <td><?php echo htmlspecialchars($cert['event_or_reason']); ?></td>
+                                                    <td><?php echo date('d-m-Y', strtotime($cert['issue_date'])); ?></td>
+                                                    <td><?php echo $cert['end_date'] ? date('d-m-Y', strtotime($cert['end_date'])) : '-'; ?></td>
+                                                    <td>
+                                                        <span class="badge <?php echo $cert['status'] === 'active' ? 'bg-success' : 'bg-danger'; ?>">
+                                                            <?php echo ucfirst($cert['status']); ?>
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="d-flex justify-content-center gap-1 flex-nowrap">
+                                                            <a href="certificates.php?action=edit&id=<?php echo $cert['id']; ?>" class="btn btn-sm btn-primary" title="Edit">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <button class="btn btn-sm btn-danger delete-btn" data-id="<?php echo $cert['id']; ?>" data-cert-no="<?php echo htmlspecialchars($cert['certificate_no']); ?>" title="Delete">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-success generate-certificate" 
+                                                                    data-certificate='<?php echo json_encode([
+                                                                        'certificate_no' => $cert['certificate_no'],
+                                                                        'certificate_type' => $cert['certificate_type'],
+                                                                        'recipient_name' => $cert['recipient_name'],
+                                                                        'post_name' => $cert['post_name'],
+                                                                        'event_or_reason' => $cert['event_or_reason'],
+                                                                        'issue_date' => $cert['issue_date'],
+                                                                        'end_date' => $cert['end_date'],
+                                                                        'effective_photo_path' => $cert['photo_path'] ?: ($cert['profile_photo'] ?? ''),
+                                                                        'photo_source' => $cert['photo_path'] ? 'certificates' : 'profiles',
+                                                                        'designation_hindi' => array_filter($allDesignations, function($d) use ($cert) { return $d['designation'] == $cert['post_name']; })[0]['designation_hindi'] ?? $cert['post_name']
+                                                                    ]); ?>' 
+                                                                    title="Download">
+                                                                <i class="fas fa-download"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <?php else: ?>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i> No certificates found. <?php if (!empty($searchTerm)): ?><a href="?tab=certificates<?php echo !empty($userSearchTerm) ? '&user_search=' . urlencode($userSearchTerm) : ''; ?>" class="alert-link ms-2">Reset search</a><?php endif; ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
-                        <div class="col-md-6 col-lg-7 text-md-end mt-2 mt-md-0">
-                            <span class="badge bg-light text-dark border py-2 px-3" id="searchMatchCount">
-                                Showing <?php echo count($certificates); ?> of <?php echo $totalRecords; ?> records
-                            </span>
-                        </div>
-                    </div>
-                    <?php if (count($certificates) > 0): ?>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Certificate No.</th>
-                                        <th>Type</th>
-                                        <th>Name</th>
-                                        <th>Birth Date</th>
-                                        <th>Designation</th>
-                                        <th>Subject</th>
-                                        <th>Issue Date</th>
-                                        <th>End Date</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($certificates as $cert): ?>
-                                        <tr>
-                                            <td><?php echo htmlspecialchars($cert['certificate_no']); ?></td>
-                                            <td>
-                                                <span class="badge badge-info">
-                                                    <?php 
-                                                    $types = [
-                                                        'Appointment' => 'Appointment Certificate',
-                                                        'Appreciation' => 'Appreciation Certificate',
-                                                        'Participation' => 'Participation Certificate',
-                                                        'Achievement' => 'Achievement Certificate',
-                                                        'Birthday Wishes' => 'Birthday Wishes'
-                                                    ];
-                                                    echo htmlspecialchars($types[$cert['certificate_type']] ?? $cert['certificate_type']);
-                                                    ?>
-                                                </span>
-                                            </td>
-                                            <td><?php echo htmlspecialchars($cert['recipient_name']); ?></td>
-                                            <td><?php echo $cert['dob'] ? date('d-m-Y', strtotime($cert['dob'])) : '-'; ?></td>
-                                            <td><?php echo htmlspecialchars($cert['post_name'] ?? '-'); ?></td>
-                                            <td><?php echo htmlspecialchars($cert['event_or_reason']); ?></td>
-                                            <td><?php echo date('d-m-Y', strtotime($cert['issue_date'])); ?></td>
-                                            <td><?php echo $cert['end_date'] ? date('d-m-Y', strtotime($cert['end_date'])) : '-'; ?></td>
-                                            <td>
-                                                <span class="badge <?php echo $cert['status'] == 'active' ? 'badge-success' : 'badge-danger'; ?>">
-                                                    <?php echo $cert['status'] == 'active' ? 'Active' : 'Inactive'; ?>
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <a href="certificates.php?action=edit&id=<?php echo $cert['id']; ?>" class="btn btn-sm btn-primary" title="Edit">
-                                                    <i class="fas fa-edit"></i>
+                        
+                        <?php if ($totalPages > 1): ?>
+                            <div class="card-footer">
+                                <nav aria-label="Certificates page navigation">
+                                    <ul class="pagination justify-content-center mb-0">
+                                        <?php if ($page > 1): ?>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?tab=certificates&page=<?php echo $page - 1; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?><?php echo !empty($userSearchTerm) ? '&user_search=' . urlencode($userSearchTerm) : ''; ?><?php echo $userPage > 1 ? '&user_page=' . $userPage : ''; ?>">
+                                                    <i class="fas fa-chevron-left"></i>
                                                 </a>
-                                                <button class="btn btn-sm btn-danger delete-certificate-btn" data-id="<?php echo $cert['id']; ?>" data-cert-no="<?php echo htmlspecialchars($cert['certificate_no']); ?>" title="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-success generate-certificate" 
-                                                        data-certificate='<?php echo json_encode([
-                                                            'certificate_no' => $cert['certificate_no'],
-                                                            'certificate_type' => $cert['certificate_type'],
-                                                            'recipient_name' => $cert['recipient_name'],
-                                                            'post_name' => $cert['post_name'],
-                                                            'event_or_reason' => $cert['event_or_reason'],
-                                                            'issue_date' => $cert['issue_date'],
-                                                            'end_date' => $cert['end_date'],
-                                                            'effective_photo_path' => $cert['photo_path'] ?: ($cert['profile_photo'] ?? ''),
-                                                            'photo_source' => $cert['photo_path'] ? 'certificates' : 'profiles',
-                                                            'designation_hindi' => array_filter($allDesignations, function($d) use ($cert) { return $d['designation'] == $cert['post_name']; })[0]['designation_hindi'] ?? $cert['post_name']
-                                                        ]); ?>' 
-                                                        title="Download">
-                                                    <i class="fas fa-download"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    <?php else: ?>
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i> No certificates found.
-                        </div>
-                    <?php endif; ?>
-                </div>
-                
-                <?php if ($totalPages > 1): ?>
-                    <div class="card-footer">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center mb-0">
-                                <?php if ($page > 1): ?>
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>">
-                                            <i class="fas fa-chevron-left"></i>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
-                                
-                                <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
-                                    <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>"><?php echo $i; ?></a>
-                                    </li>
-                                <?php endfor; ?>
-                                
-                                <?php if ($page < $totalPages): ?>
-                                    <li class="page-item">
-                                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>">
-                                            <i class="fas fa-chevron-right"></i>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
-                            </ul>
-                        </nav>
+                                            </li>
+                                        <?php endif; ?>
+                                        
+                                        <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
+                                            <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                                                <a class="page-link" href="?tab=certificates&page=<?php echo $i; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?><?php echo !empty($userSearchTerm) ? '&user_search=' . urlencode($userSearchTerm) : ''; ?><?php echo $userPage > 1 ? '&user_page=' . $userPage : ''; ?>"><?php echo $i; ?></a>
+                                            </li>
+                                        <?php endfor; ?>
+                                        
+                                        <?php if ($page < $totalPages): ?>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?tab=certificates&page=<?php echo $page + 1; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?><?php echo !empty($userSearchTerm) ? '&user_search=' . urlencode($userSearchTerm) : ''; ?><?php echo $userPage > 1 ? '&user_page=' . $userPage : ''; ?>">
+                                                    <i class="fas fa-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </nav>
+                            </div>
+                        <?php endif; ?>
                     </div>
-                <?php endif; ?>
+                </div>
+
+                <!-- TAB 2: REGISTERED USERS LIST -->
+                <div class="tab-pane fade <?php echo ($currentTab === 'users') ? 'show active' : ''; ?>" id="tab-users" role="tabpanel" aria-labelledby="users-tab">
+                    <div class="admin-card">
+                        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                            <span><i class="fas fa-users me-1 text-info"></i> Registered Users List</span>
+                            <?php if (!empty($userSearchTerm)): ?>
+                                <span class="badge bg-warning text-dark">
+                                    Filtered by: "<?php echo htmlspecialchars($userSearchTerm); ?>" 
+                                    <a href="?tab=users<?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?><?php echo $page > 1 ? '&page=' . $page : ''; ?>" class="text-dark ms-1 text-decoration-none" title="Clear filter">&times;</a>
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="card-body">
+                            <?php if (count($birthdayUsers) > 0): ?>
+                                <div class="alert alert-info mb-4">
+                                    <i class="fas fa-birthday-cake"></i> <strong>Today's Birthdays:</strong> 
+                                    <?php 
+                                    $birthdayNames = array_map(function($user) { return htmlspecialchars($user['name']); }, $birthdayUsers);
+                                    echo implode(', ', $birthdayNames); 
+                                    ?>
+                                </div>
+                            <?php else: ?>
+                                <div class="alert alert-info mb-4">
+                                    <i class="fas fa-info-circle"></i> No birthdays today.
+                                </div>
+                            <?php endif; ?>
+
+                            <!-- Global Live Search Bar for Users -->
+                            <div class="row mb-3 align-items-center">
+                                <div class="col-md-6 col-lg-5">
+                                    <div class="input-group shadow-sm">
+                                        <span class="input-group-text bg-white border-end-0 text-muted">
+                                            <i class="fas fa-search"></i>
+                                        </span>
+                                        <input type="text" id="userTableSearch" class="form-control border-start-0" 
+                                               placeholder="Live search users (name, email, mobile, birth date)..." 
+                                               value="<?php echo htmlspecialchars($userSearchTerm); ?>" 
+                                               autocomplete="off">
+                                        <button class="btn btn-outline-secondary" type="button" id="clearUserSearchBtn" 
+                                                style="<?php echo empty($userSearchTerm) ? 'display:none;' : ''; ?>" title="Clear Search">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-7 text-md-end mt-2 mt-md-0">
+                                    <span class="badge bg-light text-dark border py-2 px-3" id="userSearchMatchCount">
+                                        Showing <?php echo count($users); ?> of <?php echo $totalUsers; ?> users
+                                    </span>
+                                </div>
+                            </div>
+
+                            <?php if (count($users) > 0): ?>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover align-middle" id="usersTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Birth Date</th>
+                                                <th>Email</th>
+                                                <th>Mobile</th>
+                                                <th class="text-center">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($users as $user): 
+                                                $isBirthdayToday = in_array($user['id'], array_column($birthdayUsers, 'id'));
+                                            ?>
+                                                <tr>
+                                                    <td>
+                                                        <strong><?php echo htmlspecialchars($user['name']); ?></strong>
+                                                        <?php if ($isBirthdayToday): ?>
+                                                            <span class="badge bg-success ms-2" title="Today is birthday">
+                                                                <i class="fas fa-birthday-cake"></i> Birthday Today
+                                                            </span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td><?php echo $user['dob'] ? date('d-m-Y', strtotime($user['dob'])) : '-'; ?></td>
+                                                    <td><?php echo htmlspecialchars($user['email'] ?? '-'); ?></td>
+                                                    <td><?php echo htmlspecialchars($user['mobile'] ?? '-'); ?></td>
+                                                    <td class="text-center">
+                                                        <a href="certificates.php?action=add&user_id=<?php echo $user['id']; ?><?php echo $isBirthdayToday ? '&certificate_type=Birthday Wishes' : ''; ?>&tab=users" 
+                                                           class="btn btn-sm btn-primary" 
+                                                           title="<?php echo $isBirthdayToday ? 'Create Birthday Wishes Certificate' : 'Create Certificate'; ?>">
+                                                            <i class="fas fa-plus me-1"></i> 
+                                                            <?php echo $isBirthdayToday ? 'Birthday Wishes' : 'Create Certificate'; ?>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <?php else: ?>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i> No users found. <?php if (!empty($userSearchTerm)): ?><a href="?tab=users<?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>" class="alert-link ms-2">Reset search</a><?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if ($totalUserPages > 1): ?>
+                            <div class="card-footer">
+                                <nav aria-label="Users page navigation">
+                                    <ul class="pagination justify-content-center mb-0">
+                                        <?php if ($userPage > 1): ?>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?tab=users&user_page=<?php echo $userPage - 1; ?><?php echo !empty($userSearchTerm) ? '&user_search=' . urlencode($userSearchTerm) : ''; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?><?php echo $page > 1 ? '&page=' . $page : ''; ?>">
+                                                    <i class="fas fa-chevron-left"></i>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                        
+                                        <?php for ($i = max(1, $userPage - 2); $i <= min($totalUserPages, $userPage + 2); $i++): ?>
+                                            <li class="page-item <?php echo $i == $userPage ? 'active' : ''; ?>">
+                                                <a class="page-link" href="?tab=users&user_page=<?php echo $i; ?><?php echo !empty($userSearchTerm) ? '&user_search=' . urlencode($userSearchTerm) : ''; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?><?php echo $page > 1 ? '&page=' . $page : ''; ?>"><?php echo $i; ?></a>
+                                            </li>
+                                        <?php endfor; ?>
+                                        
+                                        <?php if ($userPage < $totalUserPages): ?>
+                                            <li class="page-item">
+                                                <a class="page-link" href="?tab=users&user_page=<?php echo $userPage + 1; ?><?php echo !empty($userSearchTerm) ? '&user_search=' . urlencode($userSearchTerm) : ''; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?><?php echo $page > 1 ? '&page=' . $page : ''; ?>">
+                                                    <i class="fas fa-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </nav>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
-            
             <div class="modal fade" id="deleteCertificateModal" tabindex="-1" aria-labelledby="deleteCertificateModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -1382,109 +1513,146 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
-// Global Live Table Search across all columns
+// Modular Live Table Search for Certificates and Users
 document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('globalTableSearch');
-    const clearBtn = document.getElementById('clearSearchBtn');
-    const table = document.querySelector('.table-responsive table');
-    const matchCountBadge = document.getElementById('searchMatchCount');
+    function setupLiveTableSearch(cfg) {
+        const searchInput = document.getElementById(cfg.inputId);
+        const clearBtn = document.getElementById(cfg.clearBtnId);
+        const table = document.getElementById(cfg.tableId);
+        const matchCountBadge = document.getElementById(cfg.matchCountBadgeId);
 
-    if (!searchInput || !table) return;
+        if (!searchInput || !table) return;
 
-    const rows = Array.from(table.querySelectorAll('tbody tr')).filter(r => r.id !== 'noResultsRow');
-    const totalRows = rows.length;
-
-    let noResultsRow = document.getElementById('noResultsRow');
-    if (!noResultsRow) {
-        const colCount = table.querySelectorAll('thead th').length || 8;
-        noResultsRow = document.createElement('tr');
-        noResultsRow.id = 'noResultsRow';
-        noResultsRow.className = 'd-none';
-        noResultsRow.innerHTML = `<td colspan="${colCount}" class="text-center py-4 text-muted"><i class="fas fa-search me-2"></i>No matching records found for "<span id="searchKeyword"></span>".</td>`;
         const tbody = table.querySelector('tbody');
-        if (tbody) tbody.appendChild(noResultsRow);
-    }
-    const searchKeywordSpan = document.getElementById('searchKeyword');
+        if (!tbody) return;
 
-    function filterTable() {
-        const rawTerm = searchInput.value.trim().toLowerCase();
-        const terms = rawTerm.split(/\s+/).filter(Boolean);
+        let noResultsRow = tbody.querySelector('.no-live-results-row');
+        if (!noResultsRow) {
+            const colCount = table.querySelectorAll('thead th').length || 6;
+            noResultsRow = document.createElement('tr');
+            noResultsRow.className = 'no-live-results-row d-none';
+            noResultsRow.innerHTML = `<td colspan="${colCount}" class="text-center py-4 text-muted"><i class="fas fa-search me-2"></i>No matching records found for "<span class="live-keyword"></span>".</td>`;
+            tbody.appendChild(noResultsRow);
+        }
+        const keywordSpan = noResultsRow.querySelector('.live-keyword');
+
+        function filterRows() {
+            const rows = Array.from(tbody.querySelectorAll('tr')).filter(r => !r.classList.contains('no-live-results-row'));
+            const totalRows = rows.length;
+            const rawTerm = searchInput.value.trim().toLowerCase();
+            const terms = rawTerm.split(/\s+/).filter(Boolean);
+
+            if (clearBtn) {
+                clearBtn.style.display = rawTerm ? 'inline-block' : 'none';
+            }
+
+            let visibleCount = 0;
+            rows.forEach(row => {
+                const cells = Array.from(row.querySelectorAll('td'));
+                const searchCells = cells.length > 1 ? cells.slice(0, -1) : cells;
+                const text = searchCells.map(c => c.innerText.toLowerCase()).join(' ');
+
+                const matches = terms.every(t => text.includes(t));
+                if (matches) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            if (visibleCount === 0 && rawTerm) {
+                noResultsRow.classList.remove('d-none');
+                if (keywordSpan) keywordSpan.textContent = searchInput.value.trim();
+            } else {
+                noResultsRow.classList.add('d-none');
+            }
+
+            if (matchCountBadge) {
+                if (rawTerm) {
+                    matchCountBadge.textContent = `${visibleCount} of ${totalRows} records match`;
+                    matchCountBadge.className = 'badge bg-primary text-white py-2 px-3';
+                } else {
+                    matchCountBadge.textContent = `Showing ${totalRows} ${cfg.entityName || 'records'}`;
+                    matchCountBadge.className = 'badge bg-light text-dark border py-2 px-3';
+                }
+            }
+        }
+
+        searchInput.addEventListener('input', filterRows);
 
         if (clearBtn) {
-            clearBtn.style.display = rawTerm ? 'inline-block' : 'none';
+            clearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                filterRows();
+                if (window.location.search.includes(cfg.queryParam + '=')) {
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete(cfg.queryParam);
+                    url.searchParams.set('tab', cfg.tabName);
+                    if (cfg.pageParam) url.searchParams.set(cfg.pageParam, '1');
+                    window.location.href = url.toString();
+                } else {
+                    searchInput.focus();
+                }
+            });
         }
 
-        let visibleCount = 0;
-        rows.forEach(row => {
-            if (row.id === 'noResultsRow') return;
-
-            const cells = Array.from(row.querySelectorAll('td'));
-            // Search all cells except the last action buttons cell
-            const searchCells = cells.length > 1 ? cells.slice(0, -1) : cells;
-            const textContent = searchCells.map(c => c.innerText.toLowerCase()).join(' ');
-
-            const matches = terms.every(term => textContent.includes(term));
-            if (matches) {
-                row.style.display = '';
-                visibleCount++;
-            } else {
-                row.style.display = 'none';
-            }
-        });
-
-        if (visibleCount === 0 && rawTerm) {
-            noResultsRow.classList.remove('d-none');
-            if (searchKeywordSpan) searchKeywordSpan.textContent = searchInput.value.trim();
-        } else {
-            noResultsRow.classList.add('d-none');
-        }
-
-        if (matchCountBadge) {
-            if (rawTerm) {
-                matchCountBadge.textContent = `${visibleCount} of ${totalRows} records match`;
-                matchCountBadge.className = 'badge bg-primary text-white py-2 px-3';
-            } else {
-                matchCountBadge.textContent = `Showing ${totalRows} records`;
-                matchCountBadge.className = 'badge bg-light text-dark border py-2 px-3';
-            }
-        }
-    }
-
-    searchInput.addEventListener('input', filterTable);
-
-    if (clearBtn) {
-        clearBtn.addEventListener('click', function() {
-            searchInput.value = '';
-            filterTable();
-            if (window.location.search.includes('search=')) {
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const term = searchInput.value.trim();
                 const url = new URL(window.location.href);
-                url.searchParams.delete('search');
-                url.searchParams.set('page', '1');
+                url.searchParams.set('tab', cfg.tabName);
+                if (term) {
+                    url.searchParams.set(cfg.queryParam, term);
+                    if (cfg.pageParam) url.searchParams.set(cfg.pageParam, '1');
+                } else {
+                    url.searchParams.delete(cfg.queryParam);
+                }
                 window.location.href = url.toString();
-            } else {
-                searchInput.focus();
             }
         });
+
+        if (searchInput.value.trim()) {
+            filterRows();
+        }
     }
 
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const term = searchInput.value.trim();
-            const url = new URL(window.location.href);
-            if (term) {
-                url.searchParams.set('search', term);
-                url.searchParams.set('page', '1');
-            } else {
-                url.searchParams.delete('search');
-            }
-            window.location.href = url.toString();
-        }
+    // 1. Initialize Certificates Search
+    setupLiveTableSearch({
+        inputId: 'certTableSearch',
+        clearBtnId: 'clearCertSearchBtn',
+        tableId: 'certificatesTable',
+        matchCountBadgeId: 'certSearchMatchCount',
+        queryParam: 'search',
+        pageParam: 'page',
+        tabName: 'certificates',
+        entityName: 'certificates'
     });
 
-    if (searchInput.value.trim()) {
-        filterTable();
-    }
+    // 2. Initialize Users Search
+    setupLiveTableSearch({
+        inputId: 'userTableSearch',
+        clearBtnId: 'clearUserSearchBtn',
+        tableId: 'usersTable',
+        matchCountBadgeId: 'userSearchMatchCount',
+        queryParam: 'user_search',
+        pageParam: 'user_page',
+        tabName: 'users',
+        entityName: 'users'
+    });
+
+    // 3. Tab State Synchronization with URL without reload
+    const tabButtons = document.querySelectorAll('#certificateTabs button[data-bs-toggle="tab"]');
+    tabButtons.forEach(btn => {
+        btn.addEventListener('shown.bs.tab', function(e) {
+            const target = e.target.getAttribute('data-bs-target');
+            const tabName = (target === '#tab-users') ? 'users' : 'certificates';
+            const url = new URL(window.location.href);
+            url.searchParams.set('tab', tabName);
+            window.history.replaceState({}, '', url.toString());
+        });
+    });
 });
 </script>
 
