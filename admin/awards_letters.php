@@ -50,7 +50,7 @@ if ($action === 'add' && isset($_GET['user_id']) && is_numeric($_GET['user_id'])
         $action = 'list';
     }
 } elseif ($action === 'edit' && $id > 0) {
-    $stmt = $db->prepare("SELECT a.*, u.name AS user_name FROM award_letters a JOIN users u ON a.user_id = u.id WHERE a.id = ?");
+    $stmt = $db->prepare("SELECT a.*, u.name AS user_name FROM award_letters a LEFT JOIN users u ON a.user_id = u.id WHERE a.id = ?");
     $stmt->execute([$id]);
     $letter = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$letter) {
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $status = isset($_POST['status']) ? sanitizeInput($_POST['status']) : 'active';
             
             // Validate basic fields
-            if (empty($recipient_name) || empty($recipient_address) || empty($award_title) || empty($field_of_contribution) || empty($issue_date) || empty($ceremony_date) || empty($ceremony_location) || empty($user_id)) {
+            if (empty($recipient_name) || empty($recipient_address) || empty($award_title) || empty($field_of_contribution) || empty($issue_date) || empty($ceremony_date) || empty($ceremony_location) || ($formAction === 'add' && empty($user_id))) {
                 $error = "Please fill all required fields.";
             } elseif (!in_array($status, ['active', 'inactive'])) {
                 $error = "Invalid status.";
@@ -204,13 +204,26 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 12;
 $offset = ($page - 1) * $limit;
 
+// Search term handling
+$searchTerm = isset($_GET['search']) ? trim(sanitizeInput($_GET['search'])) : '';
+$whereClause = '';
+$queryParams = [];
+
+if ($searchTerm !== '') {
+    $whereClause = "WHERE (a.letter_no LIKE ? OR a.recipient_name LIKE ? OR a.recipient_address LIKE ? OR a.award_title LIKE ? OR a.field_of_contribution LIKE ? OR a.ceremony_location LIKE ? OR a.status LIKE ? OR u.name LIKE ?)";
+    $like = '%' . $searchTerm . '%';
+    $queryParams = [$like, $like, $like, $like, $like, $like, $like, $like];
+}
+
 try {
-    $stmt = $db->prepare("SELECT COUNT(*) FROM award_letters");
-    $stmt->execute();
+    $countSql = "SELECT COUNT(*) FROM award_letters a LEFT JOIN users u ON a.user_id = u.id " . $whereClause;
+    $stmt = $db->prepare($countSql);
+    $stmt->execute($queryParams);
     $totalRecords = $stmt->fetchColumn();
     
-    $stmt = $db->prepare("SELECT a.*, u.name as user_name FROM award_letters a LEFT JOIN users u ON a.user_id = u.id ORDER BY a.created_at DESC LIMIT ? OFFSET ?");
-    $stmt->execute([$limit, $offset]);
+    $dataSql = "SELECT a.*, u.name as user_name FROM award_letters a LEFT JOIN users u ON a.user_id = u.id " . $whereClause . " ORDER BY a.created_at DESC LIMIT $limit OFFSET $offset";
+    $stmt = $db->prepare($dataSql);
+    $stmt->execute($queryParams);
     $letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     $totalPages = ceil($totalRecords / $limit);
@@ -274,7 +287,7 @@ include 'includes/header.php';
                     <i class="fas fa-<?php echo $action === 'add' ? 'plus' : 'edit'; ?>"></i> <?php echo ($action === 'add') ? "Add New Award Letter" : "Edit Award Letter"; ?>
                 </div>
                 <div class="card-body">
-                    <form method="post">
+                    <form method="post" action="awards_letters.php<?php echo ($action === 'edit' && $id > 0) ? '?action=edit&id=' . $id : '?action=add'; ?>">
                         <input type="hidden" name="action" value="<?php echo $action; ?>">
                         <input type="hidden" name="csrf_token" value="<?php echo generateCSRF(); ?>">
                         <?php if ($action === 'edit'): ?>
@@ -294,9 +307,15 @@ include 'includes/header.php';
                                         try {
                                             $userStmt = $db->query("SELECT id, name FROM users WHERE status = 'approved' ORDER BY name");
                                             $users = $userStmt->fetchAll(PDO::FETCH_ASSOC);
+                                            $userFound = false;
                                             foreach ($users as $user) {
                                                 $selected = (isset($letter['user_id']) && $letter['user_id'] == $user['id']) ? 'selected' : '';
+                                                if ($selected) $userFound = true;
                                                 echo "<option value='{$user['id']}' $selected>" . htmlspecialchars($user['name']) . "</option>";
+                                            }
+                                            if (!empty($letter['user_id']) && !$userFound) {
+                                                $uDisplayName = !empty($letter['user_name']) ? $letter['user_name'] : ('User #' . $letter['user_id']);
+                                                echo "<option value='{$letter['user_id']}' selected>" . htmlspecialchars($uDisplayName) . " (Current)</option>";
                                             }
                                         } catch (Exception $e) {
                                             echo "<option value=''>Error loading users</option>";
@@ -432,10 +451,39 @@ include 'includes/header.php';
             </div>
             
             <div class="admin-card">
-                <div class="card-header">
-                    <i class="fas fa-envelope-open-text"></i> Award Letters List
+                <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span><i class="fas fa-envelope-open-text me-1"></i> Award Letters List</span>
+                    <?php if (!empty($searchTerm)): ?>
+                        <span class="badge bg-warning text-dark">
+                            Filtered by: "<?php echo htmlspecialchars($searchTerm); ?>" 
+                            <a href="awards_letters.php" class="text-dark ms-1 text-decoration-none" title="Clear filter">&times;</a>
+                        </span>
+                    <?php endif; ?>
                 </div>
                 <div class="card-body">
+                    <!-- Global Live Search Bar -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-6 col-lg-5">
+                            <div class="input-group shadow-sm">
+                                <span class="input-group-text bg-white border-end-0 text-muted">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                                <input type="text" id="globalTableSearch" class="form-control border-start-0" 
+                                       placeholder="Live search all columns (ref no, recipient, award title, ceremony)..." 
+                                       value="<?php echo htmlspecialchars($searchTerm); ?>" 
+                                       autocomplete="off">
+                                <button class="btn btn-outline-secondary" type="button" id="clearSearchBtn" 
+                                        style="<?php echo empty($searchTerm) ? 'display:none;' : ''; ?>" title="Clear Search">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-7 text-md-end mt-2 mt-md-0">
+                            <span class="badge bg-light text-dark border py-2 px-3" id="searchMatchCount">
+                                Showing <?php echo count($letters); ?> of <?php echo $totalRecords; ?> records
+                            </span>
+                        </div>
+                    </div>
                     <?php if (count($letters) > 0): ?>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
@@ -505,7 +553,7 @@ include 'includes/header.php';
                             <ul class="pagination justify-content-center mb-0">
                                 <?php if ($page > 1): ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=<?php echo $page - 1; ?>">
+                                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>">
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
                                     </li>
@@ -513,13 +561,13 @@ include 'includes/header.php';
                                 
                                 <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
                                     <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>"><?php echo $i; ?></a>
                                     </li>
                                 <?php endfor; ?>
                                 
                                 <?php if ($page < $totalPages): ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=<?php echo $page + 1; ?>">
+                                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
                                     </li>
@@ -868,6 +916,114 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 500);
             }
         }, 4000);
+    }
+});
+</script>
+
+
+<script>
+// Global Live Table Search across all columns
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('globalTableSearch');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    const table = document.querySelector('.table-responsive table');
+    const matchCountBadge = document.getElementById('searchMatchCount');
+
+    if (!searchInput || !table) return;
+
+    const rows = Array.from(table.querySelectorAll('tbody tr')).filter(r => r.id !== 'noResultsRow');
+    const totalRows = rows.length;
+
+    let noResultsRow = document.getElementById('noResultsRow');
+    if (!noResultsRow) {
+        const colCount = table.querySelectorAll('thead th').length || 8;
+        noResultsRow = document.createElement('tr');
+        noResultsRow.id = 'noResultsRow';
+        noResultsRow.className = 'd-none';
+        noResultsRow.innerHTML = `<td colspan="${colCount}" class="text-center py-4 text-muted"><i class="fas fa-search me-2"></i>No matching records found for "<span id="searchKeyword"></span>".</td>`;
+        const tbody = table.querySelector('tbody');
+        if (tbody) tbody.appendChild(noResultsRow);
+    }
+    const searchKeywordSpan = document.getElementById('searchKeyword');
+
+    function filterTable() {
+        const rawTerm = searchInput.value.trim().toLowerCase();
+        const terms = rawTerm.split(/\s+/).filter(Boolean);
+
+        if (clearBtn) {
+            clearBtn.style.display = rawTerm ? 'inline-block' : 'none';
+        }
+
+        let visibleCount = 0;
+        rows.forEach(row => {
+            if (row.id === 'noResultsRow') return;
+
+            const cells = Array.from(row.querySelectorAll('td'));
+            // Search all cells except the last action buttons cell
+            const searchCells = cells.length > 1 ? cells.slice(0, -1) : cells;
+            const textContent = searchCells.map(c => c.innerText.toLowerCase()).join(' ');
+
+            const matches = terms.every(term => textContent.includes(term));
+            if (matches) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        if (visibleCount === 0 && rawTerm) {
+            noResultsRow.classList.remove('d-none');
+            if (searchKeywordSpan) searchKeywordSpan.textContent = searchInput.value.trim();
+        } else {
+            noResultsRow.classList.add('d-none');
+        }
+
+        if (matchCountBadge) {
+            if (rawTerm) {
+                matchCountBadge.textContent = `${visibleCount} of ${totalRows} records match`;
+                matchCountBadge.className = 'badge bg-primary text-white py-2 px-3';
+            } else {
+                matchCountBadge.textContent = `Showing ${totalRows} records`;
+                matchCountBadge.className = 'badge bg-light text-dark border py-2 px-3';
+            }
+        }
+    }
+
+    searchInput.addEventListener('input', filterTable);
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            filterTable();
+            if (window.location.search.includes('search=')) {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('search');
+                url.searchParams.set('page', '1');
+                window.location.href = url.toString();
+            } else {
+                searchInput.focus();
+            }
+        });
+    }
+
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const term = searchInput.value.trim();
+            const url = new URL(window.location.href);
+            if (term) {
+                url.searchParams.set('search', term);
+                url.searchParams.set('page', '1');
+            } else {
+                url.searchParams.delete('search');
+            }
+            window.location.href = url.toString();
+        }
+    });
+
+    if (searchInput.value.trim()) {
+        filterTable();
     }
 });
 </script>

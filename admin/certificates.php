@@ -118,16 +118,27 @@ if ($action === 'add' && isset($_GET['user_id']) && is_numeric($_GET['user_id'])
         $action = 'list';
     }
 } elseif ($action === 'edit' && $id > 0) {
-    $stmt = $db->prepare("SELECT c.*, u.membership_type, u.profile_image AS profile_photo FROM certificates c JOIN users u ON c.user_id = u.id WHERE c.id = ?");
+    $stmt = $db->prepare("SELECT c.*, u.membership_type, u.profile_image AS profile_photo FROM certificates c LEFT JOIN users u ON c.user_id = u.id WHERE c.id = ?");
     $stmt->execute([$id]);
     $certificate = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($certificate) {
-        $membership_type = $certificate['membership_type'];
+        $membership_type = $certificate['membership_type'] ?? '';
         $profile_photo = $certificate['profile_photo'] ?? '';
         $certificate_photo = $certificate['photo_path'] ?? '';
-        $stmt = $db->prepare("SELECT designation, designation_hindi FROM membership_designations WHERE membership_type = ? AND status = 'active' ORDER BY sort_order");
-        $stmt->execute([$membership_type]);
-        $designations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $designations = [];
+        if (!empty($membership_type)) {
+            $stmt = $db->prepare("SELECT designation, designation_hindi FROM membership_designations WHERE membership_type = ? AND status = 'active' ORDER BY sort_order");
+            $stmt->execute([$membership_type]);
+            $designations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        if (empty($designations)) {
+            try {
+                $stmtAll = $db->query("SELECT designation, designation_hindi FROM membership_designations WHERE status = 'active' ORDER BY sort_order, designation ASC");
+                $designations = $stmtAll->fetchAll(PDO::FETCH_ASSOC);
+            } catch (Exception $e) {
+                $designations = [];
+            }
+        }
     } else {
         $error = "Certificate not found.";
         $action = 'list';
@@ -242,11 +253,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Enhanced validation
             if (!in_array($certificate_type, $validCertificateTypes)) {
                 $error = "Invalid certificate type.";
-            } elseif (empty($recipient_name) || ($certificate_type !== 'Birthday Wishes' && empty($post_name)) || empty($event_or_reason) || empty($issue_date) || empty($user_id)) {
+            } elseif (empty($recipient_name) || ($certificate_type !== 'Birthday Wishes' && empty($post_name)) || empty($event_or_reason) || empty($issue_date) || ($formAction === 'add' && empty($user_id))) {
                 $error = "Please fill all required fields.";
-            } elseif (!$user) {
+            } elseif ($formAction === 'add' && !$user) {
                 $error = "User not found or not approved.";
-            } elseif ($certificate_type !== 'Birthday Wishes' && !in_array($post_name, $validDesignations)) {
+            } elseif ($certificate_type !== 'Birthday Wishes' && !empty($validDesignations) && !in_array($post_name, $validDesignations) && ($formAction === 'add' || ($formAction === 'edit' && isset($_POST['post_name']) && $_POST['post_name'] !== ($certificate['post_name'] ?? '')))) {
                 $error = "Invalid designation. Please select according to user's membership level.";
             } elseif (!in_array($status, ['active', 'inactive'])) {
                 $error = "Invalid status.";
@@ -339,13 +350,26 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 12;
 $offset = ($page - 1) * $limit;
 
+// Search term handling
+$searchTerm = isset($_GET['search']) ? trim(sanitizeInput($_GET['search'])) : '';
+$whereClause = '';
+$queryParams = [];
+
+if ($searchTerm !== '') {
+    $whereClause = "WHERE (c.certificate_no LIKE ? OR c.recipient_name LIKE ? OR c.post_name LIKE ? OR c.event_or_reason LIKE ? OR c.certificate_type LIKE ? OR c.status LIKE ? OR u.name LIKE ?)";
+    $like = '%' . $searchTerm . '%';
+    $queryParams = [$like, $like, $like, $like, $like, $like, $like];
+}
+
 try {
-    $stmt = $db->prepare("SELECT COUNT(*) FROM certificates");
-    $stmt->execute();
+    $countSql = "SELECT COUNT(*) FROM certificates c LEFT JOIN users u ON c.user_id = u.id " . $whereClause;
+    $stmt = $db->prepare($countSql);
+    $stmt->execute($queryParams);
     $totalRecords = $stmt->fetchColumn();
     
-    $stmt = $db->prepare("SELECT c.*, u.name as user_name, u.profile_image AS profile_photo, u.dob FROM certificates c LEFT JOIN users u ON c.user_id = u.id ORDER BY c.created_at DESC LIMIT ? OFFSET ?");
-    $stmt->execute([$limit, $offset]);
+    $dataSql = "SELECT c.*, u.name as user_name, u.profile_image AS profile_photo, u.dob FROM certificates c LEFT JOIN users u ON c.user_id = u.id " . $whereClause . " ORDER BY c.created_at DESC LIMIT $limit OFFSET $offset";
+    $stmt = $db->prepare($dataSql);
+    $stmt->execute($queryParams);
     $certificates = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     $stmt = $db->prepare("SELECT designation, designation_hindi FROM membership_designations WHERE status = 'active'");
@@ -420,7 +444,7 @@ include 'includes/header.php';
                     <i class="fas fa-<?php echo $action === 'add' ? 'plus' : 'edit'; ?>"></i> <?php echo ($action === 'add') ? "Add New Certificate" : "Edit Certificate"; ?>
                 </div>
                 <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" action="certificates.php<?php echo ($action === 'edit' && $id > 0) ? '?action=edit&id=' . $id : '?action=add'; ?>" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="<?php echo $action; ?>">
                         <input type="hidden" name="csrf_token" value="<?php echo generateCSRF(); ?>">
                         <?php if ($action === 'edit'): ?>
@@ -469,13 +493,23 @@ include 'includes/header.php';
                             <div class="col-md-6">
                                 <label for="post_name" class="form-label">Designation <?php echo ($certificate['certificate_type'] !== 'Birthday Wishes') ? '<span class="text-danger">*</span>' : ''; ?></label>
                                 <select class="form-select" id="post_name" name="post_name" <?php echo ($certificate['certificate_type'] !== 'Birthday Wishes') ? 'required' : ''; ?>>
-                                    <option value="">-- Select User First --</option>
-                                    <?php foreach ($designations as $designation): ?>
-                                        <option value="<?php echo htmlspecialchars($designation['designation']); ?>" 
-                                                <?php echo (isset($certificate['post_name']) && $certificate['post_name'] == $designation['designation']) ? 'selected' : ''; ?>>
+                                    <option value="">-- Select Designation --</option>
+                                    <?php 
+                                    $currentPost = $certificate['post_name'] ?? '';
+                                    $postFound = false;
+                                    foreach ($designations as $designation): 
+                                        $selected = ($currentPost === $designation['designation']) ? 'selected' : '';
+                                        if ($selected) $postFound = true;
+                                    ?>
+                                        <option value="<?php echo htmlspecialchars($designation['designation']); ?>" <?php echo $selected; ?>>
                                             <?php echo htmlspecialchars($designation['designation_hindi'] . ' (' . $designation['designation'] . ')'); ?>
                                         </option>
                                     <?php endforeach; ?>
+                                    <?php if (!empty($currentPost) && !$postFound): ?>
+                                        <option value="<?php echo htmlspecialchars($currentPost); ?>" selected>
+                                            <?php echo htmlspecialchars($currentPost); ?> (Current)
+                                        </option>
+                                    <?php endif; ?>
                                 </select>
                             </div>
                         </div>
@@ -602,10 +636,39 @@ include 'includes/header.php';
             </div>
             
             <div class="admin-card">
-                <div class="card-header">
-                    <i class="fas fa-certificate"></i> Certificate List
+                <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span><i class="fas fa-certificate me-1"></i> Certificate List</span>
+                    <?php if (!empty($searchTerm)): ?>
+                        <span class="badge bg-warning text-dark">
+                            Filtered by: "<?php echo htmlspecialchars($searchTerm); ?>" 
+                            <a href="certificates.php" class="text-dark ms-1 text-decoration-none" title="Clear filter">&times;</a>
+                        </span>
+                    <?php endif; ?>
                 </div>
                 <div class="card-body">
+                    <!-- Global Live Search Bar -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-6 col-lg-5">
+                            <div class="input-group shadow-sm">
+                                <span class="input-group-text bg-white border-end-0 text-muted">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                                <input type="text" id="globalTableSearch" class="form-control border-start-0" 
+                                       placeholder="Live search all columns (cert no, recipient, designation, type)..." 
+                                       value="<?php echo htmlspecialchars($searchTerm); ?>" 
+                                       autocomplete="off">
+                                <button class="btn btn-outline-secondary" type="button" id="clearSearchBtn" 
+                                        style="<?php echo empty($searchTerm) ? 'display:none;' : ''; ?>" title="Clear Search">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-7 text-md-end mt-2 mt-md-0">
+                            <span class="badge bg-light text-dark border py-2 px-3" id="searchMatchCount">
+                                Showing <?php echo count($certificates); ?> of <?php echo $totalRecords; ?> records
+                            </span>
+                        </div>
+                    </div>
                     <?php if (count($certificates) > 0): ?>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
@@ -694,7 +757,7 @@ include 'includes/header.php';
                             <ul class="pagination justify-content-center mb-0">
                                 <?php if ($page > 1): ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=<?php echo $page - 1; ?>">
+                                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>">
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
                                     </li>
@@ -702,13 +765,13 @@ include 'includes/header.php';
                                 
                                 <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
                                     <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>"><?php echo $i; ?></a>
                                     </li>
                                 <?php endfor; ?>
                                 
                                 <?php if ($page < $totalPages): ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=<?php echo $page + 1; ?>">
+                                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
                                     </li>
@@ -1313,6 +1376,114 @@ document.addEventListener('DOMContentLoaded', function() {
         const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
+    }
+});
+</script>
+
+
+<script>
+// Global Live Table Search across all columns
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('globalTableSearch');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    const table = document.querySelector('.table-responsive table');
+    const matchCountBadge = document.getElementById('searchMatchCount');
+
+    if (!searchInput || !table) return;
+
+    const rows = Array.from(table.querySelectorAll('tbody tr')).filter(r => r.id !== 'noResultsRow');
+    const totalRows = rows.length;
+
+    let noResultsRow = document.getElementById('noResultsRow');
+    if (!noResultsRow) {
+        const colCount = table.querySelectorAll('thead th').length || 8;
+        noResultsRow = document.createElement('tr');
+        noResultsRow.id = 'noResultsRow';
+        noResultsRow.className = 'd-none';
+        noResultsRow.innerHTML = `<td colspan="${colCount}" class="text-center py-4 text-muted"><i class="fas fa-search me-2"></i>No matching records found for "<span id="searchKeyword"></span>".</td>`;
+        const tbody = table.querySelector('tbody');
+        if (tbody) tbody.appendChild(noResultsRow);
+    }
+    const searchKeywordSpan = document.getElementById('searchKeyword');
+
+    function filterTable() {
+        const rawTerm = searchInput.value.trim().toLowerCase();
+        const terms = rawTerm.split(/\s+/).filter(Boolean);
+
+        if (clearBtn) {
+            clearBtn.style.display = rawTerm ? 'inline-block' : 'none';
+        }
+
+        let visibleCount = 0;
+        rows.forEach(row => {
+            if (row.id === 'noResultsRow') return;
+
+            const cells = Array.from(row.querySelectorAll('td'));
+            // Search all cells except the last action buttons cell
+            const searchCells = cells.length > 1 ? cells.slice(0, -1) : cells;
+            const textContent = searchCells.map(c => c.innerText.toLowerCase()).join(' ');
+
+            const matches = terms.every(term => textContent.includes(term));
+            if (matches) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        if (visibleCount === 0 && rawTerm) {
+            noResultsRow.classList.remove('d-none');
+            if (searchKeywordSpan) searchKeywordSpan.textContent = searchInput.value.trim();
+        } else {
+            noResultsRow.classList.add('d-none');
+        }
+
+        if (matchCountBadge) {
+            if (rawTerm) {
+                matchCountBadge.textContent = `${visibleCount} of ${totalRows} records match`;
+                matchCountBadge.className = 'badge bg-primary text-white py-2 px-3';
+            } else {
+                matchCountBadge.textContent = `Showing ${totalRows} records`;
+                matchCountBadge.className = 'badge bg-light text-dark border py-2 px-3';
+            }
+        }
+    }
+
+    searchInput.addEventListener('input', filterTable);
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            filterTable();
+            if (window.location.search.includes('search=')) {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('search');
+                url.searchParams.set('page', '1');
+                window.location.href = url.toString();
+            } else {
+                searchInput.focus();
+            }
+        });
+    }
+
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const term = searchInput.value.trim();
+            const url = new URL(window.location.href);
+            if (term) {
+                url.searchParams.set('search', term);
+                url.searchParams.set('page', '1');
+            } else {
+                url.searchParams.delete('search');
+            }
+            window.location.href = url.toString();
+        }
+    });
+
+    if (searchInput.value.trim()) {
+        filterTable();
     }
 });
 </script>

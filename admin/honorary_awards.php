@@ -357,18 +357,31 @@ if ($action === 'edit' && $id > 0) {
     }
 }
 
+// Search term handling
+$searchTerm = isset($_GET['search']) ? trim(sanitizeInput($_GET['search'])) : '';
+$whereClause = '';
+$queryParams = [];
+
+if ($searchTerm !== '') {
+    $whereClause = "WHERE (award_no LIKE ? OR recipient_name LIKE ? OR mobile LIKE ? OR email LIKE ? OR award_name LIKE ? OR category LIKE ? OR venue LIKE ? OR city LIKE ? OR state LIKE ? OR registration_no LIKE ? OR status LIKE ?)";
+    $like = '%' . $searchTerm . '%';
+    $queryParams = [$like, $like, $like, $like, $like, $like, $like, $like, $like, $like, $like];
+}
+
 // Get awards for list
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 12;
 $offset = ($page - 1) * $limit;
 
 try {
-    $stmt = $db->prepare("SELECT COUNT(*) FROM honorary_awards");
-    $stmt->execute();
+    $countSql = "SELECT COUNT(*) FROM honorary_awards " . $whereClause;
+    $stmt = $db->prepare($countSql);
+    $stmt->execute($queryParams);
     $totalRecords = $stmt->fetchColumn();
     
-    $stmt = $db->prepare("SELECT * FROM honorary_awards ORDER BY created_at DESC LIMIT $limit OFFSET $offset");
-    $stmt->execute();
+    $dataSql = "SELECT * FROM honorary_awards " . $whereClause . " ORDER BY created_at DESC LIMIT $limit OFFSET $offset";
+    $stmt = $db->prepare($dataSql);
+    $stmt->execute($queryParams);
     $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     $totalPages = ceil($totalRecords / $limit);
@@ -434,7 +447,7 @@ include 'includes/header.php';
                     <?php endif; ?>
                 </div>
                 <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" action="honorary_awards.php<?php echo ($action === 'edit' && $id > 0) ? '?action=edit&id=' . $id : '?action=add'; ?>" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="<?php echo $action; ?>">
                         <input type="hidden" name="csrf_token" value="<?php echo generateCSRF(); ?>">
                         
@@ -548,13 +561,20 @@ include 'includes/header.php';
                                     <option value="">-- Select Award --</option>
                                     <?php 
                                     $currentAwardName = $award['award_name'] ?? '';
+                                    $awardInMaster = false;
                                     foreach($masterAwards as $awName): 
                                         $selected = ($currentAwardName === $awName) ? 'selected' : '';
+                                        if ($selected) $awardInMaster = true;
                                     ?>
                                         <option value="<?php echo htmlspecialchars($awName); ?>" <?php echo $selected; ?>>
                                             <?php echo htmlspecialchars($awName); ?>
                                         </option>
                                     <?php endforeach; ?>
+                                    <?php if (!empty($currentAwardName) && !$awardInMaster): ?>
+                                        <option value="<?php echo htmlspecialchars($currentAwardName); ?>" selected>
+                                            <?php echo htmlspecialchars($currentAwardName); ?> (Current)
+                                        </option>
+                                    <?php endif; ?>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -563,13 +583,20 @@ include 'includes/header.php';
                                     <option value="">-- Select Category --</option>
                                     <?php 
                                     $currentCategoryName = $award['category'] ?? '';
+                                    $catInMaster = false;
                                     foreach($masterCategories as $catName): 
                                         $selected = ($currentCategoryName === $catName) ? 'selected' : '';
+                                        if ($selected) $catInMaster = true;
                                     ?>
                                         <option value="<?php echo htmlspecialchars($catName); ?>" <?php echo $selected; ?>>
                                             <?php echo htmlspecialchars($catName); ?>
                                         </option>
                                     <?php endforeach; ?>
+                                    <?php if (!empty($currentCategoryName) && !$catInMaster): ?>
+                                        <option value="<?php echo htmlspecialchars($currentCategoryName); ?>" selected>
+                                            <?php echo htmlspecialchars($currentCategoryName); ?> (Current)
+                                        </option>
+                                    <?php endif; ?>
                                 </select>
                             </div>
                         </div>
@@ -598,13 +625,20 @@ include 'includes/header.php';
                                     <option value="">-- Select Venue --</option>
                                     <?php 
                                     $currentVenueName = $award['venue'] ?? '';
+                                    $venueInMaster = false;
                                     foreach($masterVenues as $venName): 
                                         $selected = ($currentVenueName === $venName) ? 'selected' : '';
+                                        if ($selected) $venueInMaster = true;
                                     ?>
                                         <option value="<?php echo htmlspecialchars($venName); ?>" <?php echo $selected; ?>>
                                             <?php echo htmlspecialchars($venName); ?>
                                         </option>
                                     <?php endforeach; ?>
+                                    <?php if (!empty($currentVenueName) && !$venueInMaster): ?>
+                                        <option value="<?php echo htmlspecialchars($currentVenueName); ?>" selected>
+                                            <?php echo htmlspecialchars($currentVenueName); ?> (Current)
+                                        </option>
+                                    <?php endif; ?>
                                 </select>
                             </div>
                         </div>
@@ -663,10 +697,39 @@ include 'includes/header.php';
             </div>
         <?php else: ?>
             <div class="admin-card">
-                <div class="card-header">
-                    <i class="fas fa-award"></i> Awards List
+                <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span><i class="fas fa-award me-1"></i> Awards List</span>
+                    <?php if (!empty($searchTerm)): ?>
+                        <span class="badge bg-warning text-dark">
+                            Filtered by: "<?php echo htmlspecialchars($searchTerm); ?>" 
+                            <a href="honorary_awards.php" class="text-dark ms-1 text-decoration-none" title="Clear filter">&times;</a>
+                        </span>
+                    <?php endif; ?>
                 </div>
                 <div class="card-body">
+                    <!-- Global Live Search Bar -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-6 col-lg-5">
+                            <div class="input-group shadow-sm">
+                                <span class="input-group-text bg-white border-end-0 text-muted">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                                <input type="text" id="globalTableSearch" class="form-control border-start-0" 
+                                       placeholder="Live search all columns (award no, name, venue, status)..." 
+                                       value="<?php echo htmlspecialchars($searchTerm); ?>" 
+                                       autocomplete="off">
+                                <button class="btn btn-outline-secondary" type="button" id="clearSearchBtn" 
+                                        style="<?php echo empty($searchTerm) ? 'display:none;' : ''; ?>" title="Clear Search">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-7 text-md-end mt-2 mt-md-0">
+                            <span class="badge bg-light text-dark border py-2 px-3" id="searchMatchCount">
+                                Showing <?php echo count($awards); ?> of <?php echo $totalRecords; ?> records
+                            </span>
+                        </div>
+                    </div>
                     <?php if (count($awards) > 0): ?>
                         <div class="table-responsive w-100" style="overflow-x: auto; -webkit-overflow-scrolling: touch; min-width: 0;">
                             <table class="table table-striped table-hover align-middle">
@@ -739,7 +802,7 @@ include 'includes/header.php';
                             <ul class="pagination justify-content-center mb-0">
                                 <?php if ($page > 1): ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=<?php echo $page - 1; ?>">
+                                        <a class="page-link" href="?page=<?php echo $page - 1; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>">
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
                                     </li>
@@ -747,13 +810,13 @@ include 'includes/header.php';
                                 
                                 <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
                                     <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                        <a class="page-link" href="?page=<?php echo $i; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>"><?php echo $i; ?></a>
                                     </li>
                                 <?php endfor; ?>
                                 
                                 <?php if ($page < $totalPages): ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="?page=<?php echo $page + 1; ?>">
+                                        <a class="page-link" href="?page=<?php echo $page + 1; ?><?php echo !empty($searchTerm) ? '&search=' . urlencode($searchTerm) : ''; ?>">
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
                                     </li>
@@ -1224,6 +1287,114 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
             }
         });
+    }
+});
+</script>
+
+
+<script>
+// Global Live Table Search across all columns
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('globalTableSearch');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    const table = document.querySelector('.table-responsive table');
+    const matchCountBadge = document.getElementById('searchMatchCount');
+
+    if (!searchInput || !table) return;
+
+    const rows = Array.from(table.querySelectorAll('tbody tr')).filter(r => r.id !== 'noResultsRow');
+    const totalRows = rows.length;
+
+    let noResultsRow = document.getElementById('noResultsRow');
+    if (!noResultsRow) {
+        const colCount = table.querySelectorAll('thead th').length || 8;
+        noResultsRow = document.createElement('tr');
+        noResultsRow.id = 'noResultsRow';
+        noResultsRow.className = 'd-none';
+        noResultsRow.innerHTML = `<td colspan="${colCount}" class="text-center py-4 text-muted"><i class="fas fa-search me-2"></i>No matching records found for "<span id="searchKeyword"></span>".</td>`;
+        const tbody = table.querySelector('tbody');
+        if (tbody) tbody.appendChild(noResultsRow);
+    }
+    const searchKeywordSpan = document.getElementById('searchKeyword');
+
+    function filterTable() {
+        const rawTerm = searchInput.value.trim().toLowerCase();
+        const terms = rawTerm.split(/\s+/).filter(Boolean);
+
+        if (clearBtn) {
+            clearBtn.style.display = rawTerm ? 'inline-block' : 'none';
+        }
+
+        let visibleCount = 0;
+        rows.forEach(row => {
+            if (row.id === 'noResultsRow') return;
+
+            const cells = Array.from(row.querySelectorAll('td'));
+            // Search all cells except the last action buttons cell
+            const searchCells = cells.length > 1 ? cells.slice(0, -1) : cells;
+            const textContent = searchCells.map(c => c.innerText.toLowerCase()).join(' ');
+
+            const matches = terms.every(term => textContent.includes(term));
+            if (matches) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        if (visibleCount === 0 && rawTerm) {
+            noResultsRow.classList.remove('d-none');
+            if (searchKeywordSpan) searchKeywordSpan.textContent = searchInput.value.trim();
+        } else {
+            noResultsRow.classList.add('d-none');
+        }
+
+        if (matchCountBadge) {
+            if (rawTerm) {
+                matchCountBadge.textContent = `${visibleCount} of ${totalRows} records match`;
+                matchCountBadge.className = 'badge bg-primary text-white py-2 px-3';
+            } else {
+                matchCountBadge.textContent = `Showing ${totalRows} records`;
+                matchCountBadge.className = 'badge bg-light text-dark border py-2 px-3';
+            }
+        }
+    }
+
+    searchInput.addEventListener('input', filterTable);
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            filterTable();
+            if (window.location.search.includes('search=')) {
+                const url = new URL(window.location.href);
+                url.searchParams.delete('search');
+                url.searchParams.set('page', '1');
+                window.location.href = url.toString();
+            } else {
+                searchInput.focus();
+            }
+        });
+    }
+
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const term = searchInput.value.trim();
+            const url = new URL(window.location.href);
+            if (term) {
+                url.searchParams.set('search', term);
+                url.searchParams.set('page', '1');
+            } else {
+                url.searchParams.delete('search');
+            }
+            window.location.href = url.toString();
+        }
+    });
+
+    if (searchInput.value.trim()) {
+        filterTable();
     }
 });
 </script>
