@@ -44,17 +44,18 @@ $masterAwards = [];
 try {
     $stmtAw = $db->query("SELECT award_name FROM awards_list WHERE status = 'active' ORDER BY award_name ASC");
     $masterAwards = $stmtAw->fetchAll(PDO::FETCH_COLUMN);
-} catch (Exception $e) {
-    // Fallback if table doesn't exist yet
-    $masterAwards = ['HONORARY DOCTORATE AWARD', 'LIFETIME ACHIEVEMENT AWARD']; 
+} catch (Exception $e) {}
+if (empty($masterAwards)) {
+    $masterAwards = ['HONORARY DOCTORATE AWARD', 'LIFETIME ACHIEVEMENT AWARD', 'NATIONAL EXCELLENCE AWARD', 'SOCIAL SERVICE AWARD']; 
 }
 
 $masterVenues = [];
 try {
     $stmtVen = $db->query("SELECT venue_name FROM venues_list WHERE status = 'active' ORDER BY venue_name ASC");
     $masterVenues = $stmtVen->fetchAll(PDO::FETCH_COLUMN);
-} catch (Exception $e) {
-    $masterVenues = ['Online / Virtual Ceremony'];
+} catch (Exception $e) {}
+if (empty($masterVenues)) {
+    $masterVenues = ['Online / Virtual Ceremony', 'National Convention Hall, New Delhi', 'State Central Auditorium'];
 }
 // -------------------------------------------
 
@@ -85,20 +86,22 @@ $masterCategories = [];
 try {
     $stmtCat = $db->query("SELECT category_name FROM categories WHERE status = 'active' ORDER BY category_name ASC");
     $masterCategories = $stmtCat->fetchAll(PDO::FETCH_COLUMN);
-} catch (Exception $e) {
-    // Fallback if table doesn't exist yet
+} catch (Exception $e) {}
+if (empty($masterCategories)) {
     $masterCategories = ['Education Excellence', 'Social Service', 'Healthcare', 'Literature', 'Arts & Culture', 'Science & Technology', 'Business Leadership', 'Sports', 'Environmental Conservation', 'Other']; 
 }
 
 function getAwardPrefixAndStart() {
     $map = [
         'GHDAF' => ['GHDAF/', 7001],
+        'HDEAF' => ['HDEAF/', 8001],
+        'WRWWF' => ['WRWWF/', 6001],
         'WCWF'  => ['WCWF/', 3001],
         'WPEWF' => ['WPEWF/', 9003],
         'PCWWF' => ['PCWWF/', 7003]
     ];
-    $shortName = defined('ORGANIZATION_NAME_SHORT') ? ORGANIZATION_NAME_SHORT : 'DEFAULT';
-    return $map[$shortName] ?? ['PREFIX/', 1001];
+    $shortName = defined('ORGANIZATION_NAME_SHORT') ? ORGANIZATION_NAME_SHORT : 'AWARD';
+    return $map[$shortName] ?? [$shortName . '/', 1001];
 }
 
 // Function to generate unique award number
@@ -106,37 +109,66 @@ function generateAwardNumber() {
     global $db;
     list($prefix, $start) = getAwardPrefixAndStart();
     
-    $stmt = $db->prepare("SELECT award_no FROM honorary_awards WHERE award_no LIKE ? ORDER BY id DESC LIMIT 1");
+    // Find highest existing numeric suffix matching prefix
+    $stmt = $db->prepare("SELECT award_no FROM honorary_awards WHERE award_no LIKE ? ORDER BY id DESC LIMIT 50");
     $stmt->execute([$prefix . '%']);
-    $lastAward = $stmt->fetch();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    if ($lastAward) {
-        $parts = explode('/', $lastAward['award_no']);
-        $lastNum = isset($parts[1]) ? (int)$parts[1] : ($start - 1);
-        $newNumber = $lastNum + 1;
-    } else {
-        $newNumber = $start;
+    $maxNum = $start - 1;
+    foreach ($rows as $row) {
+        $numPart = preg_replace('/[^0-9]/', '', str_replace($prefix, '', $row['award_no']));
+        if ($numPart !== '') {
+            $num = (int)$numPart;
+            if ($num > $maxNum) {
+                $maxNum = $num;
+            }
+        }
     }
-    return $prefix . $newNumber;
+    
+    $candidateNum = $maxNum + 1;
+    while (true) {
+        $candidate = $prefix . $candidateNum;
+        $checkStmt = $db->prepare("SELECT id FROM honorary_awards WHERE award_no = ? LIMIT 1");
+        $checkStmt->execute([$candidate]);
+        if (!$checkStmt->fetch()) {
+            return $candidate;
+        }
+        $candidateNum++;
+    }
 }
 
 // Function to generate unique registration number using short name from config
 function generateRegistrationNumber() {
     global $db;
-    list($prefix, $start) = getAwardPrefixAndStart();
+    $shortName = defined('ORGANIZATION_NAME_SHORT') ? ORGANIZATION_NAME_SHORT : 'REG';
+    $year = date('Y');
+    $prefix = $shortName . '/' . $year . '/';
     
-    $stmt = $db->prepare("SELECT registration_no FROM honorary_awards WHERE registration_no LIKE ? ORDER BY id DESC LIMIT 1");
+    $stmt = $db->prepare("SELECT registration_no FROM honorary_awards WHERE registration_no LIKE ? ORDER BY id DESC LIMIT 50");
     $stmt->execute([$prefix . '%']);
-    $lastReg = $stmt->fetch();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    if ($lastReg) {
-        $parts = explode('/', $lastReg['registration_no']);
-        $lastNum = isset($parts[1]) ? (int)$parts[1] : ($start - 1);
-        $newNumber = $lastNum + 1;
-    } else {
-        $newNumber = $start;
+    $maxNum = 0;
+    foreach ($rows as $row) {
+        $numPart = preg_replace('/[^0-9]/', '', str_replace($prefix, '', $row['registration_no']));
+        if ($numPart !== '') {
+            $num = (int)$numPart;
+            if ($num > $maxNum) {
+                $maxNum = $num;
+            }
+        }
     }
-    return $prefix . $newNumber;
+    
+    $candidateNum = $maxNum + 1;
+    while (true) {
+        $candidate = $prefix . str_pad($candidateNum, 4, '0', STR_PAD_LEFT);
+        $checkStmt = $db->prepare("SELECT id FROM honorary_awards WHERE registration_no = ? LIMIT 1");
+        $checkStmt->execute([$candidate]);
+        if (!$checkStmt->fetch()) {
+            return $candidate;
+        }
+        $candidateNum++;
+    }
 }
 
 // Handle form submission
@@ -168,6 +200,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $city = isset($_POST['city']) ? sanitizeInput($_POST['city']) : '';
             $pincode = isset($_POST['pincode']) ? sanitizeInput($_POST['pincode']) : '';
 
+            // Retain submitted values in $award so inputs aren't wiped if validation/db error occurs
+            $award = [
+                'recipient_name' => $recipient_name,
+                'mobile' => $mobile,
+                'email' => $email,
+                'gender' => $gender,
+                'profession' => $profession,
+                'qualification' => $qualification,
+                'address' => $address,
+                'state' => $state,
+                'city' => $city,
+                'pincode' => $pincode,
+                'award_name' => $award_name,
+                'category' => $category,
+                'content' => $content,
+                'venue' => $venue,
+                'award_date' => $award_date,
+                'registration_no' => $registration_no,
+                'photo_path' => '',
+                'status' => $status
+            ];
+
             // Validation
             if (empty($recipient_name) || empty($award_name) || empty($category) || empty($content) || empty($venue) || empty($award_date)) {
                 $error = "Please fill all required fields.";
@@ -175,7 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = "Invalid status.";
             } else {
                 try {
-                    $photo_path = '';
+                    $photo_path = null;
                     $oldPhotoPath = '';
                     
                     if ($formAction === 'edit') {
@@ -196,7 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if ($uploadResult['success']) {
                             if ($formAction === 'edit' && !empty($photo_path)) {
                                 $oldPhoto = __DIR__ . '/../img/awards/' . $photo_path;
-                                if (file_exists($oldPhoto)) unlink($oldPhoto);
+                                if (file_exists($oldPhoto)) @unlink($oldPhoto);
                             }
                             $photo_path = $uploadResult['filename'];
                         } else {
@@ -232,11 +286,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             ) 
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
                         ");
-                        $stmt->execute([
+                        $res = $stmt->execute([
                             $award_no, $recipient_name, $mobile, $email, $gender, $profession, $qualification,
                             $address, $state, $city, $pincode,
                             $award_name, $category, $content, $venue, $award_date, $registration_no, $photo_path, $status
                         ]);
+                        if (!$res) {
+                            $err = $stmt->errorInfo();
+                            throw new Exception("Insert failed: " . ($err[2] ?? 'Unknown database error'));
+                        }
                     } else {
                         $award_id = isset($_POST['award_id']) ? (int)$_POST['award_id'] : 0;
                         $stmt = $db->prepare("
@@ -246,11 +304,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 award_name = ?, category = ?, content = ?, venue = ?, award_date = ?, registration_no = ?, photo_path = ?, status = ?, updated_at = NOW() 
                             WHERE id = ?
                         ");
-                        $success = $stmt->execute([
+                        $success = $success = $stmt->execute([
                             $recipient_name, $mobile, $email, $gender, $profession, $qualification,
                             $address, $state, $city, $pincode,
                             $award_name, $category, $content, $venue, $award_date, $registration_no, $photo_path, $status, $award_id
                         ]);
+                        if (!$success) {
+                            $err = $stmt->errorInfo();
+                            throw new Exception("Failed to update award in database: " . ($err[2] ?? 'Unknown error'));
+                        }
                         if (!$success) {
                             throw new Exception("Failed to update award in database.");
                         }
@@ -291,13 +353,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Initialize award array
-$award = [
+// Initialize award array if not already populated from POST
+if (empty($award)) {
+    $award = [
     'recipient_name' => '', 'mobile' => '', 'email' => '', 'gender' => '',
     'profession' => '', 'qualification' => '', 'address' => '', 'state' => '', 'city' => '', 'pincode' => '',
     'award_name' => '', 'category' => '', 'content' => '', 'venue' => '',
     'award_date' => date('Y-m-d'), 'registration_no' => generateRegistrationNumber(), 'photo_path' => '', 'status' => 'active'
 ];
+}
 $nomination_photo_source = '';
 
 // --- NEW: FETCH FROM NOMINATION IF ID PROVIDED ---
@@ -660,8 +724,8 @@ include 'includes/header.php';
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="photo" class="form-label">Upload Photo <span class="text-danger">*</span></label>
-                                <input type="file" class="form-control image-upload" id="photo" name="photo" accept="image/*" <?php echo ($action === 'add' && empty($nomination_photo_source)) ? 'required' : ''; ?>>
+                                <label for="photo" class="form-label">Upload Photo <span class="text-muted">(Optional)</span></label>
+                                <input type="file" class="form-control image-upload" id="photo" name="photo" accept="image/*">>
                                 <div class="mt-2 image-preview" id="photo_preview_container">
                                     <?php if (!empty($award['photo_path']) && strpos($award['photo_path'], '../uploads/profiles/') === 0 && file_exists(__DIR__ . '/../' . substr($award['photo_path'], 3))): ?>
                                         <img src="<?php echo SITE_URL; ?>/uploads/profiles/<?php echo htmlspecialchars(substr($award['photo_path'], 20)); ?>?v=<?php echo time(); ?>" alt="Award Photo" class="img-thumbnail" style="max-height: 150px;">
@@ -953,8 +1017,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     <!-- Name Section -->
                     <div style="position: absolute; left: 50%; transform: translateX(-50%); top: 1035px; width: 1000px; text-align: center; z-index: 2;">
-                        <h2 style="margin: 0; font-size: 60px; font-weight: bold; color: #fff; text-transform: uppercase; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
-                            ${awardData.recipient_name}
+                        <h2 style="margin: 0; font-size: 60px; font-weight: bold; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                            ${formattedName}
                         </h2>
                     </div>
 

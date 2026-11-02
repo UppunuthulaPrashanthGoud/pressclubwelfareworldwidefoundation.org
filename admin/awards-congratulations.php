@@ -73,12 +73,14 @@ $awardContent = [
 function getAwardPrefixAndStart() {
     $map = [
         'GHDAF' => ['GHDAF/', 7001],
+        'HDEAF' => ['HDEAF/', 8001],
+        'WRWWF' => ['WRWWF/', 6001],
         'WCWF'  => ['WCWF/', 3001],
         'WPEWF' => ['WPEWF/', 9003],
         'PCWWF' => ['PCWWF/', 7003]
     ];
-    $shortName = defined('ORGANIZATION_NAME_SHORT') ? ORGANIZATION_NAME_SHORT : 'DEFAULT';
-    return $map[$shortName] ?? ['PREFIX/', 1001];
+    $shortName = defined('ORGANIZATION_NAME_SHORT') ? ORGANIZATION_NAME_SHORT : 'AWARD';
+    return $map[$shortName] ?? [$shortName . '/', 1001];
 }
 
 // Function to generate unique award number
@@ -86,18 +88,32 @@ function generateAwardNumber() {
     global $db;
     list($prefix, $start) = getAwardPrefixAndStart();
     
-    $stmt = $db->prepare("SELECT award_no FROM honorary_awards WHERE award_no LIKE ? ORDER BY id DESC LIMIT 1");
+    // Find highest existing numeric suffix matching prefix
+    $stmt = $db->prepare("SELECT award_no FROM honorary_awards WHERE award_no LIKE ? ORDER BY id DESC LIMIT 50");
     $stmt->execute([$prefix . '%']);
-    $lastAward = $stmt->fetch();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    if ($lastAward) {
-        $parts = explode('/', $lastAward['award_no']);
-        $lastNum = isset($parts[1]) ? (int)$parts[1] : ($start - 1);
-        $newNumber = $lastNum + 1;
-    } else {
-        $newNumber = $start;
+    $maxNum = $start - 1;
+    foreach ($rows as $row) {
+        $numPart = preg_replace('/[^0-9]/', '', str_replace($prefix, '', $row['award_no']));
+        if ($numPart !== '') {
+            $num = (int)$numPart;
+            if ($num > $maxNum) {
+                $maxNum = $num;
+            }
+        }
     }
-    return $prefix . $newNumber;
+    
+    $candidateNum = $maxNum + 1;
+    while (true) {
+        $candidate = $prefix . $candidateNum;
+        $checkStmt = $db->prepare("SELECT id FROM honorary_awards WHERE award_no = ? LIMIT 1");
+        $checkStmt->execute([$candidate]);
+        if (!$checkStmt->fetch()) {
+            return $candidate;
+        }
+        $candidateNum++;
+    }
 }
 
 // Handle form submission (Same as Honorary Awards)
