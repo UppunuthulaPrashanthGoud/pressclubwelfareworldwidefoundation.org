@@ -161,12 +161,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $stmt->execute([$letter_no, $recipient_name, $recipient_address, $award_title, $field_of_contribution, $issue_date, $ceremony_date, $ceremony_location, $status, $user_id]);
                     } else {
                         $letter_id = isset($_POST['letter_id']) ? (int)$_POST['letter_id'] : 0;
+                        if ($letter_id <= 0) {
+                            throw new Exception("Invalid letter ID for update.");
+                        }
                         $stmt = $db->prepare("
                             UPDATE award_letters 
                             SET recipient_name = ?, recipient_address = ?, award_title = ?, 
                                 field_of_contribution = ?, issue_date = ?, ceremony_date = ?, 
                                 ceremony_location = ?, status = ?, user_id = ?, updated_at = NOW() 
-                            WHERE id = ?
+                            WHERE id = ? LIMIT 1
                         ");
                         $success = $stmt->execute([$recipient_name, $recipient_address, $award_title, $field_of_contribution, $issue_date, $ceremony_date, $ceremony_location, $status, $user_id, $letter_id]);
                         if (!$success) {
@@ -184,8 +187,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } elseif ($formAction === 'delete') {
             $letter_id = isset($_POST['letter_id']) ? (int)$_POST['letter_id'] : 0;
+            if ($letter_id <= 0) {
+                throw new Exception("Invalid letter ID for deletion.");
+            }
             try {
-                $stmt = $db->prepare("DELETE FROM award_letters WHERE id = ?");
+                $stmt = $db->prepare("DELETE FROM award_letters WHERE id = ? LIMIT 1");
                 $stmt->execute([$letter_id]);
                 
                 $success = "Award Letter successfully deleted!";
@@ -291,7 +297,7 @@ include 'includes/header.php';
                         <input type="hidden" name="action" value="<?php echo $action; ?>">
                         <input type="hidden" name="csrf_token" value="<?php echo generateCSRF(); ?>">
                         <?php if ($action === 'edit'): ?>
-                            <input type="hidden" name="letter_id" value="<?php echo $letter['id']; ?>">
+                            <input type="hidden" name="letter_id" value="<?php echo (int)($letter['id'] ?? $id); ?>">
                         <?php endif; ?>
                         
                         <div class="row mb-3">

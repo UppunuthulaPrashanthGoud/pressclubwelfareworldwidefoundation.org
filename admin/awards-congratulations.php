@@ -194,12 +194,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ]);
                     } else {
                         $award_id = isset($_POST['award_id']) ? (int)$_POST['award_id'] : 0;
+                        if ($award_id <= 0) {
+                            throw new Exception("Invalid award ID for update.");
+                        }
                         $stmt = $db->prepare("
                             UPDATE honorary_awards 
                             SET recipient_name = ?, mobile = ?, email = ?, gender = ?, profession = ?, qualification = ?, 
                                 address = ?, state = ?, city = ?, pincode = ?,
                                 award_name = ?, category = ?, content = ?, venue = ?, award_date = ?, registration_no = ?, photo_path = ?, status = ?, updated_at = NOW() 
-                            WHERE id = ?
+                            WHERE id = ? LIMIT 1
                         ");
                         $stmt->execute([
                             $recipient_name, $mobile, $email, $gender, $profession, $qualification,
@@ -218,7 +221,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($formAction === 'delete') {
              // Delete logic
             $award_id = isset($_POST['award_id']) ? (int)$_POST['award_id'] : 0;
-            $db->prepare("DELETE FROM honorary_awards WHERE id = ?")->execute([$award_id]);
+            if ($award_id <= 0) {
+                throw new Exception("Invalid award ID for deletion.");
+            }
+            $db->prepare("DELETE FROM honorary_awards WHERE id = ? LIMIT 1")->execute([$award_id]);
             header("Location: awards-congratulations.php?success=Deleted");
             exit;
         }
@@ -305,7 +311,7 @@ include 'includes/header.php';
                     <form method="post" action="awards-congratulations.php<?php echo ($action === 'edit' && $id > 0) ? '?action=edit&id=' . $id : '?action=add'; ?>" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="<?php echo $action; ?>">
                         <input type="hidden" name="csrf_token" value="<?php echo generateCSRF(); ?>">
-                        <?php if ($action === 'edit'): ?><input type="hidden" name="award_id" value="<?php echo $award['id']; ?>"><?php endif; ?>
+                        <?php if ($action === 'edit'): ?><input type="hidden" name="award_id" value="<?php echo (int)($award['id'] ?? $id); ?>"><?php endif; ?>
                         
                         <!-- Hidden fields for auto-filled data not stored in actual UI inputs -->
                         <input type="hidden" id="mobile" name="mobile" value="<?php echo htmlspecialchars($award['mobile']); ?>">
