@@ -297,12 +297,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                     } else {
                         $award_id = isset($_POST['award_id']) ? (int)$_POST['award_id'] : 0;
+                        if ($award_id <= 0) {
+                            throw new Exception("Invalid award ID for update.");
+                        }
                         $stmt = $db->prepare("
                             UPDATE honorary_awards 
                             SET recipient_name = ?, mobile = ?, email = ?, gender = ?, profession = ?, qualification = ?, 
                                 address = ?, state = ?, city = ?, pincode = ?,
                                 award_name = ?, category = ?, content = ?, venue = ?, award_date = ?, registration_no = ?, photo_path = ?, status = ?, updated_at = NOW() 
-                            WHERE id = ?
+                            WHERE id = ? LIMIT 1
                         ");
                         $success = $success = $stmt->execute([
                             $recipient_name, $mobile, $email, $gender, $profession, $qualification,
@@ -328,12 +331,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } elseif ($formAction === 'delete') {
             $award_id = isset($_POST['award_id']) ? (int)$_POST['award_id'] : 0;
+            if ($award_id <= 0) {
+                throw new Exception("Invalid award ID for deletion.");
+            }
             try {
-                $stmt = $db->prepare("SELECT photo_path FROM honorary_awards WHERE id = ?");
+                $stmt = $db->prepare("SELECT photo_path FROM honorary_awards WHERE id = ? LIMIT 1");
                 $stmt->execute([$award_id]);
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
                 
-                $stmt = $db->prepare("DELETE FROM honorary_awards WHERE id = ?");
+                $stmt = $db->prepare("DELETE FROM honorary_awards WHERE id = ? LIMIT 1");
                 $stmt->execute([$award_id]);
                 
                 if (!empty($data['photo_path'])) {
@@ -516,7 +522,10 @@ include 'includes/header.php';
                         <input type="hidden" name="csrf_token" value="<?php echo generateCSRF(); ?>">
                         
                         <?php if ($action === 'edit'): ?>
-                            <input type="hidden" name="award_id" value="<?php echo $award['id']; ?>">
+                            <input type="hidden" name="award_id" value="<?php echo (int)($award['id'] ?? $id); ?>">
+                            <div class="alert alert-info py-2 mb-3">
+                                <i class="fas fa-medal me-1"></i> <strong>Editing Award No:</strong> <span class="badge bg-primary fs-6"><?php echo htmlspecialchars($award['award_no'] ?? ''); ?></span>
+                            </div>
                         <?php endif; ?>
                         
                         <!-- Used to copy image from nominations folder if new photo not uploaded -->

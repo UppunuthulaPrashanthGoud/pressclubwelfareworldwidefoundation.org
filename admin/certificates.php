@@ -297,12 +297,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $stmt->execute([$certificate_type, $certificate_no, $recipient_name, $post_name, $event_or_reason, $issue_date, $end_date, $photo_path, $status, $user_id]);
                     } else {
                         $cert_id = isset($_POST['cert_id']) ? (int)$_POST['cert_id'] : 0;
+                        if ($cert_id <= 0) {
+                            throw new Exception("Invalid certificate ID for update.");
+                        }
                         $stmt = $db->prepare("
                             UPDATE certificates 
                             SET certificate_type = ?, recipient_name = ?, post_name = ?, 
                                 event_or_reason = ?, issue_date = ?, end_date = ?, 
                                 photo_path = ?, status = ?, user_id = ?, updated_at = NOW() 
-                            WHERE id = ?
+                            WHERE id = ? LIMIT 1
                         ");
                         $success = $stmt->execute([$certificate_type, $recipient_name, $post_name, $event_or_reason, $issue_date, $end_date, $photo_path, $status, $user_id, $cert_id]);
                         if (!$success) {
@@ -320,12 +323,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } elseif ($formAction === 'delete') {
             $cert_id = isset($_POST['cert_id']) ? (int)$_POST['cert_id'] : 0;
+            if ($cert_id <= 0) {
+                throw new Exception("Invalid certificate ID for deletion.");
+            }
             try {
-                $stmt = $db->prepare("SELECT photo_path FROM certificates WHERE id = ?");
+                $stmt = $db->prepare("SELECT photo_path FROM certificates WHERE id = ? LIMIT 1");
                 $stmt->execute([$cert_id]);
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
                 
-                $stmt = $db->prepare("DELETE FROM certificates WHERE id = ?");
+                $stmt = $db->prepare("DELETE FROM certificates WHERE id = ? LIMIT 1");
                 $stmt->execute([$cert_id]);
                 
                 if (!empty($data['photo_path'])) {
