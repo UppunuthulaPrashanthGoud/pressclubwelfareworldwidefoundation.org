@@ -674,7 +674,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 pdf.addImage(imgData, 'JPEG', 0, 0, 3375, 3375);
-                pdf.save(`Congratulations_${awardData.award_no.replace(/\//g, '-')}.pdf`);
+                const safeAwardNo = (awardData.award_no || 'award').replace(/\//g, '-');
+                pdf.save(`Congratulations_${safeAwardNo}.pdf`);
                 
                 document.body.removeChild(container);
             } catch (err) {

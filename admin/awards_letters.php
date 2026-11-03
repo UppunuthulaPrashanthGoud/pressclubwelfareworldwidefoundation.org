@@ -753,7 +753,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 pdf.addImage(imgData, 'JPEG', 0, 0, 794, 1123);
                 
-                const filename = `Award_Letter_${data.letter_no}_${data.recipient_name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+                const filename = `Award_Letter_${data.letter_no}_${(data.recipient_name || 'recipient').replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
                 pdf.save(filename);
                 
                 document.body.removeChild(container);

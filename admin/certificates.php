@@ -192,7 +192,7 @@ $certificateContent = [
     'phone'              => $siteConfig['organization_phone'],
     'chairman_name'      => CERTIFICATE_CHAIRMAN_NAME,
     'chairman_title'     => CERTIFICATE_CHAIRMAN_TITLE,
-    'template_path'      => SITE_URL . '/templates/certificate-template.png',
+    'template_path'      => SITE_URL . '/templates/' . (file_exists(__DIR__ . '/../templates/certificate-template.png') ? 'certificate-template.png' : 'certificate-new.png'),
     'signature_path'     => SITE_URL . '/img/signature.png',
     'secretary_signature_path' => SITE_URL . '/img/signature1.png',
     'secretary_name'     => CERTIFICATE_SECRETARY_NAME,
@@ -1220,7 +1220,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdf.addImage(imgData, 'JPEG', 0, 0, 1236, 1600);
                 console.log('PDF created');
                 
-                const filename = `${certData.certificate_no}_${certData.recipient_name.replace(/[^a-zA-Z0-9\u0900-\u097F]/g, '_')}.pdf`;
+                const filename = `${certData.certificate_no}_${(certData.recipient_name || 'recipient').replace(/[^a-zA-Z0-9\u0900-\u097F]/g, '_')}.pdf`;
                 pdf.save(filename);
                 console.log('PDF saved as', filename);
                 

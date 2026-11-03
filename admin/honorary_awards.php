@@ -1101,7 +1101,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 pdf.addImage(imgData, 'JPEG', 0, 0, 1419, 2125);
                 console.log('PDF created');
                 
-                const filename = `${awardData.award_no.replace(/\//g, '-')}_${awardData.recipient_name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+                const safeAwardNo = (awardData.award_no || 'award').replace(/\//g, '-');
+                const safeRecipientName = (awardData.recipient_name || 'recipient').replace(/[^a-zA-Z0-9]/g, '_');
+                const filename = `${safeAwardNo}_${safeRecipientName}.pdf`;
                 pdf.save(filename);
                 console.log('PDF saved as', filename);
                 
