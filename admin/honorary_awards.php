@@ -988,6 +988,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 let photoPath = awardData.photo_path ? (awardData.photo_path.startsWith('../uploads/profiles/') ? '<?php echo SITE_URL; ?>/uploads/profiles/' + awardData.photo_path.substring(20) : '<?php echo SITE_URL; ?>/img/awards/' + awardData.photo_path) + '?v=' + Date.now() : '';
                 
+                                // Format the recipient name to ensure the rest is Uppercase but "Dr." stays exactly as "Dr."
+                let formattedName = (awardData.recipient_name || '').toUpperCase();
+                formattedName = formattedName.replace(/\bDR\./g, 'Dr.');
+                formattedName = formattedName.replace(/\bDR\s/g, 'Dr. ');
+                
                 container.innerHTML = `
                 <div style="position: relative; width: 100%; height: 100%; font-family: 'Times New Roman', serif;">
                     
